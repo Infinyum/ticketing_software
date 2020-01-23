@@ -33,7 +33,7 @@ public class DBManager {
 			isValidObject = false;
 		}
 		catch(ClassNotFoundException ex){
-			System.err.println("ERROR ! FAILED TO LOAD JDBC DRIVERS FOR CONNECTION (mariadb connector) !" + ex.getMessage());
+			System.err.println("ERROR ! FAILED TO LOAD JDBC DRIVERS FOR CONNECTION ! " + ex.getMessage());
 			isValidObject = false;
 		}
 	}
