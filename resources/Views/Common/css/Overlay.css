@@ -1,0 +1,114 @@
+/*OVERLAY*/
+
+.overlay {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	/* background-color: rgb(0,0,0); */
+	background-color: rgba(0,0,0, 0.9);
+	overflow-x: hidden;
+	transition: 0.5s;
+}
+
+.overlay-content {
+	position: relative;
+	
+	width: 75%;
+	/* height: 90%; */
+	padding:0.5%;
+
+	margin-left:auto;
+	margin-right:auto;
+	text-align: center;
+	margin-top: 30px;
+	background-color:white;
+}
+
+.overlay a {
+	padding: 8px;
+	text-decoration: none;
+	font-size: 36px;
+	color: white;
+	display: block;
+	transition: 0.3s;
+}
+
+.overlay #closeOverlay-btn {
+	display:inline-block;
+	position: absolute;
+	color: white;
+	margin : 5px;
+	background-color:transparent;
+	top: 20px;
+	right: 45px;
+	font-size: 60px;
+}
+
+.overlay #closeOverlay-btn:hover {
+	border-color:red;
+	color: red;
+}
+
+.overlay a:hover, .overlay a:focus {
+	color: #f1f1f1;
+}
+
+
+textarea{
+    resize: none; 
+}
+
+
+/*********************/
+/* Sous tickets */
+
+.accordion {
+    /* color: #444; */
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+.active, .accordion:hover {
+    background-color: #ffd5b0;
+}
+
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+	/* symbole - */
+    content: "\2212";
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.subTicket-btn{
+	background-color: #ffead7;
+}
+
+
+/********************/
+
+
+
+/*OVERLAY END*/
