@@ -1,6 +1,6 @@
 package model;
+
 import java.sql.*;
-import java.time.LocalDateTime;
 
 /**
  * DBManager class : This class provides an easy to use interface for managing databases
@@ -22,18 +22,12 @@ public class DBManager {
 	public DBManager() {
 		
 		try {
-		
-			Class.forName("PUT THE RIGHT JDBC DRIVER HERE REGARDING THE DBMS YOU ARE USING"); // needed if JDBC <4.0
-			url = "DATABASE URL"; //Database URL
-			conn = DriverManager.getConnection(url, "USERNAME", "PASSWORD");
+			url = "jdbc:mysql:///software?cloudSqlInstance=vivid-art-264709:europe-west1:ticketing-software&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&user=client&password=client"; //Database URL
+			conn = DriverManager.getConnection(url);
 			isValidObject = true;
 		}
 		catch (SQLException e) {
 			System.err.println("ERROR ! FAILED TO CONNECT TO THE DATABASE ! " + e.getMessage());
-			isValidObject = false;
-		}
-		catch(ClassNotFoundException ex){
-			System.err.println("ERROR ! FAILED TO LOAD JDBC DRIVERS FOR CONNECTION ! " + ex.getMessage());
 			isValidObject = false;
 		}
 	}
@@ -239,19 +233,19 @@ public class DBManager {
 	public static void main(String[] args) {
 		try {
 			//Query from a SQL file
-			SQLQuery s = new SQLQuery(".\\Resources\\SQLQueries\\SelectUpdateLog.sql",true);
+			//SQLQuery s = new SQLQuery(".\\Resources\\SQLQueries\\SelectUpdateLog.sql",true);
 			
 			//Manual Query
-			SQLQuery q2 = new SQLQuery("Select * from lh_root_causes_mapping",false);
+			//SQLQuery q2 = new SQLQuery("Select * from lh_root_causes_mapping",false);
 			
 			DBManager db = new DBManager();
 			db.printDBScheme();
 			
 			//works with different types (as long as it is expected in the SQL Query)
-			db.printQueryResult(db.ExecuteSQLQuery(s, LocalDateTime.of(2019, 07, 11, 10, 0) ));
-			db.printQueryResult(db.ExecuteSQLQuery(s, "2019-07-11 10:00"));
+			//db.printQueryResult(db.ExecuteSQLQuery(s, LocalDateTime.of(2019, 07, 11, 10, 0) ));
+			//db.printQueryResult(db.ExecuteSQLQuery(s, "2019-07-11 10:00"));
 			
-			db.printQueryResult(db.ExecuteSQLQuery(q2));
+			//db.printQueryResult(db.ExecuteSQLQuery(q2));
 			
 			db.close();
 		}
