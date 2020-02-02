@@ -140,6 +140,17 @@ window.onload = function(){
 	addRow("Annule", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
 	
 	
+	/*$.ajax({
+		type: 'GET',
+		url: "http://localhost:9000/hello",
+		headers: {"Access-Control-Allow-Origin": "*"},
+		crossDomain:true,
+		data: JSON.stringify({nom: 'Thomas'}),
+		success: function (data) {
+			Console.log("Success: " + data);
+		},
+	});*/
+	
 }
 /**
  * Function that show the ticket menu overlay
