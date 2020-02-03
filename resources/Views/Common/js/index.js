@@ -1,6 +1,8 @@
-//We use JavaScript's stict mode to ensure a high JavaScript code quality
+//We use JavaScript's strict mode to ensure a high JavaScript code quality
 "use strict";
 
+//Grab the name of the host to use it 
+var host = document.URL;
 
 /**
  * Loading function of the application
