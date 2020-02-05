@@ -2,6 +2,9 @@ package controller;
 
 
 import java.util.Scanner;
+//For server IP info
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 //Jackson/JAX-RS imports
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -17,8 +20,8 @@ public class ServerREST {
 	static final int 	PORT = 9000;
 	static final String URL  = HOST + ":" + PORT;
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws UnknownHostException {
+	
 		//create a web server factory
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 		
@@ -31,8 +34,12 @@ public class ServerREST {
         sf.setAddress(URL);
         Server server = sf.create();
         
+        //Printing Server info
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        System.out.println("Host Name: " + inetAddress.getHostName());
+        System.out.println("Server IP Address: " + inetAddress.getHostAddress());
+        System.out.println("Access this server at the address : " + URL);	
         System.out.println("Press any key + return to stop the server");	
-		System.out.println("Access this server at the address : " + URL);	
 
         Scanner sc = new Scanner(System.in);
         sc.next();
