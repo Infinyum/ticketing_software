@@ -97,9 +97,11 @@
 								<br/><br/>
 								
 								<div class="half-form" style="width:75%;">
-									<label for="ClientSelect">Client</label><br/>
+									<label for="ClientSelect">Client</label><br/> 
 									<select class="formElement" id="ClientSelect">
-									</select>   
+									</select>
+									<button class="ticketSplit" id="addClient-btn">Ajouter</button>   
+									
 								</div>
 								<div class="half-form">
 									<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
@@ -107,11 +109,12 @@
 								</div>
 								
 								<br/>
-								
+								<div class="half-form" style="width:75%;">
 								<label for="AskerSelect">Demandeur</label><br/>
 								<select class="formElement" id="AskerSelect">
 								</select> 
-								
+								<button class="ticketSplit" id="addDemandeur-btn">Ajouter</button>
+								</div>
 							
 								<br/><br/>
 								
@@ -309,7 +312,87 @@
 					</div>
 					<br/><br/>
 				</div>
-			</div>			
+			</div>
+			
+			
+			<!-- ------------------------------------------- -->
+			<!-- 	Overlay view for add client view		 -->
+			<!-- ------------------------------------------- -->
+			<div id="myNavClient" class="overlay">
+				<button class="closeOverlayClient-btn" id="closeOverlay-btn" >&times;</button>
+				<div class="overlay-content">
+					<h1>Ajout Client</h1>
+					<div class="form-modif">
+					
+						<div class="row" style="background-color:#cccccc;">
+							
+								<h2>Informations sur le Client</h2>
+								
+								<label for="ObjectText">Nom</label><br/>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								
+								<br/>
+								
+						</div>
+						
+						<br/>
+						
+						<button class="half-form closeOverlayClient-btn escapeModif-btn" id="cancel-btn">Annuler</button>
+						<button class="half-form escapeModif-btn" onclick="" id="validation-btn">Valider</button> <!-- TODO LA FONCTION ONCLICK -->
+						
+					</div>
+					<br/><br/>
+				</div>
+			</div>
+			
+			
+			<!-- ------------------------------------------- -->
+			<!-- 	Overlay view for add demandeur view		 -->
+			<!-- ------------------------------------------- -->
+			<div id="myNavDemandeur" class="overlay">
+				<button class="closeOverlayDemandeur-btn" id="closeOverlay-btn" >&times;</button>
+				<div class="overlay-content">
+					<h1>Ajout Demandeur</h1>
+					<div class="form-modif">
+					
+						<div class="row" style="background-color:#cccccc;">
+							
+								<h2>Informations sur le Demandeur</h2>
+								
+								
+								<!-- NOTE : The following form is manually filled just to give an example ! -->
+								<div class="half-form">
+									<label for="ID-ticket">Nouveau demandeur du client</label>
+									<p id="ID-ticket"> <!-- add function to have the right Client name, selectionned previously ! -->
+										Test
+									</p>
+								</div>
+								<br/>
+								
+								<label for="ObjectText">Nom</label><br/>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								
+								<br/>
+								
+								<label for="ObjectText">Email</label><br/>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								
+								<br/>
+								
+								<label for="ObjectText">Téléphone</label><br/>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								
+						</div>
+						
+						<br/>
+						
+						<button class="half-form closeOverlayDemandeur-btn escapeModif-btn" id="cancel-btn">Annuler</button>
+						<button class="half-form escapeModif-btn" onclick="" id="validation-btn">Valider</button> <!-- TODO LA FONCTION ONCLICK -->
+						
+					</div>
+					<br/><br/>
+				</div>
+			</div>				
 
 
 			<!-- Ticket view (with the table) -->
