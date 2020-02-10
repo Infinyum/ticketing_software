@@ -14,6 +14,7 @@
 		<!-- Home made CSS -->
 		<link rel="stylesheet" type="text/css" href="../Common/css/main.css">
 		<link rel="stylesheet" type="text/css" href="../Common/css/Overlay.css">
+		<link rel="stylesheet" type="text/css" href="./Technician.css">
 	</head>
 	<body>
 	
@@ -24,6 +25,8 @@
 				<div id="user">Jean-Michel Technicien<br/>(Technicien)<br><a href="">Deconnexion</a></div>
 				
 				<div id="ButtonDiv">
+					
+					<button type="button" class="view-btn half-form addRow" id="InterventionView-btn">Intervention</button>
 					<button type="button" class="half-form" id="ticketCreation-btn">Créer un Ticket</button>
 					<button type="button" class="view-btn half-form" id="ticketView-btn">Vue Tickets</button>
 					<button type="button" class="view-btn half-form" id="mapView-btn">Vue Carte</button>
@@ -66,7 +69,7 @@
 								<!-- all the possible status -->
 								<div class = "third-form">
 									<label for="StatusSelect">Statut</label><br/>
-									<select class="formElement" id="StatusSelect">
+									<select class="formElement" id="StatusSelect" disabled="disabled">
 										<option value="Brouillon">Brouillon</option>
 										<option value="RequiertAffectation">Requiert Affectation</option>
 										<option value="EnAttente">En Attente</option>
@@ -80,7 +83,7 @@
 								<!-- all the type of tickets : will be loaded from the database -->
 								<div class = "third-form">
 									<label for="TicketType">Type de ticket</label><br/>
-									<select class="formElement" id="TicketType">
+									<select class="formElement" id="TicketType" disabled="disabled">
 										<option value="Incident">Incident</option>
 										<option value="Demande">Demande</option>
 									</select>    
@@ -90,7 +93,7 @@
 								<!-- all the categories of tickets : will be loaded from the database -->
 								<div class="third-form">
 									<label for="CategorieSelect">Categorie</label><br/>
-									<select class="formElement" id="CategorieSelect">
+									<select class="formElement" id="CategorieSelect" disabled="disabled">
 									</select>    
 								</div>
 								
@@ -98,35 +101,34 @@
 								
 								<div class="half-form" style="width:75%;">
 									<label for="ClientSelect">Client</label><br/>
-									<select class="formElement" id="ClientSelect">
+									<select class="formElement" id="ClientSelect" disabled="disabled">
 									</select>   
 								</div>
 								<div class="half-form">
 									<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
-									<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true">
+									<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true" disabled="disabled">
 								</div>
 								
 								<br/>
 								
 								<label for="AskerSelect">Demandeur</label><br/>
-								<select class="formElement" id="AskerSelect">
+								<select class="formElement" id="AskerSelect" disabled="disabled">
 								</select> 
-								
 							
 								<br/><br/>
 								
 								<label for="ObjectText">Objet</label><br/>
-								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								<textarea class="formElement" rows="1" id="ObjectText" disabled="disabled"></textarea>
 								
 								<br/>
 								
 								<label>Description de la demande</label><br/>
-								<textarea class="formElement" rows="3"></textarea>
+								<textarea class="formElement" rows="3" disabled="disabled"></textarea>
 								
 								<br/><br/>
 								
 								<label for="DateInput">Date</label><br/>
-								<input class="formElement" type="date" id="DateInput"></input>
+								<input class="formElement" type="date" id="DateInput" disabled="disabled"></input>
 							
 							
 							
@@ -136,7 +138,7 @@
 								<h2>Informations sur l'intervention</h2>
 								
 								<label for="skills">Compétences requises</label>
-								<select class="formElement" id="skills" multiple>
+								<select class="formElement" id="skills" multiple disabled="disabled">
 								  <option value="frigoriste">Frigoriste</option>
 								  <option value="electricien">Electricien</option>
 								</select>
@@ -144,30 +146,30 @@
 								<br/><br/>
 								
 								<label for="InterventionPlace">Lieu de l'intervention</label><br/>
-								<input class="formElement" type="text" id="InterventionPlace"></input>	
+								<input class="formElement" type="text" id="InterventionPlace disabled="disabled""></input>	
 								
 								</br>
 								
 								<div class= "half-form">
 									<label for="InterventionDateInput" style="margin:5px;">Date de l'intervention</label><br/>
-									<input class="formElement" type="date" id="InterventionDateInput"></input>
+									<input class="formElement" type="date" id="InterventionDateInput" disabled="disabled"></input>
 								</div>
 								
 								<div class= "half-form">
 									<label for="InterventionTimeInput" style="margin:5px;">Heure de l'intervention</label><br/>
-									<input class="formElement" type="time" id="InterventionTimeInput"></input>
+									<input class="formElement" type="time" id="InterventionTimeInput" disabled="disabled"></input>
 								</div>
 								
 								<br/><br/>
 								
 								<label for="TechnicPeopleList">Technicien</label><br/>
-								<select class="formElement" id="TechnicPeopleList">
+								<select class="formElement" id="TechnicPeopleList" disabled="disabled">
 								</select>
 								
 								<br/>
 								
 								<label for="PrevisibleTimeInput">Durée Prévisible de l'intervention</label><br/>
-								<input class="formElement" type="time" id="PrevisibleTimeInput"></input>	
+								<input class="formElement" type="time" id="PrevisibleTimeInput" disabled="disabled"></input>	
 								
 								<br/>
 								
@@ -546,6 +548,7 @@
 				</div>			
 			</div>
 			
+			
 			<!-- Map view -->
 			<div class="views" id="mapView" style="display:none;">
 			
@@ -553,6 +556,123 @@
 				<!-- for demo purpose => to be removed -->
 				<img class="map" alt="Map" src="../Common/img/map.jpg" style="margin:auto; display:block; border:3px solid;">
 			
+			</div>
+			
+			<!-- Intervention view -->
+			<div class="views" id="InterventionView" style="display:none;">
+				
+				
+				<select id="Filter" class="columnFilters">
+								
+				</select>
+				
+				</br>
+				
+				<span id="chronotime">0:00:00:00</span>
+				<form name="chronoForm">
+					<input type="button" name="startstop" value="start!" onClick="chronoStart()" />
+					<input type="button" name="reset" value="reset!" onClick="chronoReset()" />
+				</form>
+				
+				<!-- Ticket view (with the table) -->
+
+					<div class="filter-bar">
+						<span style="font-weight:bold;">Filtrer les tickets compris entre les dates : </span>
+						<div class="half-form dateFilters">
+							<label for="startDateFilter">Début</label><br/>
+							<input class="" type="date" id="startDateFilter"></input>
+						</div>
+						<div class="half-form  dateFilters">
+							<label for="endDateFilter">Fin</label><br/>
+							<input class="" type="date" id="endDateFilter"></input>
+						</div>
+						
+					</div>
+					<table id="ticket-table-intervention" class="table-intervention">
+						<thead class="header-row-intervention">
+						
+							<th unselectable  scope="col" id="modifyHeader">
+								
+								Détails et Modification du ticket
+								
+							</th>
+						
+							<th unselectable  scope="col">
+								<select class="formElement" id="StatusSelect">
+									<option value="Brouillon">Brouillon</option>
+									<option value="RequiertAffectation">Requiert Affectation</option>
+									<option value="EnAttente">En Attente</option>
+									<option value="InterventionPlanifiee">Intervention Planifiée</option>
+									<option value="EnCours">En Cours</option>
+									<option value="Ferme">Fermé</option>
+									<option value="Annule">Annulé</option>
+								</select> 
+
+								<div class="sortableHeader">Etat du Ticket</div>
+							</th>
+							
+							<th unselectable  scope="col">
+								<input type="text" id="idInput" class="columnFilters" placeholder="Rechercher un id" title="Rechercher un id">
+								<div class="sortableHeader">ID Ticket</div>
+							</th>
+							
+							<th unselectable  scope="col"><div class="sortableHeader">Date</div></th>
+							
+							
+							<th unselectable  scope="col">
+								<input type="text" id="clientFilter" class="columnFilters" placeholder="Rechercher une entreprise cliente" title="Rechercher une entreprise cliente">
+								<div class="sortableHeader">Entreprise Cliente</div>
+							</th>
+							
+							<th unselectable  scope="col">
+								<div class="sortableHeader">Temps intervention</div>
+							</th>
+
+							<th unselectable  scope="col">
+								<div class="sortableHeader">Chronomètre</div>
+							</th>
+							
+						</thead>
+						  
+							<!-- <tbody> -->
+								<!-- <tr class="parent"> -->
+									<!-- <td><button class="modify-btn" id="'012345'">Modifier</button></td> -->
+									<!-- <td><span style="color:darkblue;">En Cours</span></td> -->
+									<!-- <td>19970322</td> -->
+									<!-- <td>2019-09-02</td> -->
+									<!-- <td>Boucherie ALAINE</td> -->
+									<!-- <td><span id="chronotime_19970322">0:00:00:00</span></td> -->
+									<!-- <td> -->
+										<!-- <form name="chronoForm"> -->
+											<!-- <input id="btnStartStop_19970322" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br> -->
+											<!-- <input id="btnReset_19970322" type="button" class="timerButton resetButton" name="reset" value="Reset" /> -->
+										<!-- </form> -->
+									<!-- </td> -->
+								<!-- </tr> -->
+							<!-- </tbody> -->
+							
+							<!-- <tbody> -->
+								<!-- <tr class="parent"> -->
+									<!-- <td><button class="modify-btn" id="'012345'">Modifier</button></td> -->
+									<!-- <td><span style="color:darkblue;">En Cours</span></td> -->
+									<!-- <td>13458796</td> -->
+									<!-- <td>2015-04-01</td> -->
+									<!-- <td>Boucherie SANZO</td> -->
+									<!-- <td><span id="chronotime_13458796">0:00:00:00</span></td> -->
+									<!-- <td> -->
+										<!-- <form name="chronoForm"> -->
+											<!-- <input type="button" class="timerButton" name="start" value="Start!" onClick="chronoStart()" /><br> -->
+											<!-- <input type="button" class="timerButton" name="stop" value="Stop!" onClick="chronoStop()" /><br> -->
+											<!-- <input type="button" class="timerButton" name="reset" value="Reset!" onClick="chronoReset()"/><br> -->
+										<!-- </form> -->
+									<!-- </td> -->
+								<!-- </tr> -->
+							<!-- </tbody> -->
+						
+					</table>
+							
+				
+				
 			</div>
 			
 						
