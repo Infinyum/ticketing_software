@@ -3,21 +3,13 @@
 
 //Operator exclusive code
 
-/*window.onload = function(){
-
-	document.getElementById("TechnicPeopleList").disabled = true;
-	document.getElementById("PrevisibleTimeInput").disabled = true;
-	document.getElementById("EffectiveTimeInput").disabled = true;
-
-}*/
-
-
 
 $(window).on('load',function(){
 	
 	document.getElementById("TechnicPeopleList").disabled = true;
 	document.getElementById("PrevisibleTimeInput").disabled = true;
 	document.getElementById("EffectiveTimeInput").disabled = true;
+	
 	
 	// For the client overlay
 	
@@ -81,6 +73,20 @@ $(window).on('load',function(){
 	$('.closeOverlayDemandeur-btn').click(function(){
 		
 		document.getElementById("myNavDemandeur").style.height = "0%";
+		
+	});
+	
+	    /**
+	 * Anonymous Function that change the Client name on the new Demandeur Overlay
+	 * this function is called when the user click on list of client
+	 * @param : nothing
+	 * @return : nothing
+	*/
+	$(document).on('click','#ClientSelect',function(){
+		
+		var e = document.getElementById("ClientSelect");
+		var name = e.options[e.selectedIndex].text;
+		document.getElementById("ID-Demandeur").textContent = name;
 		
 	});
 	
