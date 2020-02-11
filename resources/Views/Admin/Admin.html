@@ -13,19 +13,71 @@
 		<!-- Home made CSS -->
 		<link rel="stylesheet" type="text/css" href="../Common/css/main.css">
 		<link rel="stylesheet" type="text/css" href="../Common/css/Overlay.css">
+		<link rel="stylesheet" type="text/css" href="./Admin.css">
 	</head>
 	<body>
-	
+
 		<!-- Top bar that represents the navigation menu between the views -->
 		<header class="top-bar">
-			
+
 				<img class="MainLogo" alt="LOGO PROJET" src="../Common/img/SmallLogo.png">
-				
+				<div id="admin">Compte administrateur</div>
+
 		</header>
+
 		
-		
-		<!-- TODO : ADMIN page and it's logic -->
-		
-		
+		<div class="row">
+			<div class="col-4">
+				<h1 class="title">Gestion du compte</h1>
+				<form>
+					Identifiant:&#160;&#160;&#160;&#160;
+					<input class="input" id="id" type="text">
+					<br/>
+					Mot de pass:
+					<input class="input" id="passwd" type="password">
+					<br/>
+					<button class="modify-btn" id="create">Créer</button>
+					<button class="modify-btn" id="delete">Supprimer</button>
+				</form>
+			</div>
+
+			<div class="col-4">
+				<h1 class="title">Modification de la liste de compétences technicien</h1>
+				<div class="mx-auto">
+					<form>
+						Compétences existantes:
+						<br/>
+						<select name="existingSkill" size="10" id="existingSkill" style="width:500"> 
+							<option value="Frigorist">Frigorist</option>  
+							<option value="Fydraulique">Fydraulique</option>  
+						</select> 
+						<br/>
+						Ajouter une compétence:
+						<input class="input" id="newSkill" type="text">
+						<br/>
+						<button class="modify-btn" id="create">Ajouter</button>
+						<button class="modify-btn" id="delete">Supprimer</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="col-4">
+				<h1 class="title">Modification de la liste de catégories de maintenance</h1>
+				Catégories existantes:
+				<br/>
+				<select name="existingSkill" size="10" id="existingSkill" style="width:500"> 
+					<option value="VPN">problème de VPN</option>  
+					<option value="mdp oublié">mot de passe oublié</option>  
+				</select> 
+				<br/>
+				Ajouter une catégorie:
+				<input class="input" id="newCategory" type="text">
+				<br/>
+				<button class="modify-btn" id="create">Ajouter</button>
+				<button class="modify-btn" id="delete">Supprimer</button>
+			</div>
+		</div>
+
+
 	</body>
 </html>
