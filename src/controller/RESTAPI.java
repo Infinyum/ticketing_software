@@ -84,6 +84,19 @@ public class RESTAPI {
     	
     }
 	
+    /**
+     * Method with "deps/filePath" path that serves all the common dependencies (CSS + JS content to serve to the user)
+     * @return a FileInputStream with the content of the dependency (depends what the HTML page needs)
+     * @throws IOException, if failed to access the file
+     */
+    @Path("deps/{path: .+}")
+    @GET
+    @Produces({"text/html", "text/css", "application/javascript", "image/png"})
+    public InputStream getLocalFile(@PathParam("path") String path) throws IOException{
+    	
+    	return new FileInputStream(BASE + path);
+    	
+    }
     
     /**
 	 * Provide the JSON data to display according to the queries argument (in the JSONdata parameter)
