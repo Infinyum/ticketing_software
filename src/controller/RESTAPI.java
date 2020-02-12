@@ -32,30 +32,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 //Home classes
-import model.DBManager;
+import model.DataManager;
 import model.SQLQuery;
 
 
 @Path("/")
 public class RESTAPI {
 
-	private DBManager db = new DBManager();
 	private static final String BASE = "./resources/Views/Common/";
-
-	//TODO : Remove (testing purposes)
-	@GET
-	@Path("/hello")
-	@Produces("application/json")
-	public String sayHelloGet(@QueryParam("nom") String nom) throws IOException, SQLException {
-		SQLQuery q = new SQLQuery("SELECT * FROM client WHERE nom LIKE ?", false);
-		ResultSet rs = db.ExecuteSQLQuery(q, nom);
-		
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String json = ow.writeValueAsString(db.convertToList(rs));
-        
-        return json;
-	}
-
+	private DataManager dataManager;
+	
+	public RESTAPI() throws IOException, SQLException{
+    	dataManager = new DataManager();
+    }
 	
 	 /**
      * Method with no path that serves the HTML content to the user
@@ -67,7 +56,7 @@ public class RESTAPI {
     public InputStream getIndex() throws IOException{
     	
     	//(index-2.html is the legacy name for the HTML main file)
-    	return new FileInputStream("./resources/Views/Home.html");
+    	return new FileInputStream("./resources/Views/Home/Home.html");
     }
 	
     /**
@@ -157,6 +146,7 @@ public class RESTAPI {
     		flag = "%";
     	}
     	
+    	/*
     	try {
     		
     		//Do your DB calls
@@ -165,6 +155,9 @@ public class RESTAPI {
 			//e.printStackTrace();
 			System.err.println("ERROR ! FAILED TO LOAD DATA FROM THE DATABASE !\n" + e.getMessage());
 		}
+    	
+    	*/
+    	
     	//we return the result of the SQL query
 		return SQLres;
 	}
