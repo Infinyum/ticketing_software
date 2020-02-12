@@ -83,6 +83,28 @@ $(document).on('click','#InterventionView-btn',function(){
 	//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
 	document.getElementById(id).style.display="block";
 	
+	$.ajax({
+		type: "POST",
+		url: host+"/getmytechtickets",
+		dataType:"JSON",	//what we send
+		contentType:"application/json", //what we expect as the response
+		data:JSON.stringify({id:21505228}),
+		beforeSend:function(xhr){
+			// disabling all search buttons to not overload the server while the query is happening
+			$('.search-get').attr("disabled", true);
+		},
+		complete:function(xhr){
+			// enabling back all search buttons after query finished (whether in failure or success)
+			$('.search-get').attr("disabled", false);
+		},
+		success:function(element){
+			//Process success of the request...			
+			for(int i=0; i < sizeof(ticket); i++){
+				addRow(EtatTicket, IdTicket, DateTicket, EntrepriseClient)
+			}
+		}
+	});
+		
 	// TODO: request to get tickets form database
 	/*
 	for(int i=0; i < sizeof(ticket); i++){
@@ -106,7 +128,7 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 	row.insertCell(3).innerHTML = dateTicket;
 	row.insertCell(4).innerHTML = entreprise;
 	row.insertCell(5).innerHTML = '<span id="chronotime_'+idTicket+'">0:00:00:00</span>';
-	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /></form>';
+	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /><br><input id="btnValide_'+idTicket+'" type="button" class="timerButton valideButton" name="valide" value="Valider" /></form>';
 	
 	//We append the new tbody to the table
 	table.appendChild(tbody);
@@ -121,7 +143,12 @@ $(function() { /* code here */
 });
 
 
-
+$(document).on('click','.valideButton',function(){
+	var strSplit = this.id.split('_')
+	var ticketId = strSplit[1]
+	document.getElementById('btnStartStop_'+ticketId).value = "Demarrer"
+	clearTimeout(timerID)
+});
 
 
 
