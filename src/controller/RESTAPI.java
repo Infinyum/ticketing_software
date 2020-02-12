@@ -39,7 +39,7 @@ import model.SQLQuery;
 @Path("/")
 public class RESTAPI {
 
-	private static final String BASE = "./resources/Views/Common/";
+	private static final String BASE = "./resources/Views/Deps/";
 	private DataManager dataManager;
 	
 	public RESTAPI() throws IOException, SQLException{
@@ -60,11 +60,11 @@ public class RESTAPI {
     }
 	
     /**
-     * Method with "Common/filePath" path that serves all the common dependencies (CSS + JS content to serve to the user)
+     * Method with "Deps/filePath" path that serves all the common dependencies (CSS + JS content to serve to the user)
      * @return a FileInputStream with the content of the dependency (depends what the HTML page needs)
      * @throws IOException, if failed to access the file
      */
-    @Path("Common/{path: .+}")
+    @Path("Deps/{path: .+}")
     @GET
     @Produces({"text/html", "text/css", "application/javascript", "image/png"})
     public InputStream getFile(@PathParam("path") String path) throws IOException{
@@ -73,19 +73,6 @@ public class RESTAPI {
     	
     }
 	
-    /**
-     * Method with "deps/filePath" path that serves all the common dependencies (CSS + JS content to serve to the user)
-     * @return a FileInputStream with the content of the dependency (depends what the HTML page needs)
-     * @throws IOException, if failed to access the file
-     */
-    @Path("deps/{path: .+}")
-    @GET
-    @Produces({"text/html", "text/css", "application/javascript", "image/png"})
-    public InputStream getLocalFile(@PathParam("path") String path) throws IOException{
-    	
-    	return new FileInputStream(BASE + path);
-    	
-    }
     
     /**
 	 * Provide the JSON data to display according to the queries argument (in the JSONdata parameter)
