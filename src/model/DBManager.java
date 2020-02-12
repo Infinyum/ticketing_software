@@ -29,7 +29,7 @@ public class DBManager {
 	public DBManager() {
 
 		try {
-			url = "jdbc:mysql:///software?cloudSqlInstance=vivid-art-264709:europe-west1:ticketing-software&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&user=client&password=client"; // Database
+			url = "jdbc:mysql:///software?cloudSqlInstance=dark-passage-267415:europe-west1:ticketing-software&socketFactory=com.google.cloud.sql.mysql.SocketFactory&useSSL=false&user=client&password=client"; // Database
 																																																				// URL
 			conn = DriverManager.getConnection(url);
 			isValidObject = true;
