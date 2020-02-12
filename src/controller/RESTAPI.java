@@ -1,12 +1,15 @@
 package controller;
 
 //Java standard lib imports
+import java.security.MessageDigest;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 //JAX-RS
@@ -23,6 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -42,7 +46,6 @@ public class RESTAPI {
 	private DBManager db = new DBManager();
 	private static final String BASE = "./resources/Views/Common/";
 
-	//TODO : Remove (testing purposes)
 	@GET
 	@Path("/hello")
 	@Produces("application/json")
@@ -55,8 +58,88 @@ public class RESTAPI {
         
         return json;
 	}
-
 	
+	@POST
+	@Path("/getmytechtickets")
+	@Produces("application/json")
+	public String getMyTechTickets(String inputJSON) throws IOException, SQLException {
+		ObjectMapper mapper = new ObjectMapper();
+    	Map<String, Object> dataMap = null;
+    	
+    	try {
+    		dataMap = mapper.readValue(inputJSON, Map.class);
+    		int id = (Integer)dataMap.get("id");
+    		
+    		String queryString = "SELECT * FROM ticket, ticket_technicien WHERE ticket.id = ticket_technicien.id_ticket AND ticket_technicien.id_technicien = " + id;
+    		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(queryString, false));
+    		
+    		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+            
+            return outputJSON;
+    		
+    	} catch (JsonParseException e) {
+			System.err.println("ERROR ! UNABLE TO PARSE THE JSON PROVIDED !\n" + e.getMessage());
+			return null;
+		} catch (JsonMappingException e) {
+			System.err.println("ERROR ! UNABLE TO MAP AND STORE THE JSON PROVIDED !\n" + e.getMessage());
+			return null;
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return null;
+		}
+    	
+		
+	}
+	
+	@POST
+	@Path("/connectuser")
+	@Produces("application/json")
+	public Response connectUser(String inputJSON) throws IOException, SQLException {
+		ObjectMapper mapper = new ObjectMapper();
+    	Map<String, Object> dataMap = null;
+    	
+    	try {
+    		dataMap = mapper.readValue(inputJSON, Map.class);
+    		String id = (String)dataMap.get("id");
+    		String inputPwd = (String)dataMap.get("password");
+    		
+    		String queryString = "SELECT * FROM utilisateur WHERE id = " + id;
+    		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(queryString, false));
+    		
+    		List<HashMap<String,Object>> rl = db.convertToList(rs);
+    		String dbPwd = (String)rl.get(0).get("mot_de_passe");
+    		
+    		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+    		String outputJSON = "";
+    		if (inputPwd.equals(dbPwd)) {    			
+    			outputJSON = ow.writeValueAsString(rl);
+    		}
+    		else {
+    			/*HashMap<String,Object> outMap = new HashMap();
+    			outMap.put("message", "Mauvais mot de passe");
+    			outputJSON = ow.writeValueAsString(outMap);*/
+    			return Response.status(404).build();
+    		}
+    		
+            return Response.ok(outputJSON).build();
+    		
+    	} catch (JsonParseException e) {
+			System.err.println("ERROR ! UNABLE TO PARSE THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (JsonMappingException e) {
+			System.err.println("ERROR ! UNABLE TO MAP AND STORE THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (IndexOutOfBoundsException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		}
+	}
+    	
+
 	 /**
      * Method with no path that serves the HTML content to the user
      * @return a FileInputStream with the content of the HTML page
@@ -157,14 +240,14 @@ public class RESTAPI {
     		flag = "%";
     	}
     	
-    	try {
+    	/*try {
     		
     		//Do your DB calls
 			
     	} catch (SQLException e) {
 			//e.printStackTrace();
 			System.err.println("ERROR ! FAILED TO LOAD DATA FROM THE DATABASE !\n" + e.getMessage());
-		}
+		}*/
     	//we return the result of the SQL query
 		return SQLres;
 	}
