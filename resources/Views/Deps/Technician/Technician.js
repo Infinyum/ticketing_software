@@ -3,6 +3,85 @@
 
 //Technician exclusive code
 
+$(function() { /* code here */ 
+	var technicienSelect = document.getElementById("TechnicPeopleList");
+	technicienSelect.options[technicienSelect.options.length] = new Option(' ', '0', false, false);
+	technicienSelect.options[technicienSelect.options.length] = new Option('Jean michel Technicien', '1', false, false);
+	//var opt1 = new Option('Bon','test',false,false);
+	//opt.appendChild(document.createTextNode('null'));
+	//opt.text = "null";
+	//technicienSelect.add(opt);
+	/*
+	var opt2 = document.createElement('option');
+	//opt2.appendChild(document.createTextNode('Jean Michel')); 
+	opt2.text = "Jean Michel";
+	technicienSelect.appendChild(opt2);
+*/
+});
+
+/*****************		View Set Ticket	from view "Intervention"		****************/
+
+$(document).on('click','.modify-btn-intervention',function(){
+	showOverlay();
+	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("TicketType").disabled = true;
+	document.getElementById("CategorieSelect").disabled = true;
+	document.getElementById("ClientSelect").disabled = true;
+	document.getElementById("PriorityCheckBox").disabled = true;
+	document.getElementById("AskerSelect").disabled = true;
+	document.getElementById("ObjectText").disabled = true;
+	// optionnel, on laisse la possibilite de le changer/ ajouter des remarques
+	//document.getElementById("DescText").disabled = true;
+	document.getElementById("DateInput").disabled = true;
+	document.getElementById("skills").disabled = true;	
+	document.getElementById("InterventionPlace").disabled = true;	
+	document.getElementById("InterventionDateInput").disabled = true;
+	document.getElementById("TechnicPeopleList").disabled = true;
+	
+
+});
+
+/*****************						View New Ticket					****************/
+
+$(document).on('click','.modify-btn',function(){
+	
+	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("TicketType").disabled = true;
+	document.getElementById("CategorieSelect").disabled = true;
+	document.getElementById("ClientSelect").disabled = true;
+	document.getElementById("PriorityCheckBox").disabled = true;
+	document.getElementById("AskerSelect").disabled = true;
+	document.getElementById("ObjectText").disabled = true;
+	// optionnel, on laisse la possibilite de le changer/ ajouter des remarques
+	//document.getElementById("DescText").disabled = true;
+	document.getElementById("DateInput").disabled = true;
+	document.getElementById("skills").disabled = true;	
+	document.getElementById("InterventionPlace").disabled = true;	
+	document.getElementById("InterventionDateInput").disabled = true;
+	document.getElementById("TechnicPeopleList").disabled = false;
+
+});
+	
+/*****************			View Set Ticket	from view "vue ticket"		****************/
+
+$(document).on('click','#ticketCreation-btn',function(){
+	
+	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("TicketType").disabled = false;
+	document.getElementById("CategorieSelect").disabled = false;
+	document.getElementById("ClientSelect").disabled = false;
+	document.getElementById("PriorityCheckBox").disabled = false;
+	document.getElementById("AskerSelect").disabled = false;
+	document.getElementById("ObjectText").disabled = false;
+	// optionnel, on laisse la possibilite de le changer/ ajouter des remarques
+	//document.getElementById("DescText").disabled = true;
+	document.getElementById("DateInput").disabled = false;
+	document.getElementById("skills").disabled = false;	
+	document.getElementById("InterventionPlace").disabled = false;	
+	document.getElementById("InterventionDateInput").disabled = false;
+	document.getElementById("TechnicPeopleList").disabled = false;
+	
+});
 
 /*****************						Timer						****************/
 
@@ -68,7 +147,7 @@ $(document).on('click','.resetButton',function(){
 });
 	
 
-/*****************						Row table						****************/
+/*****************					Row table						****************/
 
 $(document).on('click','#InterventionView-btn',function(){
 	
@@ -82,6 +161,29 @@ $(document).on('click','#InterventionView-btn',function(){
 
 	//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
 	document.getElementById(id).style.display="block";
+	/*
+	$.ajax({
+		type: "POST",
+		url: host+"/getmytechtickets",
+		dataType:"JSON",	//what we send
+		contentType:"application/json", //what we expect as the response
+		data:JSON.stringify({id:21505228}),
+		beforeSend:function(xhr){
+			// disabling all search buttons to not overload the server while the query is happening
+			$('.search-get').attr("disabled", true);
+		},
+		complete:function(xhr){
+			// enabling back all search buttons after query finished (whether in failure or success)
+			$('.search-get').attr("disabled", false);
+		},
+		success:function(element){
+			//Process success of the request...			
+			for(int i=0; i < sizeof(ticket); i++){
+				addRow(EtatTicket, IdTicket, DateTicket, EntrepriseClient)
+			}
+		}
+	});*/
+	
 	
 	// TODO: request to get tickets form database
 	/*
@@ -100,13 +202,13 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 
 	let row = tbody.insertRow(0);
 	//Fill the row
-	row.insertCell(0).innerHTML = "<td><button class=\"modify-btn\">Modifier</button></td>"; //Insert the "modifier" button
+	row.insertCell(0).innerHTML = "<td><button class=\"modify-btn-intervention\">Modifier</button></td>"; //Insert the "modifier" button
 	row.insertCell(1).innerHTML = '<span style="color:darkblue;">'+ etatTicket+'</span>';
 	row.insertCell(2).innerHTML = idTicket;
 	row.insertCell(3).innerHTML = dateTicket;
 	row.insertCell(4).innerHTML = entreprise;
 	row.insertCell(5).innerHTML = '<span id="chronotime_'+idTicket+'">0:00:00:00</span>';
-	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /></form>';
+	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /><br><input id="btnValide_'+idTicket+'" type="button" class="timerButton valideButton" name="valide" value="Valider" /></form>';
 	
 	//We append the new tbody to the table
 	table.appendChild(tbody);
@@ -118,6 +220,15 @@ $(function() { /* code here */
 	addRowIntervention("En Attente", 12354664, "15 mars 2019", "Jean Boucherie")
 	addRowIntervention("En Cours", 45624858, "20 frevrier 2020", "Joe Boucherie")
 
+});
+
+
+$(document).on('click','.valideButton',function(){
+	var strSplit = this.id.split('_')
+	var ticketId = strSplit[1]
+	document.getElementById('btnStartStop_'+ticketId).value = "Demarrer"
+	clearTimeout(timerID)
+	
 });
 
 

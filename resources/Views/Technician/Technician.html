@@ -68,7 +68,7 @@
 								<!-- all the possible status -->
 								<div class = "third-form">
 									<label for="StatusSelect">Statut</label><br/>
-									<select class="formElement" id="StatusSelect" disabled="disabled">
+									<select class="formElement" id="StatusSelect" >
 										<option value="Brouillon">Brouillon</option>
 										<option value="RequiertAffectation">Requiert Affectation</option>
 										<option value="EnAttente">En Attente</option>
@@ -82,7 +82,7 @@
 								<!-- all the type of tickets : will be loaded from the database -->
 								<div class = "third-form">
 									<label for="TicketType">Type de ticket</label><br/>
-									<select class="formElement" id="TicketType" disabled="disabled">
+									<select class="formElement" id="TicketType" >
 										<option value="Incident">Incident</option>
 										<option value="Demande">Demande</option>
 									</select>    
@@ -92,7 +92,7 @@
 								<!-- all the categories of tickets : will be loaded from the database -->
 								<div class="third-form">
 									<label for="CategorieSelect">Categorie</label><br/>
-									<select class="formElement" id="CategorieSelect" disabled="disabled">
+									<select class="formElement" id="CategorieSelect">
 									</select>    
 								</div>
 								
@@ -100,34 +100,34 @@
 								
 								<div class="half-form" style="width:75%;">
 									<label for="ClientSelect">Client</label><br/>
-									<select class="formElement" id="ClientSelect" disabled="disabled">
+									<select class="formElement" id="ClientSelect">
 									</select>   
 								</div>
 								<div class="half-form">
 									<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
-									<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true" disabled="disabled">
+									<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true">
 								</div>
 								
 								<br/>
 								
 								<label for="AskerSelect">Demandeur</label><br/>
-								<select class="formElement" id="AskerSelect" disabled="disabled">
+								<select class="formElement" id="AskerSelect">
 								</select> 
 							
 								<br/><br/>
 								
 								<label for="ObjectText">Objet</label><br/>
-								<textarea class="formElement" rows="1" id="ObjectText" disabled="disabled"></textarea>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
 								
 								<br/>
 								
 								<label>Description de la demande</label><br/>
-								<textarea class="formElement" rows="3" disabled="disabled"></textarea>
+								<textarea class="formElement" rows="3" id="DescText"></textarea>
 								
 								<br/><br/>
 								
 								<label for="DateInput">Date</label><br/>
-								<input class="formElement" type="date" id="DateInput" disabled="disabled"></input>
+								<input class="formElement" type="date" id="DateInput"></input>
 							
 							
 							
@@ -137,7 +137,7 @@
 								<h2>Informations sur l'intervention</h2>
 								
 								<label for="skills">Compétences requises</label>
-								<select class="formElement" id="skills" multiple disabled="disabled">
+								<select class="formElement" id="skills" multiple>
 								  <option value="frigoriste">Frigoriste</option>
 								  <option value="electricien">Electricien</option>
 								</select>
@@ -145,30 +145,30 @@
 								<br/><br/>
 								
 								<label for="InterventionPlace">Lieu de l'intervention</label><br/>
-								<input class="formElement" type="text" id="InterventionPlace disabled="disabled""></input>	
+								<input class="formElement" type="text" id="InterventionPlace"></input>	
 								
 								</br>
 								
 								<div class= "half-form">
 									<label for="InterventionDateInput" style="margin:5px;">Date de l'intervention</label><br/>
-									<input class="formElement" type="date" id="InterventionDateInput" disabled="disabled"></input>
+									<input class="formElement" type="date" id="InterventionDateInput"></input>
 								</div>
 								
 								<div class= "half-form">
 									<label for="InterventionTimeInput" style="margin:5px;">Heure de l'intervention</label><br/>
-									<input class="formElement" type="time" id="InterventionTimeInput" disabled="disabled"></input>
+									<input class="formElement" type="time" id="InterventionTimeInput"></input>
 								</div>
 								
 								<br/><br/>
 								
 								<label for="TechnicPeopleList">Technicien</label><br/>
-								<select class="formElement" id="TechnicPeopleList" disabled="disabled">
+								<select class="formElement" id="TechnicPeopleList">
 								</select>
 								
 								<br/>
 								
 								<label for="PrevisibleTimeInput">Durée Prévisible de l'intervention</label><br/>
-								<input class="formElement" type="time" id="PrevisibleTimeInput" disabled="disabled"></input>	
+								<input class="formElement" type="time" id="PrevisibleTimeInput"></input>	
 								
 								<br/>
 								
@@ -559,11 +559,6 @@
 			
 			<!-- Intervention view -->
 			<div class="views" id="InterventionView" style="display:none;">
-				
-				
-				<select id="Filter" class="columnFilters">
-								
-				</select>
 				
 				</br>
 				
