@@ -90,4 +90,43 @@ $(window).on('load',function(){
 		
 	});
 	
+	/**
+	 * Anonymous Function that change the Client name on the new Demandeur Overlay
+	 * this function is called when the user click on list of client
+	 * @param : nothing
+	 * @return : nothing
+	*/
+	$(document).on('click','#modification',function(){
+		
+		
+		document.getElementById("ClientSelect").disabled = true;
+		document.getElementById("TicketType").disabled = true;
+		document.getElementById("CategorieSelect").disabled = true;
+		document.getElementById("addClient-btn").disabled = true;
+		document.getElementById("AskerSelect").disabled = true;
+		document.getElementById("addDemandeur-btn").disabled = true;
+		document.getElementById("ObjectText").disabled = true;
+		document.getElementById("DateInput").disabled = true;
+		document.getElementById("InterventionPlace").disabled = true;
+		
+		/**
+		 * Anonymous Function that change the Client name on the new Demandeur Overlay
+		 * this function is called when the user click on list of client
+		 * @param : nothing
+		 * @return : nothing
+		*/
+		$('.closeOverlay-btn').click(function(){
+			document.getElementById("ClientSelect").disabled = false;
+			document.getElementById("TicketType").disabled = false;
+			document.getElementById("CategorieSelect").disabled = false;
+			document.getElementById("addClient-btn").disabled = false;
+			document.getElementById("AskerSelect").disabled = false;
+			document.getElementById("addDemandeur-btn").disabled = false;
+			document.getElementById("ObjectText").disabled = false;
+			document.getElementById("DateInput").disabled = false;
+			document.getElementById("InterventionPlace").disabled = false;
+			
+		});
+	});
+	
 });
