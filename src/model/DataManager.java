@@ -1,11 +1,60 @@
 package model;
 
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.core.Response;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 public class DataManager {
 
-	private DBManager db;
+	public DBManager db;
 	
 	public DataManager() {
 		db = new DBManager();
 	}
 
+	public String getMyTechTickets(int id) throws SQLException, IOException {
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getTicketByTechnician.sql", true), id);
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+
+		return outputJSON;
+	}
+	
+	public String getAllTickets() throws SQLException, IOException {
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getAllTickets.sql", true));
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+
+		return outputJSON;
+	}
+	
+	public String connectUser(String id, String inputPwd) throws SQLException, IOException {
+
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getUserInfo.sql", true), id);
+
+		List<HashMap<String, Object>> rl = db.convertToList(rs);
+		String dbPwd = (String) rl.get(0).get("mot_de_passe");
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = "";
+		if (inputPwd.equals(dbPwd)) {
+			outputJSON = ow.writeValueAsString(rl);
+		} else {
+			 HashMap<String,Object> outMap = new HashMap(); outMap.put("message", "Mauvais mot de passe"); outputJSON = ow.writeValueAsString(outMap);
+		}
+
+		return outputJSON;
+	}
 }

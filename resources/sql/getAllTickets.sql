@@ -1,0 +1,1 @@
+SELECT * FROM ticket, site, demandeur, client WHERE ticket.id_site = site.id AND demandeur.email = ticket.demandeur AND demandeur.id_client = client.id;

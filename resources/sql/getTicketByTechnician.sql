@@ -1,0 +1,1 @@
+SELECT * FROM ticket, ticket_technicien, site WHERE ticket.id_site = site.id AND ticket.id = ticket_technicien.id_ticket AND ticket_technicien.id_technicien = ?;
