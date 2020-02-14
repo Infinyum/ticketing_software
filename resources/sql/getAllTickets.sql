@@ -1,1 +1,1 @@
-SELECT * FROM ticket, site, demandeur, client WHERE ticket.id_site = site.id AND demandeur.email = ticket.demandeur AND demandeur.id_client = client.id;
+SELECT ticket.id as id, ticket.titre as titre, ticket.poids as poids, site.adresse as adresse, demandeur.email as demandeur, ticket.statut as statut, ticket.type as type, client.nom as client FROM ticket, site, demandeur, client, categorie_ticket WHERE ticket.id_site = site.id AND demandeur.email = ticket.demandeur AND demandeur.id_client = client.id AND categorie_ticket.id_ticket = ticket.id;
