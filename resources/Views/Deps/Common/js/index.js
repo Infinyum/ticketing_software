@@ -147,7 +147,7 @@ window.onload = function () {
 		success: function (response, status, jqXHR) {
 			for (let i = 0; i < response.length; i++) {
 				// TODO
-				//console.log(response[i]);
+				console.log(response[i]);
 			}
 		},
 		error: function (jqXHR, status, errorThrown) {

@@ -49,9 +49,15 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-
-		// (index-2.html is the legacy name for the HTML main file)
 		return new FileInputStream("./resources/Views/Home/Home.html");
+	}
+	
+	@Path("/operator")
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public InputStream getOperator() throws IOException {
+
+		return new FileInputStream("./resources/Views/Operator/Operator.html");
 	}
 
 	/**

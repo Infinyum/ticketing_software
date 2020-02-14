@@ -48,12 +48,20 @@ public class DataManager {
 		String dbPwd = (String) rl.get(0).get("mot_de_passe");
 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		String outputJSON = "";
+		
+		HashMap<String, Object> testMap = new HashMap<>();
+		testMap.put("token", "montoken");
+		testMap.put("page", "operator");
+		
+		String outputJSON = ow.writeValueAsString(testMap);
+		
+		/*String outputJSON = "";
+		
 		if (inputPwd.equals(dbPwd)) {
 			outputJSON = ow.writeValueAsString(rl);
 		} else {
-			 HashMap<String,Object> outMap = new HashMap(); outMap.put("message", "Mauvais mot de passe"); outputJSON = ow.writeValueAsString(outMap);
-		}
+			 HashMap<String,Object> outMap = new HashMap<>(); outMap.put("message", "Mauvais mot de passe"); outputJSON = ow.writeValueAsString(outMap);
+		}*/
 
 		return outputJSON;
 	}

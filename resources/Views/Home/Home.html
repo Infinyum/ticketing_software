@@ -56,7 +56,9 @@
 				data: JSON.stringify({id: id.value, password: hexDigest}),
 				success: function(response, status, jqXHR) {
 					window.sessionStorage.setItem("TicketSoftToken", response.token);
-					window.location.href = window.location.hostname + "" + response.page;
+					
+					// TODO: requete ajax a la place
+					window.location.href = document.URL + response.page;
 				},
 				error: function(jqXHR, status, errorThrown) {
 					errorMsg.hidden = false;

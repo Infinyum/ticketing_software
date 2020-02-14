@@ -217,8 +217,8 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 }	
 
 $(function() { /* code here */ 
-	addRowIntervention("En Attente", 12354664, "15 mars 2019", "Jean Boucherie")
-	addRowIntervention("En Cours", 45624858, "20 frevrier 2020", "Joe Boucherie")
+	addRowIntervention("En Attente", 12354664, "2019-03-19", "Jean Boucherie")
+	addRowIntervention("En Cours", 45624858, "2020-02-14", "Joe Boucherie")
 
 });
 
