@@ -46,12 +46,32 @@ public class DataManager {
 
 		List<HashMap<String, Object>> rl = db.convertToList(rs);
 		String dbPwd = (String) rl.get(0).get("mot_de_passe");
+		String type_compte = (String) rl.get(0).get("type_compte");
 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		
 		HashMap<String, Object> testMap = new HashMap<>();
-		testMap.put("token", "montoken");
-		testMap.put("page", "operator");
+		
+		switch (type_compte) {
+		case "Technicien":
+			testMap.put("token", "montoken");
+			testMap.put("page", "technicien");
+			break;
+		case "Opérateur d'appel":
+			testMap.put("token", "montoken");
+			testMap.put("page", "operator");
+			break;
+		case "Responsable technique":
+			testMap.put("token", "montoken");
+			testMap.put("page", "responsable");
+			break;
+		case "Administrateur":
+			testMap.put("token", "montoken");
+			testMap.put("page", "admin");
+			break;
+		default:
+			testMap.put("token", "erreur");
+			testMap.put("page", "erreur");
+		}
 		
 		String outputJSON = ow.writeValueAsString(testMap);
 		

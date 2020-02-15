@@ -60,6 +60,30 @@ public class RESTAPI {
 		return new FileInputStream("./resources/Views/Operator/Operator.html");
 	}
 
+	@Path("/technicien")
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public InputStream getTechnicien() throws IOException {
+
+		return new FileInputStream("./resources/Views/Technician/Technician.html");
+	}
+	
+	@Path("/responsable")
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public InputStream getResponsable() throws IOException {
+
+		return new FileInputStream("./resources/Views/TechSupervisor/TechSupervisor.html");
+	}
+	
+	@Path("/admin")
+	@GET
+	@Produces(MediaType.TEXT_HTML)
+	public InputStream getAdmin() throws IOException {
+
+		return new FileInputStream("./resources/Views/Admin/Admin.html");
+	}
+	
 	/**
 	 * Method with "Deps/filePath" path that serves all the common dependencies (CSS
 	 * + JS content to serve to the user)
