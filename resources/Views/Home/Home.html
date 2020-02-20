@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- LOGIN PAGE -->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>TicketSoft</title>
+
+		<!-- Home made CSS -->
+		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/main.css">
+		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/Overlay.css">
+		<link rel="stylesheet" type="text/css" href="../Deps/Home/Home.css">
+	</head>
+	<body class="homeBody">	
+		<!-- Login page and system -->
+		<img class="logo" alt="LOGO PROJET" src="../Deps/Common/img/SmallLogo.png">
+		<section class="loginSection">
+			<form name="loginForm" class="loginForm" action="javascript:connect()">
+				<input name="idField" type="text" class="textField" placeholder="Identifiant" autocomplete="off" required/>
+				<input name="pwdField" type="password" class="textField" placeholder="Mot de passe" required/>
+				<div class="errorMsg" hidden>Une erreur est survenue lors de la connexion.</div>
+				<input type="submit" class="loginBtn" value="Connexion"/>
+			</form>
+		</section>
+		
+	</body>
+</html>
+
+<!-- Librairies -->
+<script src="../Deps/Common/js/libs/jquery.js"></script>
+<script src="../Deps/Home/crypto-js.min.js"></script>
+<script src="../Deps/Home/enc-base64.min.js"></script>
+<script src="../Deps/Home/hmac-sha256.min.js"></script>
+<script type="text/javascript">
+	
+	function connect() {
+		let regexId = /\d+/;
+		let loginBtn = document.getElementsByClassName("loginBtn")[0];
+		let id = document.getElementsByName("idField")[0];
+		let password = document.getElementsByName("pwdField")[0];
+		let errorMsg = document.getElementsByClassName("errorMsg")[0];
+
+		loginBtn.disabled = true;
+		if(id.value.match(regexId) && password.value != "") {
+			var hash = CryptoJS.HmacSHA256(password.value, password.value);
+			var hexDigest = hash.toString(CryptoJS.enc.Hex);
+			$.ajax({
+				type: "POST",
+				url: "http://localhost:9000/connectuser/",
+				dataType: 'json',
+				contentType: 'json', // Non present -> erreur serveur
+				data: JSON.stringify({id: id.value, password: hexDigest}),
+				success: function(response, status, jqXHR) {
+					window.sessionStorage.setItem("TicketSoftToken", response.token);
+					
+					// TODO: requete ajax a la place
+					window.location.href = document.URL + response.page;
+				},
+				error: function(jqXHR, status, errorThrown) {
+					errorMsg.hidden = false;
+					loginBtn.disabled = false;
+				}
+			});
+		}
+		else {
+			loginBtn.disabled = false;
+			errorMsg.hidden = false;
+		}
+	}
+
+</script>

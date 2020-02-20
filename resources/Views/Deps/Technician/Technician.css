@@ -1,0 +1,22 @@
+
+.timerButton {
+  width: 100%;
+  height: 20px;
+  text-align: center;
+}
+
+
+.modify-btn-intervention{
+
+	display:inline-block;
+	border-radius: 15px;
+	background-color: #f2fbff;
+	
+	width:100%;
+	height:100%;
+	
+	padding:5px;
+	/* margin: 5px; */
+	text-align:center;
+	
+}

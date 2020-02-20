@@ -2,9 +2,11 @@ package controller;
 
 
 import java.util.Scanner;
+import java.io.IOException;
 //For server IP info
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 
 //Jackson/JAX-RS imports
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -20,7 +22,7 @@ public class ServerREST {
 	static final int 	PORT = 9000;
 	static final String URL  = HOST + ":" + PORT;
 	
-	public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws IOException, SQLException {
 	
 		//create a web server factory
 		JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
