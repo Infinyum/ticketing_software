@@ -5,12 +5,7 @@
 
 
 $(window).on('load',function(){
-	
-	document.getElementById("TechnicPeopleList").disabled = true;
-	document.getElementById("PrevisibleTimeInput").disabled = true;
-	document.getElementById("EffectiveTimeInput").disabled = true;
-	
-	
+		
 	// For the client overlay
 	
 	/**
@@ -24,12 +19,7 @@ $(window).on('load',function(){
 		showOverlayClient();
 	
 	});
-	
-	function showOverlayClient(){
-	
-	document.getElementById("myNavClient").style.width = "100%";
-	document.getElementById("myNavClient").style.height = "100%";
-	}
+
 
     /**
 	 * Anonymous Function that cancel the deep dive modifications in the entries
@@ -58,12 +48,6 @@ $(window).on('load',function(){
 	
 	});
 	
-	function showOverlayDemandeur(){
-	
-	document.getElementById("myNavDemandeur").style.width = "100%";
-	document.getElementById("myNavDemandeur").style.height = "100%";
-	}
-
     /**
 	 * Anonymous Function that cancel the deep dive modifications in the entries
 	 * this function is called when the user click on the x (cross) button
@@ -90,43 +74,61 @@ $(window).on('load',function(){
 		
 	});
 	
-	/**
-	 * Anonymous Function that change the Client name on the new Demandeur Overlay
-	 * this function is called when the user click on list of client
-	 * @param : nothing
-	 * @return : nothing
-	*/
-	$(document).on('click','#modification',function(){
-		
-		
+
+	$(document).on('click','.modify-btn',function(){
+
 		document.getElementById("ClientSelect").disabled = true;
 		document.getElementById("TicketType").disabled = true;
 		document.getElementById("CategorieSelect").disabled = true;
-		document.getElementById("addClient-btn").disabled = true;
 		document.getElementById("AskerSelect").disabled = true;
 		document.getElementById("addDemandeur-btn").disabled = true;
 		document.getElementById("ObjectText").disabled = true;
 		document.getElementById("DateInput").disabled = true;
 		document.getElementById("InterventionPlace").disabled = true;
 		
-		/**
-		 * Anonymous Function that change the Client name on the new Demandeur Overlay
-		 * this function is called when the user click on list of client
-		 * @param : nothing
-		 * @return : nothing
-		*/
-		$('.closeOverlay-btn').click(function(){
-			document.getElementById("ClientSelect").disabled = false;
-			document.getElementById("TicketType").disabled = false;
-			document.getElementById("CategorieSelect").disabled = false;
-			document.getElementById("addClient-btn").disabled = false;
-			document.getElementById("AskerSelect").disabled = false;
-			document.getElementById("addDemandeur-btn").disabled = false;
-			document.getElementById("ObjectText").disabled = false;
-			document.getElementById("DateInput").disabled = false;
-			document.getElementById("InterventionPlace").disabled = false;
-			
-		});
+		document.getElementById("TechnicPeopleList").disabled = true;
+		document.getElementById("PrevisibleTimeInput").disabled = true;
+		document.getElementById("EffectiveTimeInput").disabled = true;
+
+	});
+	
+	
+	
+	$(document).on('click','#ticketCreation-btn',function(){
+
+		document.getElementById("TechnicPeopleList").disabled = true;
+		document.getElementById("PrevisibleTimeInput").disabled = true;
+		document.getElementById("EffectiveTimeInput").disabled = true;
+
+	});
+	
+	
+	$('.closeOverlay-btn').click(function(){
+		document.getElementById("ClientSelect").disabled = false;
+		document.getElementById("TicketType").disabled = false;
+		document.getElementById("CategorieSelect").disabled = false;
+		document.getElementById("addClient-btn").disabled = false;
+		document.getElementById("AskerSelect").disabled = false;
+		document.getElementById("addDemandeur-btn").disabled = false;
+		document.getElementById("ObjectText").disabled = false;
+		document.getElementById("DateInput").disabled = false;
+		document.getElementById("InterventionPlace").disabled = false;
+
 	});
 	
 });
+
+
+function showOverlayDemandeur(){
+	
+	document.getElementById("myNavDemandeur").style.width = "100%";
+	document.getElementById("myNavDemandeur").style.height = "100%";
+}
+
+	
+function showOverlayClient(){
+
+	document.getElementById("myNavClient").style.width = "100%";
+	document.getElementById("myNavClient").style.height = "100%";
+}
+

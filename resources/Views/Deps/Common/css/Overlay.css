@@ -61,6 +61,22 @@ textarea{
     resize: none; 
 }
 
+input:disabled {
+	background: #ced5de;
+}
+
+select:disabled {
+	background: #ced5de;
+}
+
+textarea:disabled {
+	background: #ced5de;
+}
+
+.comments{
+	background-color:#eeeeee;
+	margin:4px;
+}
 
 /*********************/
 /* Sous tickets */
