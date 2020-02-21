@@ -6,33 +6,6 @@
 
 $(window).on('load',function(){
 		
-	// For the client overlay
-	
-	/**
-	 * Anonymous Function that opens the creation/modif interface
-	 * this function is called when the user click on the 'modifier' or 'créer un nouveau ticket' button
-	 * @param : nothing
-	 * @return : nothing
-	*/
-	$(document).on('click','#addClient-btn',function(){
-	
-		showOverlayClient();
-	
-	});
-
-
-    /**
-	 * Anonymous Function that cancel the deep dive modifications in the entries
-	 * this function is called when the user click on the x (cross) button
-	 * @param : nothing
-	 * @return : nothing
-	*/
-	$('.closeOverlayClient-btn').click(function(){
-		
-		document.getElementById("myNavClient").style.height = "0%";
-		
-	});
-	
 	
 	// For the demandeur overlay
 	
@@ -74,6 +47,23 @@ $(window).on('load',function(){
 		
 	});
 	
+	/**
+	 * Anonymous Function that add new demandeur to dmandeur select box
+	 * this function is called when the user click DemandeurValidation-btn
+	 * @param : nothing
+	 * @return : nothing
+	*/
+	$(document).on('click','#DemandeurValidation-btn',function(){
+		
+		var name = document.getElementById("NameDemandeur").value;
+		var selDemandeur = document.getElementById("AskerSelect");
+		var opt = document.createElement('option');
+		opt.appendChild(document.createTextNode(name));
+		opt.value = name;
+		selDemandeur.appendChild(opt);
+		
+	});
+	
 
 	$(document).on('click','.modify-btn',function(){
 
@@ -97,8 +87,8 @@ $(window).on('load',function(){
 	$(document).on('click','#ticketCreation-btn',function(){
 
 		document.getElementById("TechnicPeopleList").disabled = true;
-		document.getElementById("PrevisibleTimeInput").disabled = true;
 		document.getElementById("EffectiveTimeInput").disabled = true;
+		document.getElementById("PriorityCheckBox").disabled = true;
 
 	});
 	
@@ -107,7 +97,6 @@ $(window).on('load',function(){
 		document.getElementById("ClientSelect").disabled = false;
 		document.getElementById("TicketType").disabled = false;
 		document.getElementById("CategorieSelect").disabled = false;
-		document.getElementById("addClient-btn").disabled = false;
 		document.getElementById("AskerSelect").disabled = false;
 		document.getElementById("addDemandeur-btn").disabled = false;
 		document.getElementById("ObjectText").disabled = false;
@@ -125,10 +114,5 @@ function showOverlayDemandeur(){
 	document.getElementById("myNavDemandeur").style.height = "100%";
 }
 
-	
-function showOverlayClient(){
 
-	document.getElementById("myNavClient").style.width = "100%";
-	document.getElementById("myNavClient").style.height = "100%";
-}
 
