@@ -48,148 +48,150 @@
 							<div class="column" style="background-color:#cccccc;">
 							
 								<h2>Informations sur le ticket</h2>
-								
-								
+							
+							
 								<!-- NOTE : The following form is manually filled just to give an example ! -->
-								<form id="OverlayLeftForm">
-									<div class="half-form">
-										<label for="ID-ticket">ID du ticket</label>
-										<p id="ID-ticket"></p>
-									</div>
-									<div class="half-form">
-									<label for="ParentTicket">Ticket Parent</label>
-									<p id="ParentTicket"></p>
-									</div>
-									<br/>
+							
+								<div class="half-form">
+									<label for="ID-ticket">ID du ticket</label>
+									<p id="ID-ticket">
+									</p>
+								</div>
+								<div class="half-form">
+								<label for="ParentTicket">Ticket Parent</label>
+								<p id="ParentTicket">
+								</p>
+								</div>
+								<br/>
+							
+								<!-- all the possible status -->
+								<div class = "third-form">
+									<label for="StatusSelect">Statut</label><br/>
+									<select class="formElement" id="StatusSelect">
+										<option value="Brouillon">Brouillon</option>
+										<option value="RequiertAffectation">Requiert Affectation</option>
+										<option value="EnAttente">En Attente</option>
+										<option value="InterventionPlanifiee">Intervention Planifiée</option>
+										<option value="EnCours">En Cours</option>
+										<option value="Ferme">Fermé</option>
+										<option value="Annule">Annulé</option>
+									</select>    
+								</div>
 								
-									<!-- all the possible status -->
-									<div class = "third-form">
-										<label for="StatusSelect">Statut</label><br/>
-										<select class="formElement" id="StatusSelect">
-											<option value="Brouillon">Brouillon</option>
-											<option value="RequiertAffectation">Requiert Affectation</option>
-											<option value="EnAttente">En Attente</option>
-											<option value="InterventionPlanifiee">Intervention Planifiée</option>
-											<option value="EnCours">En Cours</option>
-											<option value="Ferme">Fermé</option>
-											<option value="Annule">Annulé</option>
-										</select>    
-									</div>
+								<!-- all the type of tickets : will be loaded from the database -->
+								<div class = "third-form">
+									<label for="TicketType">Type de ticket</label><br/>
+									<select class="formElement" id="TicketType">
+										<option value="Incident">Incident</option>
+										<option value="Demande">Demande</option>
+									</select>    
 									
-									<!-- all the type of tickets : will be loaded from the database -->
-									<div class = "third-form">
-										<label for="TicketType">Type de ticket</label><br/>
-										<select class="formElement" id="TicketType">
-											<option value="Incident">Incident</option>
-											<option value="Demande">Demande</option>
-										</select>    
-										
-									</div>
+								</div>
 
-									<!-- all the categories of tickets : will be loaded from the database -->
-									<div class="third-form">
-										<label for="CategorieSelect">Categorie</label><br/>
-										<select class="formElement" id="CategorieSelect">
-										</select>    
-									</div>
-									
-									<br/><br/>
-									
-									<div class="half-form" style="width:75%;">
-										<label for="ClientSelect">Client</label><br/> 
-										<select class="formElement" id="ClientSelect">
-											<option value="Brouillon">Client 1 </option>
-											<option value="RequiertAffectation">Client 2</option>
-											<option value="EnAttente">Client 3</option>
-										</select>									
-									</div>
-									<div class="half-form">
-										<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
-										<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true">
-									</div>
-									
-									<br/>
-									<div class="half-form" style="width:75%;">
+								<!-- all the categories of tickets : will be loaded from the database -->
+								<div class="third-form">
+									<label for="CategorieSelect">Categorie</label><br/>
+									<select class="formElement" id="CategorieSelect">
+									</select>    
+								</div>
+								
+								<br/><br/>
+								
+								<div class="half-form" style="width:75%;">
+									<label for="ClientSelect">Client</label><br/> 
+									<select class="formElement" id="ClientSelect">
+										<option value="Brouillon">Client 1 </option>
+										<option value="RequiertAffectation">Client 2</option>
+										<option value="EnAttente">Client 3</option>
+									</select>									
+								</div>
+								<div class="half-form">
+									<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
+									<input type="checkbox" name="PriorityCheckBox" id="PriorityCheckBox" value="true">
+								</div>
+								
+								<br/>
+								<div class="half-form" style="width:75%;">
 									<label for="AskerSelect">Demandeur</label><br/>
 									<select class="formElement" id="AskerSelect">
 									</select> 
-									<button class="ticketSplit" id="addDemandeur-btn">Ajouter</button>
-									</div>
+									<button id="addDemandeur-btn">Ajouter</button>
+								</div>
+							
+								<br/><br/>
 								
-									<br/><br/>
-									
-									<label for="ObjectText">Objet</label><br/>
-									<textarea class="formElement" rows="1" id="ObjectText"></textarea>
-									
-									<br/>
-									
-									<label for="DescriptionText">Description de la demande</label><br/>
-									<textarea class="formElement" rows="3" id="DescriptionText"></textarea>
-									
-									<br/><br/>
-									
-									<label for="CreationDate">Date de création du ticket</label><br/>
-									<p id="CreationDate">							
-									</p>
-									
-									<label for="DateInput">Date de la prise d'appel</label><br/>
-									<input class="formElement" type="date" id="DateInput"></input>
-								</form>
+								<label for="ObjectText">Objet</label><br/>
+								<textarea class="formElement" rows="1" id="ObjectText"></textarea>
+								
+								<br/>
+								
+								<label for="DescriptionText">Description de la demande</label><br/>
+								<textarea class="formElement" rows="3" id="DescriptionText"></textarea>
+								
+								<br/><br/>
+								
+								<label for="CreationDate">Date de création du ticket</label><br/>
+								<p id="CreationDate">							
+								</p>
+								
+								<label for="DateInput">Date de la prise d'appel</label><br/>
+								<input class="formElement" type="date" id="DateInput"></input>
+
 							
 							</div>
 							<div class="column" style="background-color:#bfbfbf;">
 							
 								<h2>Informations sur l'intervention</h2>
 								
-								<form id="OverlayRightForm">
-									<label for="skills">Compétences requises</label>
-									<select class="formElement" id="skills" multiple>
-									  <option value="frigoriste">Frigoriste</option>
-									  <option value="electricien">Electricien</option>
-									</select>
-									
-									<br/><br/>
-									
-									<label for="InterventionPlace">Lieu de l'intervention</label><br/>
-									<input class="formElement" type="text" id="InterventionPlace"></input>	
-									
-									</br>
-									
-									<div class= "half-form">
-										<label for="InterventionDateInput" style="margin:5px;">Date de l'intervention</label><br/>
-										<input class="formElement" type="date" id="InterventionDateInput"></input>
-									</div>
-									
-									<div class= "half-form">
-										<label for="InterventionTimeInput" style="margin:5px;">Heure de l'intervention</label><br/>
-										<input class="formElement" type="time" id="InterventionTimeInput"></input>
-									</div>
-									
-									<br/><br/>
-									
-									<label for="TechnicPeopleList">Technicien</label><br/>
-									<select class="formElement" id="TechnicPeopleList">
-									</select>
-									
-									<br/>
-									
-									<label for="PrevisibleTimeInput">Durée Prévisible de l'intervention</label><br/>
-									<input class="formElement" type="time" id="PrevisibleTimeInput"></input>	
-									
-									<br/>
-									
-									<label for="EffectiveTimeInput">Durée Effective de l'intervention</label><br/>
-									<input class="formElement" type="time" id="EffectiveTimeInput"></input>
-									
-									<br/>
-									
-									<label for="CommentsText">Commentaires sur l'intervention</label><br/>
-									<div id="CommentsZone">
-									</div>
-									<textarea class="formElement" rows="3" id="CommentsText" placeholder="Ajoutez votre commentaire ici..."></textarea>
-									
-									<br/><br/>
-								</form>
+								
+								<label for="skills">Compétences requises</label>
+								<select class="formElement" id="skills" multiple>
+								  <option value="frigoriste">Frigoriste</option>
+								  <option value="electricien">Electricien</option>
+								</select>
+								
+								<br/><br/>
+								
+								<label for="InterventionPlace">Lieu de l'intervention</label><br/>
+								<input class="formElement" type="text" id="InterventionPlace"></input>	
+								
+								</br>
+								
+								<div class= "half-form">
+									<label for="InterventionDateInput" style="margin:5px;">Date de l'intervention</label><br/>
+									<input class="formElement" type="date" id="InterventionDateInput"></input>
+								</div>
+								
+								<div class= "half-form">
+									<label for="InterventionTimeInput" style="margin:5px;">Heure de l'intervention</label><br/>
+									<input class="formElement" type="time" id="InterventionTimeInput"></input>
+								</div>
+								
+								<br/><br/>
+								
+								<label for="TechnicPeopleList">Technicien</label><br/>
+								<select class="formElement" id="TechnicPeopleList">
+								</select>
+								
+								<br/>
+								
+								<label for="PrevisibleTimeInput">Durée Prévisible de l'intervention</label><br/>
+								<input class="formElement" type="time" id="PrevisibleTimeInput"></input>	
+								
+								<br/>
+								
+								<label for="EffectiveTimeInput">Durée Effective de l'intervention</label><br/>
+								<input class="formElement" type="time" id="EffectiveTimeInput"></input>
+								
+								<br/>
+								
+								<label for="CommentsText">Commentaires sur l'intervention</label><br/>
+								<div id="CommentsZone">
+								</div>
+								<textarea class="formElement" rows="3" id="CommentsText" placeholder="Ajoutez votre commentaire ici..."></textarea>
+								
+								<br/><br/>
+
 							</div>
 						</div>
 						
@@ -203,54 +205,54 @@
 								<button class="ticketSplit" id="split-btn">Ajouter</button>
 								<br/><br/>
 								
-								<form id="OverlayBottomForm">
-									<table class="subTicketTable">
-									
-										<thead>
-											<th>ID Sous-ticket</th>
-											<th>Statut</th>
-											<th>Catégorie</th>
-											<th>Poid du sous-ticket</th>
-											<th>Compétences requises</th>
-											<th>Lieu de l'intervention</th>
-											<th>Date de l'intervention</th>
-										</thead>
-										<tbody>
-											<tr>
-												<td>19970321</td>
-												<td>
-													<select class="formElement" id="StatusSelect">
-														<option value="Brouillon">Brouillon</option>
-														<option value="RequiertAffectation">Requiert Affectation</option>
-														<option value="EnAttente">En Attente</option>
-														<option value="InterventionPlanifiee">Intervention Planifiée</option>
-														<option value="EnCours">En Cours</option>
-														<option value="Ferme" selected>Fermé</option>
-														<option value="Annule">Annulé</option>
-													</select> 
-												</td>
-												<td>
-													<select>
-														<option value="materiel" selected>Matériel</option>
-														<option value="etude">Etude</option>
-													</select>    
-												</td>
-												<td><input type="number" value="1"></input></td>
-												<td>
-													<select class="formElement" multiple>
-														<option value="frigoriste" selected>Frigoriste</option>
-														<option value="electricien">Electricien</option>
-														<option value="">aucune</option>
-													</select>
-												</td>
-												<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
-												<td><input class="formElement" type="date" value="2019-09-01"></input></td>
-											</tr>
+							
+								<table class="subTicketTable">
+								
+									<thead>
+										<th>ID Sous-ticket</th>
+										<th>Statut</th>
+										<th>Catégorie</th>
+										<th>Poid du sous-ticket</th>
+										<th>Compétences requises</th>
+										<th>Lieu de l'intervention</th>
+										<th>Date de l'intervention</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td>19970321</td>
+											<td>
+												<select class="formElement" id="StatusSelect">
+													<option value="Brouillon">Brouillon</option>
+													<option value="RequiertAffectation">Requiert Affectation</option>
+													<option value="EnAttente">En Attente</option>
+													<option value="InterventionPlanifiee">Intervention Planifiée</option>
+													<option value="EnCours">En Cours</option>
+													<option value="Ferme" selected>Fermé</option>
+													<option value="Annule">Annulé</option>
+												</select> 
+											</td>
+											<td>
+												<select>
+													<option value="materiel" selected>Matériel</option>
+													<option value="etude">Etude</option>
+												</select>    
+											</td>
+											<td><input type="number" value="1"></input></td>
+											<td>
+												<select class="formElement" multiple>
+													<option value="frigoriste" selected>Frigoriste</option>
+													<option value="electricien">Electricien</option>
+													<option value="">aucune</option>
+												</select>
+											</td>
+											<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
+											<td><input class="formElement" type="date" value="2019-09-01"></input></td>
+										</tr>
 
-										</tbody>
-										
-									</table>
-								</form>
+									</tbody>
+									
+								</table>
+								
 							</div>	
 						<!-- SI ON VEUT AJOUTER UNE LIGNE SOUS LES COL -->
 						</div>
@@ -264,7 +266,6 @@
 					<br/><br/>
 				</div>
 			</div>
-
 
 			<!-- Ticket view (with the table) -->
 			<div class="views" id="ticketView">
