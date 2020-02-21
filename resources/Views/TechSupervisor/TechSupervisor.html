@@ -47,19 +47,18 @@
 							<div class="column" style="background-color:#cccccc;">
 							
 								<h2>Informations sur le ticket</h2>
-								
-								
+							
+							
 								<!-- NOTE : The following form is manually filled just to give an example ! -->
+							
 								<div class="half-form">
 									<label for="ID-ticket">ID du ticket</label>
 									<p id="ID-ticket">
-										19970322
 									</p>
 								</div>
 								<div class="half-form">
 								<label for="ParentTicket">Ticket Parent</label>
 								<p id="ParentTicket">
-									/
 								</p>
 								</div>
 								<br/>
@@ -98,9 +97,12 @@
 								<br/><br/>
 								
 								<div class="half-form" style="width:75%;">
-									<label for="ClientSelect">Client</label><br/>
+									<label for="ClientSelect">Client</label><br/> 
 									<select class="formElement" id="ClientSelect">
-									</select>   
+										<option value="Brouillon">Client 1 </option>
+										<option value="RequiertAffectation">Client 2</option>
+										<option value="EnAttente">Client 3</option>
+									</select>									
 								</div>
 								<div class="half-form">
 									<label for="PriorityCheckBox">Client Prioritaire ?</label><br/>
@@ -108,11 +110,12 @@
 								</div>
 								
 								<br/>
-								
-								<label for="AskerSelect">Demandeur</label><br/>
-								<select class="formElement" id="AskerSelect">
-								</select> 
-								
+								<div class="half-form" style="width:75%;">
+									<label for="AskerSelect">Demandeur</label><br/>
+									<select class="formElement" id="AskerSelect">
+									</select> 
+									<button id="addDemandeur-btn">Ajouter</button>
+								</div>
 							
 								<br/><br/>
 								
@@ -121,20 +124,24 @@
 								
 								<br/>
 								
-								<label>Description de la demande</label><br/>
-								<textarea class="formElement" rows="3"></textarea>
+								<label for="DescriptionText">Description de la demande</label><br/>
+								<textarea class="formElement" rows="3" id="DescriptionText"></textarea>
 								
 								<br/><br/>
 								
-								<label for="DateInput">Date</label><br/>
+								<label for="CreationDate">Date de création du ticket</label><br/>
+								<p id="CreationDate">							
+								</p>
+								
+								<label for="DateInput">Date de la prise d'appel</label><br/>
 								<input class="formElement" type="date" id="DateInput"></input>
-							
-							
+
 							
 							</div>
 							<div class="column" style="background-color:#bfbfbf;">
 							
 								<h2>Informations sur l'intervention</h2>
+								
 								
 								<label for="skills">Compétences requises</label>
 								<select class="formElement" id="skills" multiple>
@@ -175,7 +182,15 @@
 								<label for="EffectiveTimeInput">Durée Effective de l'intervention</label><br/>
 								<input class="formElement" type="time" id="EffectiveTimeInput"></input>
 								
+								<br/>
+								
+								<label for="CommentsText">Commentaires sur l'intervention</label><br/>
+								<div id="CommentsZone">
+								</div>
+								<textarea class="formElement" rows="3" id="CommentsText" placeholder="Ajoutez votre commentaire ici..."></textarea>
+								
 								<br/><br/>
+
 							</div>
 						</div>
 						
@@ -188,6 +203,8 @@
 								<input class="ticketSplit" type="number"></input> 
 								<button class="ticketSplit" id="split-btn">Ajouter</button>
 								<br/><br/>
+								
+							
 								<table class="subTicketTable">
 								
 									<thead>
@@ -230,70 +247,7 @@
 											<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
 											<td><input class="formElement" type="date" value="2019-09-01"></input></td>
 										</tr>
-										
-										
-										<tr>
-											<td>19970320</td>
-											<td>
-												<select class="formElement" id="StatusSelect">
-													<option value="Brouillon">Brouillon</option>
-													<option value="RequiertAffectation">Requiert Affectation</option>
-													<option value="EnAttente">En Attente</option>
-													<option value="InterventionPlanifiee">Intervention Planifiée</option>
-													<option value="EnCours">En Cours</option>
-													<option value="Ferme" selected>Fermé</option>
-													<option value="Annule">Annulé</option>
-												</select> 
-											</td>
-											<td>
-												<select>
-													<option value="materiel">Matériel</option>
-													<option value="etude" selected>Etude</option>
-												</select>    
-											</td>
-											<td><input type="number" value="1"></input></td>
-											<td>
-												<select class="formElement" multiple>
-													<option value="frigoriste">Frigoriste</option>
-													<option value="electricien" selected>Electricien</option>
-													<option value="">aucune</option>
-												</select>
-											</td>
-											<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
-											<td><input class="formElement" type="date" value="2019-08-29"></input></td>
-										</tr>
-										
-										<tr>
-											<td>19970319</td>
-											<td>
-												<select class="formElement" id="StatusSelect">
-													<option value="Brouillon">Brouillon</option>
-													<option value="RequiertAffectation">Requiert Affectation</option>
-													<option value="EnAttente">En Attente</option>
-													<option value="InterventionPlanifiee">Intervention Planifiée</option>
-													<option value="EnCours" selected>En Cours</option>
-													<option value="Ferme">Fermé</option>
-													<option value="Annule">Annulé</option>
-												</select> 
-											</td>
-											<td>
-												<select>
-													<option value="materiel">Matériel</option>
-													<option selected="true" value="etude">Etude</option>
-												</select>    
-											</td>
-											<td><input type="number" value="2"></input></td>
-											<td>
-												<select class="formElement" multiple>
-													<option value="frigoriste">Frigoriste</option>
-													<option value="electricien" selected>Electricien</option>
-													<option value="">aucune</option>
-												</select>
-											</td>
-											<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
-											<td><input class="formElement" type="date" value="2019-08-29"></input></td>
-										</tr>
-										
+
 									</tbody>
 									
 								</table>
@@ -305,12 +259,12 @@
 						<br/>
 						
 						<button class="half-form closeOverlay-btn escapeModif-btn" id="cancel-btn">Annuler</button>
-						<button class="half-form escapeModif-btn" onclick="" id="validation-btn">Valider</button> <!-- TODO LA FONCTION ONCLICK -->
+						<button class="half-form escapeModif-btn" id="validation-btn">Valider</button> <!-- TODO LA FONCTION ONCLICK -->
 						
 					</div>
 					<br/><br/>
 				</div>
-			</div>			
+			</div>
 
 
 			<!-- Ticket view (with the table) -->
@@ -570,7 +524,7 @@
 		
 		
 		<!-- Librairies -->
-		<script src="../Common/js/libs/jquery.js"></script>
+		<script src="../Deps/Common/js/libs/jquery.js"></script>
 	
 		<!-- Our own scripts -->
 		<script type="text/javascript" src="../Deps/Common/js/index.js"></script>

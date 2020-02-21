@@ -4,6 +4,9 @@
 //Grab the name of the host to use it 
 var host = document.URL;
 
+//Map with all the tickets (id as key, ticket info as value)
+var ticketMap = new Map();
+
 /**
  * Loading function of the application
  * Map all the events' callback to our functions
@@ -58,7 +61,32 @@ window.onload = function () {
 	 * @return : nothing
 	 */
 	$(document).on('click', '.modify-btn', function () {
-
+		
+		let ticket = ticketMap[this.closest('tbody').id];
+		
+		console.log(ticket);
+		
+		//Load all the values
+		//TODO !
+		// document.getElementById("ID-ticket").innerHTML 			= "/";
+		// document.getElementById("ParentTicket").innerHTML 		= "/";
+		// document.getElementById("StatusSelect").value 			= "Brouillon";
+		// document.getElementById("TicketType").value 			= "Demande";
+		// document.getElementById("CategorieSelect").value 		= "";
+		// document.getElementById("ClientSelect").value	 		= "";
+		// document.getElementById("AskerSelect").value	 		= "";
+		// document.getElementById("ObjectText").innerHTML 		= "";
+		// document.getElementById("DescriptionText").value 		= "";
+		// document.getElementById("CreationDate").innerHTML		= formatedDate;
+		// document.getElementById("DateInput").value				= formatedDate;
+		// document.getElementById("skills").value 				= "";
+		// document.getElementById("InterventionPlace").value 		= "";
+		// document.getElementById("InterventionDateInput").value 	= "";
+		// document.getElementById("InterventionTimeInput").value 	= "";
+		// document.getElementById("TechnicPeopleList").value		= "";
+		// document.getElementById("PrevisibleTimeInput").value 	= "";
+		// document.getElementById("EffectiveTimeInput").value 	= "";
+		
 		showOverlay();
 
 	});
@@ -70,7 +98,33 @@ window.onload = function () {
 	 * @return : nothing
 	 */
 	$(document).on('click', '#ticketCreation-btn', function () {
-
+		
+		let today = new Date();
+		let formatedDate = today.getFullYear()+'-'+("0"+(today.getMonth()+1)).slice(-2)+'-'+today.getDate();
+		
+		//reset all values
+		document.getElementById("ID-ticket").innerHTML 			= "/";
+		document.getElementById("ParentTicket").innerHTML 		= "/";
+		document.getElementById("StatusSelect").value 			= "Brouillon";
+		document.getElementById("TicketType").value 			= "Demande";
+		document.getElementById("CategorieSelect").value 		= "";
+		document.getElementById("ClientSelect").value	 		= "";
+		document.getElementById("AskerSelect").value	 		= "";
+		document.getElementById("ObjectText").innerHTML 		= "";
+		document.getElementById("DescriptionText").value 		= "";
+		document.getElementById("CreationDate").innerHTML		= formatedDate;
+		document.getElementById("DateInput").value				= formatedDate;
+		document.getElementById("skills").value 				= "";
+		document.getElementById("InterventionPlace").value 		= "";
+		document.getElementById("InterventionDateInput").value 	= "";
+		document.getElementById("InterventionTimeInput").value 	= "";
+		document.getElementById("TechnicPeopleList").value		= "";
+		document.getElementById("PrevisibleTimeInput").value 	= "";
+		document.getElementById("EffectiveTimeInput").value 	= "";
+		
+		resetComments();
+		
+		//and then we show the overlay
 		showOverlay();
 
 	});
@@ -105,6 +159,25 @@ window.onload = function () {
 	$('.closeOverlay-btn').click(function () {
 
 		document.getElementById("myNav").style.height = "0%";
+		
+		//we enable all the previously blocked input
+		document.getElementById("StatusSelect").disabled			= false; 			
+		document.getElementById("TicketType").disabled 				= false;
+		document.getElementById("CategorieSelect").disabled 		= false;
+		document.getElementById("ClientSelect").disabled 			= false;
+		document.getElementById("AskerSelect").disabled 			= false;
+		document.getElementById("ObjectText").disabled 				= false;
+		document.getElementById("DescriptionText").disabled 		= false;
+		document.getElementById("CreationDate").disabled 			= false;
+		document.getElementById("DateInput").disabled 				= false;
+		document.getElementById("skills").disabled 					= false;
+		document.getElementById("InterventionPlace").disabled 		= false;		
+		document.getElementById("InterventionDateInput").disabled 	= false;
+		document.getElementById("InterventionTimeInput").disabled 	= false;
+		document.getElementById("TechnicPeopleList").disabled 		= false;
+		document.getElementById("PrevisibleTimeInput").disabled 	= false;
+		document.getElementById("EffectiveTimeInput").disabled 		= false;
+	
 		//document.getElementById("FormOverlay").style.height = "0%";
 
 	});
@@ -131,29 +204,61 @@ window.onload = function () {
 
 	//TODO
 	//EXAMPLE OF ROWS : Should be removed !
-	addRow("enCours", 123456789, "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
+	let table = document.getElementById('ticket-table');
+	let fragment = document.createDocumentFragment();
+	
+	//buffering row addition
+	addRow(fragment,"enCours", 123456789, "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
 
-	addRow("brouillon", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("RequiertAffectation", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("enAttente", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("InterventionPlanifiee", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("enCours", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("ferme", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
-	addRow("Annule", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "brouillon", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "RequiertAffectation", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "enAttente", 1234567812, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "InterventionPlanifiee", 1234567813, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "enCours", 1234567814, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "ferme", 1234567815, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
+	addRow(fragment, "Annule", 1234567816, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "123456789");
 
+	table.appendChild(fragment);
+
+	ticketMap[123456789] = {"status":"enCours","id":123456789,"date":"2020-01-22"};
+
+	//Work in progress : auto load the tickets 
+	/*
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:9000/getalltickets/",
 		success: function (response, status, jqXHR) {
+			
+			We create a fragment where we are going to make all the changes
+			let fragment = document.createDocumentFragment();
+			
 			for (let i = 0; i < response.length; i++) {
-				// TODO
+				
+				let ticket = response[i];
+				let id 		= ticket["id"];
+				
+				ticketMap.set(id, ticket);
+				
+				let status 	= ticket["statut"];
+				let date 	= ticket["date"];
+				let category= ticket["categorie"];
+				let client 	= ticket["nom"];
+				let parent 	= ticket["parent"];
+				let 
+				
+				
+			
+				addRow(status,id,date,category, type, client, 
+				
 				console.log(response[i]);
 			}
+			table.appendChild(fragment);
 		},
 		error: function (jqXHR, status, errorThrown) {
 			console.log("ERROR!");
 		}
 	});
+	*/
 
 }
 /**
@@ -391,6 +496,7 @@ function getStatusColored(status) {
 
 /**
  * Function that add a row in the main ticket table (in ticket view)
+ * @param hostElement, the element we append our lines to
  * @param status : string representing the status of the ticket
  * @param ID : int representing the ID of the ticket
  * @param date : string representing the date of the ticket
@@ -403,7 +509,7 @@ function getStatusColored(status) {
  * @param fatherID : int representing the ID of the father ticket we need to insert the newly created sub-ticket
  * @return : nothing...
  */
-function addRow(status, ID, date, category, type, company, progression, isMainTicket, weight, fatherID) {
+function addRow(hostElement, status, ID, date, category, type, company, progression, isMainTicket, weight, fatherID) {
 
 	//We retrieve the table
 	let table = document.getElementById('ticket-table');
@@ -447,13 +553,19 @@ function addRow(status, ID, date, category, type, company, progression, isMainTi
 			"<th unselectable=true  scope=\"col\">Taux d'avancement</th>";
 
 		//We append the new tbody to the table
-		table.appendChild(tbody);
+		hostElement.appendChild(tbody);
+		
 	}
 	//If the row is a sub-row
 	else {
 
 		//We look for the correct tbody (the correct row)
 		let tbody = table.tBodies.namedItem(fatherID);
+		
+		//if we try to bufferize the addition, we need to look for the tbody in the hostElement
+		if(tbody==null){
+			tbody = hostElement.getElementById(fatherID);
+		}
 
 		//If the father does exist
 		if (tbody != null) {
@@ -473,13 +585,41 @@ function addRow(status, ID, date, category, type, company, progression, isMainTi
 			row.insertCell(7).innerHTML = progression + "%";
 
 			//We append the new tbody to the table
-			table.appendChild(tbody);
-
+			hostElement.appendChild(tbody);
 		}
 		//Otherwhise : ERROR => invalid usage of the function
 		else {
 			console.log("INVALID SUB-TICKET CREATION ! Wrong Father ID");
 		}
-
 	}
+}
+
+/**
+ * Function to add a comment to an intervention
+ * @param text, the comment text to add
+ * @return nothing
+ */
+function addComment(text){
+	
+	//we create a paragraph
+	let paragraph = document.createElement("p");
+	paragraph.appendChild(document.createTextNode(text));
+	//we add the right class to it
+	paragraph.classList.add('comments');
+	
+	//we add it to the comment zone
+	document.getElementById("CommentsZone").appendChild(paragraph);
+	
+}
+
+/**
+ * Function to remove all the comments in the overlay
+ * @param nothing
+ * @return nothing
+ */
+function resetComments(){
+	
+	let commentZone = document.getElementById("CommentsZone");
+	commentZone.innerHTML = "";
+	commentZone.id = "CommentsZone"; //extra safety
 }

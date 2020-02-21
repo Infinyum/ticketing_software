@@ -3,20 +3,13 @@
 
 //Technician exclusive code
 
+var statutChange = 0;
+
 $(function() { /* code here */ 
 	var technicienSelect = document.getElementById("TechnicPeopleList");
 	technicienSelect.options[technicienSelect.options.length] = new Option(' ', '0', false, false);
 	technicienSelect.options[technicienSelect.options.length] = new Option('Jean michel Technicien', '1', false, false);
-	//var opt1 = new Option('Bon','test',false,false);
-	//opt.appendChild(document.createTextNode('null'));
-	//opt.text = "null";
-	//technicienSelect.add(opt);
-	/*
-	var opt2 = document.createElement('option');
-	//opt2.appendChild(document.createTextNode('Jean Michel')); 
-	opt2.text = "Jean Michel";
-	technicienSelect.appendChild(opt2);
-*/
+	// TODO : requete pour recuperer le technicien actuel
 });
 
 /*****************		View Set Ticket	from view "Intervention"		****************/
@@ -115,7 +108,6 @@ function chrono(id){
 	timerID = setTimeout("chrono(\""+id+"\")", 10)
 }
 
-
 $(document).on('click','.startButton',function(){
 	//window.alert(document.getElementById(this.id).value);
 	var strSplit = this.id.split('_')
@@ -125,17 +117,33 @@ $(document).on('click','.startButton',function(){
 	if(startButton.value == "Arret"){
 		startButton.value = "Reprendre"
 		clearTimeout(timerID)
+		document.getElementById('btnValide_'+ticketId).disabled = ""
 	}else if(startButton.value == "Demarrer"){
 		start = new Date()
 		startButton.value = "Arret"
 		chrono('chronotime_'+ticketId)
+		document.getElementById('btnValide_'+ticketId).disabled = "disabled"
+		var btnsTimer = document.getElementsByClassName('setButton')
+		Array.from(btnsTimer).forEach((btnTimer) => {
+			// Do stuff here
+			btnTimer.disabled = "disabled"
+		});
+		document.getElementById('btnStartStop_'+ticketId).disabled = ""
+		document.getElementById('btnReset_'+ticketId).disabled = ""
+		document.getElementById('StatusSelectIntervention_'+ticketId).disabled = ""
+		
 	}else if(startButton.value == "Reprendre"){
 		startButton.value = "Arret"
-				start = new Date()-diff
+		start = new Date()-diff
 		start = new Date(start)
 		chrono('chronotime_'+ticketId)
+		document.getElementById('btnValide_'+ticketId).disabled = "disabled"
+		
 	}
+	
+	
 });
+
 
 $(document).on('click','.resetButton',function(){
 	var strSplit = this.id.split('_')
@@ -144,6 +152,20 @@ $(document).on('click','.resetButton',function(){
 	document.getElementById('chronotime_'+ticketId).innerHTML = "0:00:00:00"
 	start = new Date()
 	clearTimeout(timerID)
+	if(statutChange == 0){
+		document.getElementById('btnValide_'+ticketId).disabled = "disabled"
+	}else if(statutChange == 1){
+		document.getElementById('btnValide_'+ticketId).disabled = ""
+	}
+	var btnsTimer = document.getElementsByClassName('setButton')
+	Array.from(btnsTimer).forEach((btnTimer) => {
+		// Do stuff here
+		btnTimer.disabled = ""
+		
+	});
+	document.getElementById('btnStartStop_'+ticketId).disabled = ""
+	document.getElementById('btnReset_'+ticketId).disabled = ""
+	document.getElementById('StatusSelectIntervention_'+ticketId).disabled = ""
 });
 	
 
@@ -196,30 +218,57 @@ $(document).on('click','#InterventionView-btn',function(){
 });
 	
 function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
-	
+	//alert(etatTicket)
+	//alert(etatTicket == "Intervention Planifiée")
 	let table = document.getElementById('ticket-table-intervention');
 	let tbody = document.createElement('tbody');
-
+	
 	let row = tbody.insertRow(0);
+	row.class="ligneIntervention"
+	row.id="ligneIntervention_"+idTicket
+	
 	//Fill the row
-	row.insertCell(0).innerHTML = "<td><button class=\"modify-btn-intervention\">Modifier</button></td>"; //Insert the "modifier" button
-	row.insertCell(1).innerHTML = '<span style="color:darkblue;">'+ etatTicket+'</span>';
+	row.insertCell(0).innerHTML = "<button class=\"modify-btn-intervention\">Modifier</button>"; //Insert the "modifier" button
+	/*
+	row.insertCell(1).innerHTML = '<select class="formElement" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>'
+	*/
+	
+	if(etatTicket == "Intervention Planifiée"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
+	}else if(etatTicket == "En Cours"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours" selected>En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
+	}else if(etatTicket == "Fermé"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme" selected>Fermé</option><option value="Annule">Annulé</option></select>';
+	}else if(etatTicket == "Annulé"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule" selected>Annulé</option></select>';
+	}else{
+		row.insertCell(1).innerHTML = '<span> etatTicket </span>'
+	}
+	
 	row.insertCell(2).innerHTML = idTicket;
 	row.insertCell(3).innerHTML = dateTicket;
 	row.insertCell(4).innerHTML = entreprise;
 	row.insertCell(5).innerHTML = '<span id="chronotime_'+idTicket+'">0:00:00:00</span>';
-	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /><br><input id="btnValide_'+idTicket+'" type="button" class="timerButton valideButton" name="valide" value="Valider" /></form>';
+	row.insertCell(6).innerHTML = '<form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton setButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton setButton" name="reset" value="Reset" /></form>';
+	row.insertCell(7).innerHTML = '<form name="ValideForm class="ValideForm" id="ValideForm_'+idTicket+'"><input id="btnValide_'+idTicket+'" type="button" class="valideButton setButton" name="valide" value="Enregistrer" disabled=disabled/></form>';
 	
 	//We append the new tbody to the table
 	table.appendChild(tbody);
 	// document.getElementById("ticket-table").innerHTML +='<tbody><tr class="parent"><td><button class="modify-btn" id="' + idTicket +'" >Modifier</button></td><td><span style="color:darkblue;">'+ etatTicket+'</span></td><td>'+ idTicket +'</td><td>'+ dateTicket +'</td><td>'+entreprise+'</td><td><span id="chronotime_'+idTicket+'">0:00:00:00</span></td><td><form name="chronoForm"><input id="btnStartStop_'+ idTicket +'" type="button" class="timerButton startButton" name="startstop" value="Demarrer" /><br><input id="btnReset_'+idTicket+'" type="button" class="timerButton resetButton" name="reset" value="Reset" /></form></td></tr></tbody>'
 	
-}	
+}
+
+$(document).on('change','.formElementIntervention',function(){
+	//alert("test");
+	var strSplit = this.id.split('_')
+	var ticketId = strSplit[1]
+	document.getElementById('btnValide_'+ticketId).disabled = ""
+	statutChange = 1
+});
 
 $(function() { /* code here */ 
-	addRowIntervention("En Attente", 12354664, "2019-03-19", "Jean Boucherie")
-	addRowIntervention("En Cours", 45624858, "2020-02-14", "Joe Boucherie")
-
+	addRowIntervention("En Cours", 12354664, "2019-03-19", "Jean Boucherie")
+	addRowIntervention("Intervention Planifiée", 45624858, "2020-02-14", "Joe Boucherie")
 });
 
 
@@ -227,7 +276,19 @@ $(document).on('click','.valideButton',function(){
 	var strSplit = this.id.split('_')
 	var ticketId = strSplit[1]
 	document.getElementById('btnStartStop_'+ticketId).value = "Demarrer"
+	document.getElementById('btnValide_'+ticketId).disabled = "disabled"
 	clearTimeout(timerID)
+	statutChange = 0
+	
+	var btnsTimer = document.getElementsByClassName('setButton')
+	Array.from(btnsTimer).forEach((btnTimer) => {
+		// Do stuff here
+		btnTimer.disabled = ""
+		
+	});
+	
+	// ajouter requete sauvegarder valeur
+	// envoi numero de ticket + numero technicien + statut ticket + temps intervention
 	
 });
 
