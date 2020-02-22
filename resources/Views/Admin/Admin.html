@@ -1,0 +1,82 @@
+<!doctype html>
+<!-- ADMIN PAGE -->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>TicketSoft</title>
+
+		<!-- Home made CSS -->
+		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/main.css">
+		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/Overlay.css">
+		<link rel="stylesheet" type="text/css" href="../Deps/Admin/Admin.css">
+	</head>
+	<body>
+
+		<!-- Top bar that represents the navigation menu between the views -->
+		<header class="top-bar">
+
+				<img class="MainLogo" alt="LOGO PROJET" src="../Deps/Common/img/SmallLogo.png">
+				<div id="admin">Compte administrateur</div>
+
+		</header>
+
+
+		<div class="row">
+			<div class="col-4">
+				<h1 class="title">Gestion du compte</h1>
+					Identifiant:&#160;&#160;&#160;&#160;
+					<input class="input" id="id" type="text">
+					<br/>
+					Mot de pass:
+					<input class="input" id="passwd" type="password">
+					<br/>
+					<button class="modify-btn" id="addCompte">Créer</button>
+					<button class="modify-btn" id="delCompte">Supprimer</button>
+			</div>
+
+			<div class="col-4">
+				<h1 class="title">Modification de la liste de compétences technicien</h1>
+					Compétences existantes:
+					<br/>
+					<select name="existingSkill" size="10" id="existingSkill" style="width:500"> 
+						<option value="Frigorist">Frigorist</option>  
+						<option value="Fydraulique">Fydraulique</option>  
+					</select> 
+					<br/>
+					Ajouter une compétence:
+					<input class="input" id="newSkill" type="text">
+					<br/>
+					<button class="modify-btn" id="addSkill">Ajouter</button>
+					<button class="modify-btn" id="delSkill">Supprimer</button>
+			</div>
+
+			<div class="col-4">
+				<h1 class="title">Modification de la liste de catégories de maintenance</h1>
+				Catégories existantes:
+				<br/>
+				<select name="existingSkill" size="10" id="existingCat" style="width:500"> 
+					<option value="VPN">problème de VPN</option>  
+					<option value="mdp oublié">mot de passe oublié</option>  
+				</select> 
+				<br/>
+				Ajouter une catégorie:
+				<input class="input" id="newCategory" type="text">
+				<br/>
+				<button class="modify-btn" id="addCat">Ajouter</button>
+				<button class="modify-btn" id="delCat">Supprimer</button>
+			</div>
+		</div>
+
+		<!-- Librairies -->
+		<script src="../Deps/Common/js/libs/jquery.js"></script>
+
+		<!-- Our own scripts -->
+		<script type="text/javascript" src="../Deps/Common/js/index.js"></script>
+		<script type="text/javascript" src="../Deps/Admin/Admin.js"></script>
+	</body>
+</html>
