@@ -46,7 +46,7 @@
 
 		loginBtn.disabled = true;
 		if(id.value.match(regexId) && password.value != "") {
-			var hash = CryptoJS.HmacSHA256(password.value, password.value);
+			var hash = CryptoJS.SHA256(password.value);
 			var hexDigest = hash.toString(CryptoJS.enc.Hex);
 			$.ajax({
 				type: "POST",
@@ -56,7 +56,7 @@
 				data: JSON.stringify({id: id.value, password: hexDigest}),
 				success: function(response, status, jqXHR) {
 					window.sessionStorage.setItem("TicketSoftToken", response.token);
-					
+
 					// TODO: requete ajax a la place
 					window.location.href = document.URL + response.page;
 				},
