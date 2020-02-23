@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -127,6 +128,7 @@ public class RESTAPI {
 		Map<String, Object> dataMap = null;
 
 		try {
+			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
 			int id = (Integer) dataMap.get("id");
 			
@@ -151,6 +153,7 @@ public class RESTAPI {
 		Map<String, Object> dataMap = null;
 
 		try {
+			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
 			String id = (String) dataMap.get("id");
 			String inputPwd = (String) dataMap.get("password");
@@ -164,6 +167,9 @@ public class RESTAPI {
 			return Response.status(500).build();
 		} catch (SQLException e) {
 			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println("ERROR ! ERROR IN HASH !\n" + e.getMessage());
 			return Response.status(500).build();
 		}
 	}
