@@ -34,8 +34,24 @@ public class DataManager {
 	public String getAllTickets() throws SQLException, IOException {
 		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getAllTickets.sql", true));
 
+		List<HashMap<String, Object>> rl = db.convertToList(rs);
+		
+		for (HashMap<String, Object> jsonObj : rl) {
+			String id = (String)jsonObj.get("id");
+			
+			ResultSet rs2 = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getCompetenceByTicket.sql", true), id);
+			List<HashMap<String, Object>> rl2 = db.convertToList(rs2);
+			
+			jsonObj.put("required_skills", rl2);
+			
+			rs2 = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getCommentaireByTicket.sql", true), id);
+			rl2 = db.convertToList(rs2);
+			
+			jsonObj.put("comments", rl2);
+		}
+		
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+		String outputJSON = ow.writeValueAsString(rl);
 
 		return outputJSON;
 	}
