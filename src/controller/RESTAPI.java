@@ -50,14 +50,14 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-		return new FileInputStream("./resources/Views/Home/Home.html");
+		//return new FileInputStream("./resources/Views/Home/Home.html");
+		return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
 	@Path("/operator")
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getOperator() throws IOException {
-
 		return new FileInputStream("./resources/Views/Operator/Operator.html");
 	}
 
@@ -65,7 +65,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getTechnicien() throws IOException {
-
 		return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
@@ -73,7 +72,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getResponsable() throws IOException {
-
 		return new FileInputStream("./resources/Views/TechSupervisor/TechSupervisor.html");
 	}
 	
@@ -81,7 +79,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getAdmin() throws IOException {
-
 		return new FileInputStream("./resources/Views/Admin/Admin.html");
 	}
 	
@@ -97,9 +94,7 @@ public class RESTAPI {
 	@GET
 	@Produces({ "text/html", "text/css", "application/javascript", "image/png" })
 	public InputStream getFile(@PathParam("path") String path) throws IOException {
-
 		return new FileInputStream(BASE + path);
-
 	}
 	
 	@POST

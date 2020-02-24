@@ -258,7 +258,7 @@ window.onload = function () {
 	let fragment = document.createDocumentFragment();
 	
 	//buffering row addition
-	addRow(fragment,"enCours", "ORAN-12345-1", "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
+	/*addRow(fragment,"enCours", "ORAN-12345-1", "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
 
 	addRow(fragment, "brouillon", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
 	addRow(fragment, "RequiertAffectation", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
@@ -271,13 +271,15 @@ window.onload = function () {
 	table.appendChild(fragment);
 
 	ticketMap["ORAN-12345-1"] = {"status":"enCours","id":"ORAN-12345-1","date":"2020-01-22"};
-	console.log(ticketMap["ORAN-12345-1"]);
+	console.log(ticketMap["ORAN-12345-1"]);*/
 
 	//Work in progress : auto load the tickets 
-	/*
+	
 	$.ajax({
 		type: "POST",
 		url: host + "/getalltickets",
+		dataType: 'json',
+		contentType: 'json', // Non present -> erreur serveur
 		success: function (response, status, jqXHR) {
 				
 			//First, we complete the dependencies graph
@@ -294,7 +296,7 @@ window.onload = function () {
 				if(parentID != null){
 					
 					//if the parent is already in the graphmap
-					if(graphMap.has(parentID){
+					if(graphMap.has(parentID)){
 						
 						//we just add the subTicket-ID to the list of subTicket
 						graphMap[parentID].push(id);
@@ -318,7 +320,7 @@ window.onload = function () {
 			let fragment = document.createDocumentFragment();
 			
 			//Then we add all the main rows to the UI
-			for (let ticket : graphMap.keys()) {
+			for (let ticket in graphMap.keys()) {
 				
 				let ID 		= ticket["id"];
 				let status	= ticket["status"];
@@ -337,7 +339,7 @@ window.onload = function () {
 				let totalFinishWeight = 0;
 				
 				//we iterate over all the sub ticket to get the progression
-				for(let subTicketID : graphMap[ID]){
+				for(let subTicketID in graphMap[ID]){
 					
 					let subTicket = ticketMap[subticketID];
 					
@@ -364,7 +366,7 @@ window.onload = function () {
 			}
 			
 			//Then we add all the child rows to the UI
-			for (let ticket : graphMap.values()) {
+			for (let ticket in graphMap.values()) {
 				
 				let ID 		= ticket["id"];
 				let parentID= ticket["id_parent"];
@@ -386,7 +388,7 @@ window.onload = function () {
 		error: function (jqXHR, status, errorThrown) {
 			console.log("ERROR!" + status + "\n" + errorThrown);
 		}
-	});*/
+	});
 }
 /**
  * Function that show the ticket menu overlay

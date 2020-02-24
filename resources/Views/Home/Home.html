@@ -57,7 +57,14 @@
 				success: function(response, status, jqXHR) {
 					window.sessionStorage.setItem("TicketSoftToken", response.token);
 
-					// TODO: requete ajax a la place
+					/*$.ajax({
+						type: "GET",
+						url: "http://localhost:9000/" +  response.page,
+						success: function(response, status, jqXHR) {
+							document.getElementsByTagName('html').innerHTML = response;
+						}
+					});*/
+
 					window.location.href = document.URL + response.page;
 				},
 				error: function(jqXHR, status, errorThrown) {

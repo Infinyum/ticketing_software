@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -31,13 +32,18 @@ public class DataManager {
 
 	public String getAllTickets() throws SQLException, IOException {
 		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getAllTickets.sql", true));
-
+		ResultSetMetaData rsm = rs.getMetaData();
+		
 		// Get the results of the first query as a Java object
 		List<HashMap<String, Object>> rl = db.convertToList(rs);
 
 		// For each "JSON" object from the results
 		for (HashMap<String, Object> jsonObj : rl) {
 			String ticketID = (String) jsonObj.get("id");
+
+			for (int i = 1 ; i <= rsm.getColumnCount() ; i++) {
+				jsonObj.put(rs.getMetaData().getColumnLabel(i), jsonObj.remove(rs.getMetaData().getColumnName(i)));
+			}
 
 			// Get the skills related to this ticket
 			ResultSet rs2 = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getCompetenceByTicket.sql", true),
