@@ -298,8 +298,14 @@ window.onload = function () {
 					//if the parent is already in the graphmap
 					if(graphMap.has(parentID)){
 						
-						//we just add the subTicket-ID to the list of subTicket
-						graphMap[parentID].push(id);
+						//double safety to ensure the creation of the the Array
+						if(graphMap[parentID] == null){
+							graphMap.set(parentID, new Array(id));
+						}
+						else{
+							//we just add the subTicket-ID to the list of subTicket
+							graphMap[parentID].push(id);
+						}
 						
 					}
 					else{
