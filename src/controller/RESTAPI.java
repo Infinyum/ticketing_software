@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,13 +52,13 @@ public class RESTAPI {
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
 		return new FileInputStream("./resources/Views/Home/Home.html");
+		//return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
 	@Path("/operator")
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getOperator() throws IOException {
-
 		return new FileInputStream("./resources/Views/Operator/Operator.html");
 	}
 
@@ -64,7 +66,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getTechnicien() throws IOException {
-
 		return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
@@ -72,7 +73,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getResponsable() throws IOException {
-
 		return new FileInputStream("./resources/Views/TechSupervisor/TechSupervisor.html");
 	}
 	
@@ -80,7 +80,6 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getAdmin() throws IOException {
-
 		return new FileInputStream("./resources/Views/Admin/Admin.html");
 	}
 	
@@ -96,9 +95,7 @@ public class RESTAPI {
 	@GET
 	@Produces({ "text/html", "text/css", "application/javascript", "image/png" })
 	public InputStream getFile(@PathParam("path") String path) throws IOException {
-
 		return new FileInputStream(BASE + path);
-
 	}
 	
 	@POST
@@ -127,6 +124,7 @@ public class RESTAPI {
 		Map<String, Object> dataMap = null;
 
 		try {
+			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
 			int id = (Integer) dataMap.get("id");
 			
@@ -142,29 +140,38 @@ public class RESTAPI {
 			return Response.status(500).build();
 		}	
 	}
-
+	
 	@POST
 	@Path("/connectuser")
 	@Produces("application/json")
-	public Response connectUser(String inputJSON) {
+	//@Produces(MediaType.TEXT_HTML)
+	public Response connectUser(String inputJSON) throws FileNotFoundException  {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> dataMap = null;
 
 		try {
+			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
 			String id = (String) dataMap.get("id");
 			String inputPwd = (String) dataMap.get("password");
 
 			String outputJSON = dataManager.connectUser(id, inputPwd);
-			
 			return Response.ok(outputJSON).build();
+
+			//return dataManager.connectUser(id, inputPwd);
 
 		} catch (IOException e) {
 			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
 			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
 		} catch (SQLException e) {
 			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
 			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println("ERROR ! ERROR IN HASH !\n" + e.getMessage());
+			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
 		}
 	}
 

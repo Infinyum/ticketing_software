@@ -46,21 +46,28 @@
 
 		loginBtn.disabled = true;
 		if(id.value.match(regexId) && password.value != "") {
-			var hash = CryptoJS.HmacSHA256(password.value, password.value);
+			var hash = CryptoJS.SHA256(password.value);
 			var hexDigest = hash.toString(CryptoJS.enc.Hex);
 			$.ajax({
 				type: "POST",
 				url: "http://localhost:9000/connectuser/",
 				dataType: 'json',
-				contentType: 'json', // Non present -> erreur serveur
+				contentType: 'text/html', // Non present -> erreur serveur
 				data: JSON.stringify({id: id.value, password: hexDigest}),
 				success: function(response, status, jqXHR) {
-					window.sessionStorage.setItem("TicketSoftToken", response.token);
-					
-					// TODO: requete ajax a la place
-					window.location.href = document.URL + response.page;
+					$.ajax({
+						type: "GET",
+						url: "http://localhost:9000/" +  response.page,
+						contentType: 'text/html',
+						success: function(res, status, jqXHR) {
+							document.open();
+							document.write(res);
+							document.close();
+						}
+					});
 				},
 				error: function(jqXHR, status, errorThrown) {
+					console.log(errorThrown);
 					errorMsg.hidden = false;
 					loginBtn.disabled = false;
 				}

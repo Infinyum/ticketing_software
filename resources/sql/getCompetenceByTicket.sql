@@ -1,1 +1,1 @@
-SELECT * FROM utilisateur WHERE id = ?;
+SELECT c_t.competence FROM competence_ticket c_t INNER JOIN ticket t ON t.id = c_t.id_ticket WHERE t.id = ?;

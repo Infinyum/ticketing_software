@@ -1,1 +1,1 @@
-SELECT * FROM utilisateur WHERE id = ?;
+SELECT c_t.commentaire, u.id, u.nom FROM commentaire_ticket c_t INNER JOIN ticket t ON c_t.id_ticket = t.id INNER JOIN utilisateur u ON c_t.id_auteur = u.id WHERE t.id = ?;
