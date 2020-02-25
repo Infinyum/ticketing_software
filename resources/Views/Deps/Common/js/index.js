@@ -71,7 +71,7 @@ window.onload = function () {
 		let ticket = ticketMap[this.closest('tbody').id];
 
 		console.log(ticket);
-		/*
+		
 		let ID 		= ticket["id"];
 		let parentID= ticket["id_parent"];
 		
@@ -133,10 +133,10 @@ window.onload = function () {
 		document.getElementById("EffectiveTimeInput").value 	= actualDuration;
 		
 		//adding all the comments
-		for(let c : comments){
+		for(let c in comments){
 			addComment(c);
 		}
-		*/
+		
 		showOverlay();
 
 	});
