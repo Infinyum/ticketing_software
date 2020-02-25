@@ -121,6 +121,55 @@ public class DBManager {
 		return res;
 
 	}
+	
+	/**
+	 * Method that execute a SQL query which manipulates objects (object)
+	 * 
+	 * @param s,               the sql query to execute
+	 * @param queryParameters, the list of parameters of the s SQL query
+	 * @return the result of the query : a ResultSet type. (null if the SQLQuery is
+	 *         null)
+	 * @throws SQLException if the query fails
+	 */
+	public void UpdateSQLQuery(SQLQuery s, Object... queryParameters) throws SQLException {
+
+		// if no query => no result
+		if (s == null) {
+			return;
+		}
+
+		// if the object is invalid => get out !
+		if (!isValidObject()) {
+			throw new SQLException(
+					"INVALID OBJECT! OBJECT HAS NOT BEEN PROPERLY CREATED (DATABASE CONNECTION FAILED!) AND THUS CAN NOT BE USED!");
+		}
+
+		// Prepared statement instead of statement : 1/ prevent SQL injection + 2/
+		// proper way to handle parameters
+		PreparedStatement pst = conn.prepareStatement(s.getValue());
+
+		// We insert all the parameters the user has passed us to the SQL Query (just
+		// make a difference for string to double-prevent from SQL injections)
+		int i = 1;
+		for (Object param : queryParameters) {
+
+			if (param instanceof String) {
+				pst.setString(i, (String) param);
+			} else {
+				pst.setObject(i, param);
+			}
+
+			i++;
+		}
+
+		// execute the query and close the prepared statement
+		// System.out.println(pst.toString()); //display the query : useful for
+		// debugging
+		pst.executeUpdate();
+		// BELOW: depending on the DBMS
+		//pst.close();
+
+	}
 
 	/**
 	 * Method to print the result of a SQL query

@@ -115,6 +115,32 @@ public class RESTAPI {
 			return Response.status(500).build();
 		}	
 	}
+	
+	@POST
+	@Path("/updatedureeticket")
+	public Response updateDureeTicket(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String id = (String) dataMap.get("id");
+			String statut = (String) dataMap.get("statut");
+			String duree = (String) dataMap.get("duree");
+
+			dataManager.updateDureeTicket(id, statut, duree);
+			
+			return Response.ok().build();
+
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}
+	}
 
 	@POST
 	@Path("/getmytechtickets")
@@ -126,7 +152,7 @@ public class RESTAPI {
 		try {
 			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
-			int id = (Integer) dataMap.get("id");
+			int id = (Integer)dataMap.get("id");
 			
 			String outputJSON = dataManager.getMyTechTickets(id);
 
@@ -142,9 +168,36 @@ public class RESTAPI {
 	}
 	
 	@POST
+	@Path("/adddemandeur")
+	@Produces("application/json")
+	public Response addDemandeur(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String client = (String)dataMap.get("client");
+			String email = (String)dataMap.get("email");
+			String nom = (String)dataMap.get("nom");
+			String telephone = (String)dataMap.get("telephone");
+			
+			dataManager.addDemandeur(email, client, nom, telephone);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
 	@Path("/connectuser")
 	@Produces("application/json")
-	//@Produces(MediaType.TEXT_HTML)
 	public Response connectUser(String inputJSON) throws FileNotFoundException  {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> dataMap = null;
@@ -158,20 +211,15 @@ public class RESTAPI {
 			String outputJSON = dataManager.connectUser(id, inputPwd);
 			return Response.ok(outputJSON).build();
 
-			//return dataManager.connectUser(id, inputPwd);
-
 		} catch (IOException e) {
 			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
 			return Response.status(500).build();
-			//return new FileInputStream("./resources/Views/Home/Home.html");
 		} catch (SQLException e) {
 			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
 			return Response.status(500).build();
-			//return new FileInputStream("./resources/Views/Home/Home.html");
 		} catch (NoSuchAlgorithmException e) {
 			System.err.println("ERROR ! ERROR IN HASH !\n" + e.getMessage());
 			return Response.status(500).build();
-			//return new FileInputStream("./resources/Views/Home/Home.html");
 		}
 	}
 

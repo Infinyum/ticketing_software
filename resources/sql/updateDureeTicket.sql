@@ -1,0 +1,1 @@
+UPDATE ticket SET statut = ?, duree_effective = ? WHERE id = ?;

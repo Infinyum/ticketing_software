@@ -93,28 +93,22 @@ public class DataManager {
 		case "Technicien":
 			testMap.put("token", "montoken");
 			testMap.put("page", "technicien");
-			//return new FileInputStream("./resources/Views/Technician/Technician.html");
 			break;
 		case "Opérateur d'appel":
 			testMap.put("token", "montoken");
 			testMap.put("page", "operator");
-			//return new FileInputStream("./resources/Views/Operator/Operator.html");
 			break;
 		case "Responsable technique":
 			testMap.put("token", "montoken");
 			testMap.put("page", "responsable");
-			//return new FileInputStream("./resources/Views/TechSupervisor/TechSupervisor.html");
 			break;
 		case "Administrateur":
 			testMap.put("token", "montoken");
 			testMap.put("page", "admin");
-			//return new FileInputStream("./resources/Views/Admin/Admin.html");
 			break;
 		default:
 			testMap.put("token", "erreur");
 			testMap.put("page", "erreur");
-			// TODO: change exception
-			//throw new IOException("SWITCH DEFAULT");
 			break;
 		}
 
@@ -130,5 +124,13 @@ public class DataManager {
 			hexString.append(hex);
 		}
 		return hexString.toString();
+	}
+
+	public void updateDureeTicket(String id, String statut, String duree) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\updateDureeTicket.sql", true), statut, duree, id);
+	}
+	
+	public void addDemandeur(String email, String client, String nom, String telephone) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addDemandeur.sql", true), email, client, nom, telephone);
 	}
 }
