@@ -75,6 +75,7 @@ public class DataManager {
 		// Getting the password and the account type
 		String dbPwd = (String) rl.get(0).get("mot_de_passe");
 		String type_compte = (String) rl.get(0).get("type_compte");
+		String nom_utilisateur = (String) rl.get(0).get("nom");
 
 		// TODO: change exception mechanism
 		if (!inputPwd.equals(dbPwd)) {
@@ -85,27 +86,25 @@ public class DataManager {
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		HashMap<String, Object> testMap = new HashMap<>();
 
+		testMap.put("nom", nom_utilisateur);
+		testMap.put("id", id);
+		
 		switch (type_compte) {
 		case "Technicien":
-			testMap.put("token", "montoken");
 			testMap.put("page", "technicien");
 			break;
 		case "Opérateur d'appel":
-			testMap.put("token", "montoken");
 			testMap.put("page", "operator");
 			break;
 		case "Responsable technique":
-			testMap.put("token", "montoken");
 			testMap.put("page", "responsable");
 			break;
 		case "Administrateur":
-			testMap.put("token", "montoken");
 			testMap.put("page", "admin");
 			break;
 		default:
-			testMap.put("token", "erreur");
-			testMap.put("page", "erreur");
-			break;
+			// TODO: change exception mechanism
+			throw new IOException("Switch default");
 		}
 
 		return ow.writeValueAsString(testMap);

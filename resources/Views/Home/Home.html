@@ -55,6 +55,9 @@
 				contentType: 'text/html', // Non present -> erreur serveur
 				data: JSON.stringify({id: id.value, password: hexDigest}),
 				success: function(response, status, jqXHR) {
+					sessionStorage.setItem("username", response.nom);
+					sessionStorage.setItem("userID", response.id);
+					
 					$.ajax({
 						type: "GET",
 						url: "http://localhost:9000/" +  response.page,
