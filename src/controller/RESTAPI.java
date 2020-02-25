@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,8 +51,8 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-		//return new FileInputStream("./resources/Views/Home/Home.html");
-		return new FileInputStream("./resources/Views/Technician/Technician.html");
+		return new FileInputStream("./resources/Views/Home/Home.html");
+		//return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
 	@Path("/operator")
@@ -139,11 +140,12 @@ public class RESTAPI {
 			return Response.status(500).build();
 		}	
 	}
-
+	
 	@POST
 	@Path("/connectuser")
 	@Produces("application/json")
-	public Response connectUser(String inputJSON) {
+	//@Produces(MediaType.TEXT_HTML)
+	public Response connectUser(String inputJSON) throws FileNotFoundException  {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> dataMap = null;
 
@@ -154,18 +156,22 @@ public class RESTAPI {
 			String inputPwd = (String) dataMap.get("password");
 
 			String outputJSON = dataManager.connectUser(id, inputPwd);
-			
 			return Response.ok(outputJSON).build();
+
+			//return dataManager.connectUser(id, inputPwd);
 
 		} catch (IOException e) {
 			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
 			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
 		} catch (SQLException e) {
 			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
 			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
 		} catch (NoSuchAlgorithmException e) {
 			System.err.println("ERROR ! ERROR IN HASH !\n" + e.getMessage());
 			return Response.status(500).build();
+			//return new FileInputStream("./resources/Views/Home/Home.html");
 		}
 	}
 

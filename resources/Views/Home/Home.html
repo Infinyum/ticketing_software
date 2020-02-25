@@ -52,22 +52,22 @@
 				type: "POST",
 				url: "http://localhost:9000/connectuser/",
 				dataType: 'json',
-				contentType: 'json', // Non present -> erreur serveur
+				contentType: 'text/html', // Non present -> erreur serveur
 				data: JSON.stringify({id: id.value, password: hexDigest}),
 				success: function(response, status, jqXHR) {
-					window.sessionStorage.setItem("TicketSoftToken", response.token);
-
-					/*$.ajax({
+					$.ajax({
 						type: "GET",
 						url: "http://localhost:9000/" +  response.page,
-						success: function(response, status, jqXHR) {
-							document.getElementsByTagName('html').innerHTML = response;
+						contentType: 'text/html',
+						success: function(res, status, jqXHR) {
+							document.open();
+							document.write(res);
+							document.close();
 						}
-					});*/
-
-					window.location.href = document.URL + response.page;
+					});
 				},
 				error: function(jqXHR, status, errorThrown) {
+					console.log(errorThrown);
 					errorMsg.hidden = false;
 					loginBtn.disabled = false;
 				}

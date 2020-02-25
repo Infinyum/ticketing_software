@@ -2,7 +2,9 @@ package model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -91,22 +93,29 @@ public class DataManager {
 		case "Technicien":
 			testMap.put("token", "montoken");
 			testMap.put("page", "technicien");
+			//return new FileInputStream("./resources/Views/Technician/Technician.html");
 			break;
 		case "Opérateur d'appel":
 			testMap.put("token", "montoken");
 			testMap.put("page", "operator");
+			//return new FileInputStream("./resources/Views/Operator/Operator.html");
 			break;
 		case "Responsable technique":
 			testMap.put("token", "montoken");
 			testMap.put("page", "responsable");
+			//return new FileInputStream("./resources/Views/TechSupervisor/TechSupervisor.html");
 			break;
 		case "Administrateur":
 			testMap.put("token", "montoken");
 			testMap.put("page", "admin");
+			//return new FileInputStream("./resources/Views/Admin/Admin.html");
 			break;
 		default:
 			testMap.put("token", "erreur");
 			testMap.put("page", "erreur");
+			// TODO: change exception
+			//throw new IOException("SWITCH DEFAULT");
+			break;
 		}
 
 		return ow.writeValueAsString(testMap);
