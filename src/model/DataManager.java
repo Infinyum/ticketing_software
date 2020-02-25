@@ -76,10 +76,6 @@ public class DataManager {
 		String dbPwd = (String) rl.get(0).get("mot_de_passe");
 		String type_compte = (String) rl.get(0).get("type_compte");
 
-		MessageDigest digest = MessageDigest.getInstance("SHA-256");
-		byte[] encodedHash = digest.digest(dbPwd.getBytes(StandardCharsets.UTF_8));
-		dbPwd = bytesToHex(encodedHash);
-
 		// TODO: change exception mechanism
 		if (!inputPwd.equals(dbPwd)) {
 			throw new IOException("Wrong password");
@@ -113,17 +109,6 @@ public class DataManager {
 		}
 
 		return ow.writeValueAsString(testMap);
-	}
-
-	private static String bytesToHex(byte[] hash) {
-		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < hash.length; i++) {
-			String hex = Integer.toHexString(0xff & hash[i]);
-			if (hex.length() == 1)
-				hexString.append('0');
-			hexString.append(hex);
-		}
-		return hexString.toString();
 	}
 
 	public void updateDureeTicket(String id, String statut, String duree) throws SQLException, IOException {
