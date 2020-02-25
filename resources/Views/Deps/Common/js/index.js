@@ -5,10 +5,10 @@
 var host = document.URL;
 
 //Map with all the tickets (id as key, ticket object as value)
-var ticketMap = new Map();
+var ticketMap = {};
 
 //in this map, we map a ticket-ID to the list of sub-ticket-ID
-var graphMap = new Map();
+var graphMap = {};
 
 /**
  * Loading function of the application
@@ -20,7 +20,7 @@ window.onload = function () {
 
 	//reset the filters' value
 	document.getElementsByClassName('columnFilters').value = "";
-	
+
 	//disable forever the priority checkbox
 	document.getElementById("PriorityCheckBox").disabled = true;
 
@@ -67,9 +67,9 @@ window.onload = function () {
 	 * @return : nothing
 	 */
 	$(document).on('click', '.modify-btn', function () {
-		
+
 		let ticket = ticketMap[this.closest('tbody').id];
-		
+
 		console.log(ticket);
 		/*
 		let ID 		= ticket["id"];
@@ -148,32 +148,32 @@ window.onload = function () {
 	 * @return : nothing
 	 */
 	$(document).on('click', '#ticketCreation-btn', function () {
-		
+
 		let today = new Date();
-		let formatedDate = today.getFullYear()+'-'+("0"+(today.getMonth()+1)).slice(-2)+'-'+today.getDate();
-		
+		let formatedDate = today.getFullYear() + '-' + ("0" + (today.getMonth() + 1)).slice(-2) + '-' + today.getDate();
+
 		//reset all values
-		document.getElementById("ID-ticket").innerHTML 			= "/";
-		document.getElementById("ParentTicket").innerHTML 		= "/";
-		document.getElementById("StatusSelect").value 			= "Brouillon";
-		document.getElementById("TicketType").value 			= "Demande";
-		document.getElementById("CategorieSelect").value 		= "";
-		document.getElementById("ClientSelect").value	 		= "";
-		document.getElementById("AskerSelect").value	 		= "";
-		document.getElementById("ObjectText").innerHTML 		= "";
-		document.getElementById("DescriptionText").value 		= "";
-		document.getElementById("CreationDate").innerHTML		= formatedDate;
-		document.getElementById("DateInput").value				= formatedDate;
-		document.getElementById("skills").value 				= "";
-		document.getElementById("InterventionPlace").value 		= "";
-		document.getElementById("InterventionDateInput").value 	= "";
-		document.getElementById("InterventionTimeInput").value 	= "";
-		document.getElementById("TechnicPeopleList").value		= "";
-		document.getElementById("PrevisibleTimeInput").value 	= "";
-		document.getElementById("EffectiveTimeInput").value 	= "";
-		
+		document.getElementById("ID-ticket").innerHTML = "/";
+		document.getElementById("ParentTicket").innerHTML = "/";
+		document.getElementById("StatusSelect").value = "Brouillon";
+		document.getElementById("TicketType").value = "Demande";
+		document.getElementById("CategorieSelect").value = "";
+		document.getElementById("ClientSelect").value = "";
+		document.getElementById("AskerSelect").value = "";
+		document.getElementById("ObjectText").innerHTML = "";
+		document.getElementById("DescriptionText").value = "";
+		document.getElementById("CreationDate").innerHTML = formatedDate;
+		document.getElementById("DateInput").value = formatedDate;
+		document.getElementById("skills").value = "";
+		document.getElementById("InterventionPlace").value = "";
+		document.getElementById("InterventionDateInput").value = "";
+		document.getElementById("InterventionTimeInput").value = "";
+		document.getElementById("TechnicPeopleList").value = "";
+		document.getElementById("PrevisibleTimeInput").value = "";
+		document.getElementById("EffectiveTimeInput").value = "";
+
 		resetComments();
-		
+
 		//and then we show the overlay
 		showOverlay();
 
@@ -209,25 +209,25 @@ window.onload = function () {
 	$('.closeOverlay-btn').click(function () {
 
 		document.getElementById("myNav").style.height = "0%";
-		
+
 		//we enable all the previously blocked input
-		document.getElementById("StatusSelect").disabled			= false; 			
-		document.getElementById("TicketType").disabled 				= false;
-		document.getElementById("CategorieSelect").disabled 		= false;
-		document.getElementById("ClientSelect").disabled 			= false;
-		document.getElementById("AskerSelect").disabled 			= false;
-		document.getElementById("ObjectText").disabled 				= false;
-		document.getElementById("DescriptionText").disabled 		= false;
-		document.getElementById("CreationDate").disabled 			= false;
-		document.getElementById("DateInput").disabled 				= false;
-		document.getElementById("skills").disabled 					= false;
-		document.getElementById("InterventionPlace").disabled 		= false;		
-		document.getElementById("InterventionDateInput").disabled 	= false;
-		document.getElementById("InterventionTimeInput").disabled 	= false;
-		document.getElementById("TechnicPeopleList").disabled 		= false;
-		document.getElementById("PrevisibleTimeInput").disabled 	= false;
-		document.getElementById("EffectiveTimeInput").disabled 		= false;
-	
+		document.getElementById("StatusSelect").disabled = false;
+		document.getElementById("TicketType").disabled = false;
+		document.getElementById("CategorieSelect").disabled = false;
+		document.getElementById("ClientSelect").disabled = false;
+		document.getElementById("AskerSelect").disabled = false;
+		document.getElementById("ObjectText").disabled = false;
+		document.getElementById("DescriptionText").disabled = false;
+		document.getElementById("CreationDate").disabled = false;
+		document.getElementById("DateInput").disabled = false;
+		document.getElementById("skills").disabled = false;
+		document.getElementById("InterventionPlace").disabled = false;
+		document.getElementById("InterventionDateInput").disabled = false;
+		document.getElementById("InterventionTimeInput").disabled = false;
+		document.getElementById("TechnicPeopleList").disabled = false;
+		document.getElementById("PrevisibleTimeInput").disabled = false;
+		document.getElementById("EffectiveTimeInput").disabled = false;
+
 		//document.getElementById("FormOverlay").style.height = "0%";
 
 	});
@@ -254,9 +254,9 @@ window.onload = function () {
 
 	//TODO
 	//EXAMPLE OF ROWS : Should be removed !
-	let table = document.getElementById('ticket-table');
-	let fragment = document.createDocumentFragment();
-	
+	//let table = document.getElementById('ticket-table');
+	//let fragment = document.createDocumentFragment();
+
 	//buffering row addition
 	/*addRow(fragment,"enCours", "ORAN-12345-1", "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
 
@@ -274,127 +274,131 @@ window.onload = function () {
 	console.log(ticketMap["ORAN-12345-1"]);*/
 
 	//Work in progress : auto load the tickets 
-	
+
 	$.ajax({
 		type: "POST",
 		url: host + "/getalltickets",
 		dataType: 'json',
 		contentType: 'json', // Non present -> erreur serveur
 		success: function (response, status, jqXHR) {
-				
 			//First, we complete the dependencies graph
 			for (let i = 0; i < response.length; i++) {
-				
-				let ticket 	= response[i];
-				let id 		= ticket["id"];
-				let parentID= ticket["id_parent"];
-				
+
+				let ticket = response[i];
+				let id = ticket["id"];
+				let parentID = ticket["id_parent"];
+
 				//we add our ticket to the main map
-				ticketMap.set(id, ticket);
+				//ticketMap.set(id, ticket);
+				ticketMap[id] = ticket;
 
 				//if the ticket has a parent
-				if(parentID != null){
-					
+				if (parentID != null) {
+
 					//if the parent is already in the graphmap
-					if(graphMap.has(parentID)){
-						
+					if ( /*graphMap.has(parentID)*/ parentID in graphMap) {
+
 						//double safety to ensure the creation of the the Array
-						if(graphMap[parentID] == null){
-							graphMap.set(parentID, new Array(id));
-						}
-						else{
+						if (graphMap[parentID] == null) {
+							//graphMap.set(parentID, new Array(id));
+							graphMap[parentID] = new Array(id);
+						} else {
 							//we just add the subTicket-ID to the list of subTicket
 							graphMap[parentID].push(id);
 						}
-						
-					}
-					else{
+
+					} else {
 						//Otherwise, we create the new entry in the map and our subticket as an element of an array
-						graphMap.set(parentID, new Array(id));
+						//graphMap.set(parentID, new Array(id));
+						graphMap[parentID] = new Array(id);
 					}
-					
-				}
-				else{
-					
+
+				} else {
+
 					//We consider our ticket to be on the top of the dependencies graph 
-					graphMap.set(id, new Array());
-					
+					//graphMap.set(id, new Array());
+					graphMap[id] = new Array();
 				}
 			}
-			
+
 			//We create a fragment where we are going to make all the changes
-			let fragment = document.createDocumentFragment();
-			
+			let fragmentStorage = document.createDocumentFragment();
+
 			//Then we add all the main rows to the UI
-			for (let ticket in graphMap.keys()) {
-				
-				let ID 		= ticket["id"];
-				let status	= ticket["status"];
-				
+			for (let k in graphMap) {
+				let ticket = ticketMap[k];
+				let ID = ticket["id"];
+				let status = ticket["status"];
+
 				//TODO : format callDate correctly
-				let callDate= ticket["call_date"];
-				let category= ticket["category"];
-				let type	= ticket["type"];
+				let callDate = ticket["call_date"];
+				let category = ticket["category"];
+				let type = ticket["type"];
 				let companyName = ticket["client"];
-				let weight	= ticket["weight"];
+				let weight = ticket["weight"];
 
 				//progression variables
-				let totalSubTicketNumber = graphMap[ID].length;
+				let totalSubTicketNumber = graphMap[ID].size;
 				let totalWeight = 0;
 				let totalFinish = 0;
 				let totalFinishWeight = 0;
-				
+
 				//we iterate over all the sub ticket to get the progression
-				for(let subTicketID in graphMap[ID]){
-					
-					let subTicket = ticketMap[subticketID];
-					
+				for (let j in graphMap[ID]) {
+					let subTicketID = graphMap[ID][j];
+					let subTicket = ticketMap[subTicketID];
+
 					// subTicket properties
-					let s = subTicket[status].toLowerCase();
+					let s = subTicket["status"].toLowerCase();
 					let w = subTicket["weight"];
-					
+
 					totalWeight = totalWeight + w;
-					
+
 					//if one subticket is close => it counts in the progression
-					if( s == "fermé" || s == "ferme"){
-						
+					if (s == "fermé" || s == "ferme") {
+
 						totalFinish = totalFinish + 1;
 						totalFinishWeight = totalFinishWeight + w;
-						
+
 					}
 				}
-				
+
 				//compute the progression
 				let progression = 100.0 * (totalFinish * totalFinishWeight) / (totalSubTicketNumber * totalWeight);
-				
+
 				//we add the parent to the UI
-				addRow(fragment, status, ID, callDate, category, type, companyName, progression, true, weight, "");
+				addRow(fragmentStorage, status, ID, callDate, category, type, companyName, progression, true, weight, "");
 			}
-			
+
 			//Then we add all the child rows to the UI
-			for (let ticket in graphMap.values()) {
-				
-				let ID 		= ticket["id"];
-				let parentID= ticket["id_parent"];
-				let status	= ticket["status"];
+			for ( /*let ticket of graphMap.values()*/ let i in graphMap) {
+				let ticket = graphMap[i];
+				let ID = ticket["id"];
+				let parentID = ticket["id_parent"];
+				let status = ticket["status"];
 				//TODO : format callDate correctly
-				let callDate= ticket["call_date"];
-				let category= ticket["category"];
-				let type	= ticket["type"];
+				let callDate = ticket["call_date"];
+				let category = ticket["category"];
+				let type = ticket["type"];
 				let companyName = ticket["client"];
-				let weight	= ticket["weight"];
-				
+				let weight = ticket["weight"];
+
+				console.log("IN SECOND FOR");
+
 				//we add the child to the UI
-				addRow(fragment, status, ID, callDate, category, type, companyName, 0, false, weight, parentID);
-				
+				addRow(fragmentStorage, status, ID, callDate, category, type, companyName, 0, false, weight, parentID);
+
 			}
-			
-			table.appendChild(fragment);
+
+			let ticketTable = document.getElementById('ticket-table');
+			ticketTable.appendChild(fragmentStorage);
+
 		},
 		error: function (jqXHR, status, errorThrown) {
 			console.log("ERROR!" + status + "\n" + errorThrown);
 		}
 	});
+
 }
 /**
  * Function that show the ticket menu overlay
@@ -689,16 +693,16 @@ function addRow(hostElement, status, ID, date, category, type, company, progress
 
 		//We append the new tbody to the table
 		hostElement.appendChild(tbody);
-		
+
 	}
 	//If the row is a sub-row
 	else {
 
 		//We look for the correct tbody (the correct row)
 		let tbody = table.tBodies.namedItem(fatherID);
-		
+
 		//if we try to bufferize the addition, we need to look for the tbody in the hostElement
-		if(tbody==null){
+		if (tbody == null) {
 			tbody = hostElement.getElementById(fatherID);
 		}
 
@@ -734,17 +738,17 @@ function addRow(hostElement, status, ID, date, category, type, company, progress
  * @param text, the comment text to add
  * @return nothing
  */
-function addComment(text){
-	
+function addComment(text) {
+
 	//we create a paragraph
 	let paragraph = document.createElement("p");
 	paragraph.appendChild(document.createTextNode(text));
 	//we add the right class to it
 	paragraph.classList.add('comments');
-	
+
 	//we add it to the comment zone
 	document.getElementById("CommentsZone").appendChild(paragraph);
-	
+
 }
 
 /**
@@ -752,8 +756,8 @@ function addComment(text){
  * @param nothing
  * @return nothing
  */
-function resetComments(){
-	
+function resetComments() {
+
 	let commentZone = document.getElementById("CommentsZone");
 	commentZone.innerHTML = "";
 	commentZone.id = "CommentsZone"; //extra safety

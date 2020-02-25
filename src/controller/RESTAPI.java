@@ -51,8 +51,8 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-		return new FileInputStream("./resources/Views/Home/Home.html");
-		//return new FileInputStream("./resources/Views/Technician/Technician.html");
+		//return new FileInputStream("./resources/Views/Home/Home.html");
+		return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
 	@Path("/operator")
