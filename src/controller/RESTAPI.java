@@ -196,6 +196,132 @@ public class RESTAPI {
 	}
 	
 	@POST
+	@Path("/addcategorie")
+	@Produces("application/json")
+	public Response addCategorie(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String categorie = (String)dataMap.get("categorie");
+			
+			dataManager.addCategorie(categorie);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/removecategorie")
+	@Produces("application/json")
+	public Response removeCategorie(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String categorie = (String)dataMap.get("categorie");
+			
+			dataManager.removeCategorie(categorie);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/addcompetence")
+	@Produces("application/json")
+	public Response addCompetence(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String competence = (String)dataMap.get("competence");
+			
+			dataManager.addCompetence(competence);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/removecompetence")
+	@Produces("application/json")
+	public Response removeCompetence(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String competence = (String)dataMap.get("competence");
+			
+			dataManager.removeCompetence(competence);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/changepriority")
+	@Produces("application/json")
+	public Response changePriority(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String client = (String)dataMap.get("client");
+			String prioritaire = (String)dataMap.get("prioritaire");
+			
+			dataManager.changePriority(client, prioritaire);
+
+			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
 	@Path("/connectuser")
 	@Produces("application/json")
 	public Response connectUser(String inputJSON) throws FileNotFoundException  {
