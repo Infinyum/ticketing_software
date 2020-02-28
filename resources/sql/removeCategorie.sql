@@ -1,0 +1,1 @@
+UPDATE categorie SET existe = FALSE WHERE nom = ?;

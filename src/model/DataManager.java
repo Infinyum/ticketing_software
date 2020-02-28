@@ -117,4 +117,24 @@ public class DataManager {
 	public void addDemandeur(String email, String client, String nom, String telephone) throws SQLException, IOException {
 		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addDemandeur.sql", true), email, client, nom, telephone);
 	}
+	
+	public void addCategorie(String categorie) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addCategorie.sql", true), categorie);
+	}
+	
+	public void removeCategorie(String categorie) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\removeCategorie.sql", true), categorie);
+	}
+	
+	public void addCompetence(String competence) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addCompetence.sql", true), competence);
+	}
+	
+	public void removeCompetence(String categorie) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\removeCompetence.sql", true), categorie);
+	}
+	
+	public void changePriority(String client, String prioritaire) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\changePriorityClient.sql", true), prioritaire, client);
+	}
 }

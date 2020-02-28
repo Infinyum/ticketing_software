@@ -611,22 +611,22 @@ function getStatusColored(status) {
 		case "brouillon":
 			return "<td><span style=\"color:olive;\">Brouillon</span></td>";
 			//-----------------------------//
-		case "requiertaffectation":
-			return "<td><span style=\"color:purple;\">Requiert Affectation</span></td>";
+		case "requiert affectation":
+			return "<td><span style=\"color:purple;\">Requiert affectation</span></td>";
 			//-----------------------------//		
-		case "enattente":
-			return "<td><span style=\"color:darkorange;\">En Attente</span></td>";
+		case "en attente":
+			return "<td><span style=\"color:darkorange;\">En attente</span></td>";
 			//-----------------------------//		
-		case "interventionplanifiee":
-			return "<td><span style=\"color:teal;\">Intervention Planifiée</span></td>";
+		case "intervention planifiée":
+			return "<td><span style=\"color:teal;\">Intervention planifiée</span></td>";
 			//-----------------------------//		
-		case "encours":
-			return "<td><span style=\"color:darkblue;\">En Cours</span></td>";
+		case "en cours":
+			return "<td><span style=\"color:darkblue;\">En cours</span></td>";
 			//-----------------------------//		
-		case "ferme":
+		case "fermé":
 			return "<td><span style=\"color:darkgreen;\">Fermé</span></td>";
 			//-----------------------------//		
-		case "annule":
+		case "annulé":
 			return "<td><span style=\"color:maroon;\">Annulé</span></td>";
 	}
 
