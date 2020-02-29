@@ -130,7 +130,7 @@ $(document).on('click','.startButton',function(){
 		});
 		document.getElementById('btnStartStop_'+ticketId).disabled = ""
 		document.getElementById('btnReset_'+ticketId).disabled = ""
-		document.getElementById('StatusSelectIntervention_'+ticketId).disabled = ""
+		document.getElementById('StatutSelectIntervention_'+ticketId).disabled = ""
 		
 	}else if(startButton.value == "Reprendre"){
 		startButton.value = "Arret"
@@ -165,7 +165,7 @@ $(document).on('click','.resetButton',function(){
 	});
 	document.getElementById('btnStartStop_'+ticketId).disabled = ""
 	document.getElementById('btnReset_'+ticketId).disabled = ""
-	document.getElementById('StatusSelectIntervention_'+ticketId).disabled = ""
+	document.getElementById('StatutSelectIntervention_'+ticketId).disabled = ""
 });
 	
 
@@ -216,7 +216,7 @@ $(document).on('click','#InterventionView-btn',function(){
 	//addRowIntervention("En Attente", 12354664, "15 mars 2019", "Jean Boucherie")
 	//addRowIntervention("En Cours", 45624858, "20 frevrier 2020", "Joe Boucherie")
 });
-	
+
 function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 	//alert(etatTicket)
 	//alert(etatTicket == "Intervention Planifiée")
@@ -230,17 +230,17 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 	//Fill the row
 	row.insertCell(0).innerHTML = "<button class=\"modify-btn-intervention\">Modifier</button>"; //Insert the "modifier" button
 	/*
-	row.insertCell(1).innerHTML = '<select class="formElement" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>'
+	row.insertCell(1).innerHTML = '<select class="formElement" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>'
 	*/
 	
 	if(etatTicket == "Intervention Planifiée"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
 	}else if(etatTicket == "En Cours"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours" selected>En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours" selected>En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
 	}else if(etatTicket == "Fermé"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme" selected>Fermé</option><option value="Annule">Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme" selected>Fermé</option><option value="Annule">Annulé</option></select>';
 	}else if(etatTicket == "Annulé"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatusSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule" selected>Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule" selected>Annulé</option></select>';
 	}else{
 		row.insertCell(1).innerHTML = '<span> etatTicket </span>'
 	}
@@ -279,7 +279,6 @@ $(document).on('click','.valideButton',function(){
 	document.getElementById('btnValide_'+ticketId).disabled = "disabled"
 	clearTimeout(timerID)
 	statutChange = 0
-	
 	var btnsTimer = document.getElementsByClassName('setButton')
 	Array.from(btnsTimer).forEach((btnTimer) => {
 		// Do stuff here
@@ -289,6 +288,37 @@ $(document).on('click','.valideButton',function(){
 	
 	// ajouter requete sauvegarder valeur
 	// envoi numero de ticket + numero technicien + statut ticket + temps intervention
+
+	var statutSelect;
+	
+	statutSelect = document.getElementById('StatutSelectIntervention_'+ticketId).options[document.getElementById('StatutSelectIntervention_'+ticketId).selectedIndex].text;
+	
+	/*
+	listeStatut = document.getElementById('StatutSelectIntervention_'+ticketId);
+	valSelectStatut = listeStatut.options[listeStatut.selectedIndex].value;
+	*/
+	//var id = sessionStorage.getItem('userID');
+	
+	$.ajax({
+	type: "POST",
+	url: host+"/updatedureeticket",
+	dataType:"json",	//what we send
+	contentType:"application/json", //what we expect as the response
+	data:JSON.stringify({id:ticketId,statut:statutSelect,duree:"02:15:25"}),
+	beforeSend:function(xhr){
+		// disabling all search buttons to not overload the server while the query is happening
+		//$('.search-get').attr("disabled", true);
+		alert("En cours d'enregistrement");
+	},
+	complete:function(xhr){
+		// enabling back all search buttons after query finished (whether in failure or success)
+		//$('.search-get').attr("disabled", false);
+		alert("Enregistrement termine");
+	},success:function(element){
+		//Process success of the request...			
+		alert("Temps intervention et statut du ticket bien enregistre");
+	}
+	});
 	
 });
 
