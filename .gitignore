@@ -57,3 +57,7 @@ local.properties
 /target/
 
 .DS_Store/
+.DS_Store
+*.class
+.classpath
+.project
