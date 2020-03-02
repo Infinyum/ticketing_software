@@ -232,6 +232,33 @@ window.onload = function () {
 
 	});
 
+	$('#validation-btn').click(() => {
+		let ticketsToUpdate = []
+		let parentTicketID = document.getElementById("ID-ticket").innerText;
+		ticketsToUpdate.push(ticketMap[parentTicketID]);
+
+		for (let i in graphMap[parentTicketID]) {
+			let subticketID = graphMap[parentTicketID][i];
+			ticketsToUpdate.push(ticketMap[subticketID]);
+		}
+
+		console.log(ticketsToUpdate);
+		
+		$.ajax({
+			type: "POST",
+			url: host + "/updatetickets",
+			data: JSON.stringify(ticketsToUpdate),
+			contentType: 'json', // Non present -> erreur serveur
+			success: function (response, status, jqXHR) {
+				console.log("Tickets updated!!");
+			},
+			error: function (jqXHR, status, errorThrown) {
+				console.log("ERROR!" + status + "\n" + errorThrown);
+			}
+		});
+		
+	});
+
 	// Accordion management : We add the Click event listener to it 
 	// For the moment, the only accordion is the sub-ticket creation menu
 	{

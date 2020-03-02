@@ -11,6 +11,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -136,5 +137,10 @@ public class DataManager {
 	
 	public void changePriority(String client, String prioritaire) throws SQLException, IOException {
 		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\changePriorityClient.sql", true), prioritaire, client);
+	}
+	
+	public void updateTicket(Map<String, Object> ticket) throws SQLException, IOException {
+		System.out.println(ticket.get("address"));
+		//db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\updateDureeTicket.sql", true), statut, duree, id);
 	}
 }
