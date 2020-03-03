@@ -1,1 +1,1 @@
-UPDATE client SET prioritaire = ? WHERE nom = ?;
+UPDATE client SET prioritaire = ? WHERE entreprise = ?;

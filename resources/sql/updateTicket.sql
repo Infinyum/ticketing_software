@@ -1,2 +1,8 @@
-UPDATE TABLE t
-SET t.titre object, t.poids weight, s.adresse address, s.latitude latitude, s.longitude longitude, d.email asker_email, d.nom asker_name, c_t.categorie category, t.statut status, t.creation_date creation_date, t.call_date call_date, t.description description, t.type type, c.nom client, c.prioritaire priority, duree_previsible planned_duration, duree_effective actual_duration, sub.intervention_datetime intervention_datetime, sub.technician_name technician_name, sub.technician_id technician_id FROM ticket t INNER JOIN site s ON t.id_site = s.id INNER JOIN demandeur d ON d.email = t.demandeur INNER JOIN client c ON d.id_client = c.id INNER JOIN categorie_ticket c_t ON c_t.id_ticket = t.id LEFT JOIN (SELECT u.nom as technician_name, u.id as technician_id, t_t.date_intervention as intervention_datetime, t_t.id_ticket as id_ticket FROM ticket_technicien t_t INNER JOIN utilisateur u ON u.id = t_t.id_technicien) sub ON sub.id_ticket = t.id WHERE t.id = ?;
+UPDATE ticket t
+INNER JOIN site s ON s.id = t.id_site
+INNER JOIN demandeur d ON d.email = t.demandeur
+INNER JOIN client c ON d.id_client = c.id
+INNER JOIN categorie_ticket c_t ON c_t.id_ticket = t.id
+LEFT JOIN (SELECT u.nom as technician_name, u.id as technician_id, t_t.date_intervention as intervention_datetime, t_t.id_ticket as id_ticket FROM ticket_technicien t_t INNER JOIN utilisateur u ON u.id = t_t.id_technicien) sub ON sub.id_ticket = t.id
+SET t.titre = ?, t.poids = ?, s.adresse = ?, s.latitude = ?, s.longitude = ?, d.email = ?, d.nom = ?, c_t.categorie = ?, t.statut = ?, t.call_date = ?, t.description = ?, t.type = ?, c.nom = ?, t.duree_previsible = ?, t.duree_effective = ?, sub.intervention_datetime = ?, sub.technician_name = ?
+WHERE t.id = ?;

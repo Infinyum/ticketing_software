@@ -1,1 +1,1 @@
-INSERT INTO demandeur VALUES (?, (SELECT id FROM client WHERE nom = ?), ?, ?);
+INSERT INTO demandeur VALUES (?, (SELECT id FROM client WHERE entreprise = ?), ?, ?);
