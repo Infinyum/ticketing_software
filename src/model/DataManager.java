@@ -140,7 +140,12 @@ public class DataManager {
 	}
 	
 	public void updateTicket(Map<String, Object> ticket) throws SQLException, IOException {
-		System.out.println(ticket.get("address"));
-		//db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\updateDureeTicket.sql", true), statut, duree, id);
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\updateTicket.sql", true),
+				ticket.get("object"), ticket.get("weight"), ticket.get("address"),
+				ticket.get("latitude"), ticket.get("longitude"), ticket.get("asker_email"),
+				ticket.get("asker_name"), ticket.get("category"), ticket.get("status"),
+				ticket.get("call_date"), ticket.get("description"), ticket.get("type"),
+				ticket.get("client"), ticket.get("planned_duration"), ticket.get("actual_duration"),
+				ticket.get("intervention_datetime"), ticket.get("technician_id"), ticket.get("id"));
 	}
 }
