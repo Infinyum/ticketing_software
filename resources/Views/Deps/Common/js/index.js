@@ -357,22 +357,23 @@ window.onload = function () {
 				let ID = ticket["id"];
 				let status = ticket["status"];
 
-				//TODO : format callDate correctly
-				let callDate = ticket["call_date"];
+				let callDate = new Date(ticket["call_date"]);
 				let category = ticket["category"];
 				let type = ticket["type"];
 				let companyName = ticket["client"];
 				let weight = ticket["weight"];
 
 				//progression variables
-				let totalSubTicketNumber = graphMap[ID].size;
+				let totalSubTicketNumber = graphMap[ID].length;
 				let totalWeight = 0;
 				let totalFinish = 0;
 				let totalFinishWeight = 0;
 
+				let childrenList = graphMap[ID];
+
 				//we iterate over all the sub ticket to get the progression
-				for (let j in graphMap[ID]) {
-					let subTicketID = graphMap[ID][j];
+				for (let j in childrenList) {
+					let subTicketID = childrenList[j];
 					let subTicket = ticketMap[subTicketID];
 
 					// subTicket properties
@@ -381,40 +382,50 @@ window.onload = function () {
 
 					totalWeight = totalWeight + w;
 
-					//if one subticket is close => it counts in the progression
-					if (s == "fermé" || s == "ferme") {
+					totalFinishWeight = totalFinishWeight + w*computeProgressionFromStatus(status);
 
-						totalFinish = totalFinish + 1;
-						totalFinishWeight = totalFinishWeight + w;
-
-					}
+					
 				}
 
 				//compute the progression
-				let progression = 100.0 * (totalFinish * totalFinishWeight) / (totalSubTicketNumber * totalWeight);
+				let progression = computeProgressionFromStatus(status);
+								
+				if(childrenList.length != 0){
+					//compute the progression
+					progression = (totalFinishWeight) / (totalSubTicketNumber * totalWeight);
+				}
 
 				//we add the parent to the UI
-				addRow(fragmentStorage, status, ID, callDate, category, type, companyName, progression, true, weight, "");
+				addRow(fragmentStorage, status, ID, callDate.toISOString().substring(0,10), category, type, companyName, progression, true, weight, "");
 			}
 
-			//Then we add all the child rows to the UI
-			for ( /*let ticket of graphMap.values()*/ let i in graphMap) {
-				let ticket = graphMap[i];
-				let ID = ticket["id"];
-				let parentID = ticket["id_parent"];
-				let status = ticket["status"];
-				//TODO : format callDate correctly
-				let callDate = ticket["call_date"];
-				let category = ticket["category"];
-				let type = ticket["type"];
-				let companyName = ticket["client"];
-				let weight = ticket["weight"];
+			//for every father ticket...
+			for( let i in graphMap){	
 
-				console.log("IN SECOND FOR");
+				let children = graphMap[i];
+				
+				//Then we add all the child rows to the UI
+				for (let j in children) {
+					
+					let ticket = ticketMap[children[j]];
+					
+					let ID = ticket["id"];
+					let parentID = ticket["id_parent"];
+					let status = ticket["status"];
+					//TODO : format callDate correctly
+					let callDate = new Date(ticket["call_date"]);
+					let category = ticket["category"];
+					let type = ticket["type"];
+					let companyName = ticket["client"];
+					let weight = ticket["weight"];
 
-				//we add the child to the UI
-				addRow(fragmentStorage, status, ID, callDate, category, type, companyName, 0, false, weight, parentID);
+					
 
+					//we add the child to the UI
+					addRow(fragmentStorage, status, ID, callDate.toISOString().substring(0,10), category, type, companyName, computeProgressionFromStatus(status), false, weight, parentID);
+
+				}
+				
 			}
 
 			let ticketTable = document.getElementById('ticket-table');
@@ -759,6 +770,42 @@ function addRow(hostElement, status, ID, date, category, type, company, progress
 		}
 	}
 }
+
+
+/**
+ * Method that gives a percentage of the completion of a ticket given a status
+ * @param status : status of the given ticket
+ * @return the completion percentage
+ */
+function computeProgressionFromStatus(status){
+
+	//status is the value of the form (user selection)
+	let s = status.toLowerCase();
+	switch (s) {
+		case "brouillon":
+			return 0;
+			//-----------------------------//
+		case "requiert affectation":
+			return 100/5;
+			//-----------------------------//		
+		case "en attente":
+			return 200/5;
+			//-----------------------------//		
+		case "intervention planifiée":
+			return 300/5;
+			//-----------------------------//		
+		case "en cours":
+			return 400/5;
+			//-----------------------------//		
+		case "fermé":
+			return 100;
+			//-----------------------------//		
+		case "annulé":
+			return 0;
+	}
+	
+}
+
 
 /**
  * Function to add a comment to an intervention
