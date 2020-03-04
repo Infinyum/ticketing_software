@@ -1,0 +1,1 @@
+INSERT INTO commentaire_ticket (id_ticket, id_auteur, commentaire) VALUES(?, ?, ?);

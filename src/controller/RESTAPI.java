@@ -143,6 +143,28 @@ public class RESTAPI {
 	}
 	
 	@POST
+	@Path("/createticket")
+	public Response createTickets(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			// Si plusieurs categories d'un coup : faire une boucle et appeler plusieurs SQL queries
+			dataManager.createTicket(dataMap);
+			
+			return Response.ok().build();
+
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}
+	}
+	
+	@POST
 	@Path("/updatedureeticket")
 	public Response updateDureeTicket(String inputJSON) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -337,6 +359,48 @@ public class RESTAPI {
 			dataManager.changePriority(client, prioritaire);
 
 			return Response.ok().build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/getcompetences")
+	@Produces("application/json")
+	public Response getCompetences() {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			String outputJSON = dataManager.getCompetences();
+
+			return Response.ok(outputJSON).build();
+			
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}	
+	}
+	
+	@POST
+	@Path("/getcategories")
+	@Produces("application/json")
+	public Response getCategories() {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+
+		try {
+			String outputJSON = dataManager.getCategories();
+
+			return Response.ok(outputJSON).build();
 			
 		} catch (IOException e) {
 			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());

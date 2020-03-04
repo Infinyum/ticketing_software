@@ -149,6 +149,39 @@ public class DataManager {
 				ticket.get("client"), ticket.get("planned_duration"), ticket.get("actual_duration"),
 				ticket.get("intervention_datetime"), ticket.get("technician_id"), ticket.get("id"));
 	}
+	
+	public void createTicket(Map<String, Object> ticket) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createTicket.sql", true),
+				ticket.get("id"), ticket.get("id_parent"), ticket.get("created_by"),
+				ticket.get("asker_email"), ticket.get("address"), ticket.get("weight"),
+				ticket.get("creation_date"), ticket.get("status"), ticket.get("type"),
+				ticket.get("object"), ticket.get("description"), ticket.get("call_date"), 
+				ticket.get("planned_duration"), ticket.get("actual_duration"));
+		
+		// Insert an intervention if not null!
+		if (ticket.get("intervention_datetime") != null && ticket.get("technician_id") != null) {
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createIntervention.sql", true),
+					ticket.get("technician_id"), ticket.get("id"), ticket.get("intervention_datetime"));
+		}
+		
+		// Insert all the categories
+		ArrayList<String> categories = (ArrayList<String>) ticket.get("categories");
+		for (String cat : categories) {
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createCategorieTicket.sql", true), ticket.get("id"), cat);
+		}
+		
+		// Insert all the competences
+		ArrayList<String> competences = (ArrayList<String>) ticket.get("skills");
+		for (String com : competences) {
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createCompetenceTicket.sql", true), ticket.get("id"), com);
+		}
+		
+		// Insert all the comments
+		ArrayList<Map<String, Object>> comments = (ArrayList<Map<String, Object>>) ticket.get("comments");
+		for (Map<String, Object> c : comments) {
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createCommentaireTicket.sql", true), ticket.get("id"), c.get("id"), c.get("commentaire"));
+		}
+	}
 
 	public String getTechniciansFromCompetences(ArrayList<String> competences, String respId) throws SQLException, IOException {
 		// Launch request and get result
@@ -170,6 +203,30 @@ public class DataManager {
 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+
+		return outputJSON;
+	}
+	
+	public String getCompetences() throws SQLException, IOException {
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getExistingCompetences.sql", true));
+		
+		// Get the results of the first query as a Java object
+		List<HashMap<String, Object>> rl = db.convertToList(rs);
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = ow.writeValueAsString(rl);
+
+		return outputJSON;
+	}
+	
+	public String getCategories() throws SQLException, IOException {
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getExistingCategories.sql", true));
+		
+		// Get the results of the first query as a Java object
+		List<HashMap<String, Object>> rl = db.convertToList(rs);
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = ow.writeValueAsString(rl);
 
 		return outputJSON;
 	}

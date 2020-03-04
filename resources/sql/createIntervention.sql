@@ -1,0 +1,1 @@
+INSERT INTO ticket_technicien VALUES(?, ?, ?);

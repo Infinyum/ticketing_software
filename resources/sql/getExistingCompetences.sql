@@ -1,0 +1,1 @@
+SELECT nom FROM competence WHERE existe = 1;

@@ -1,0 +1,1 @@
+INSERT INTO competence_ticket VALUES(?, ?);

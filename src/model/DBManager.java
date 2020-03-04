@@ -122,7 +122,6 @@ public class DBManager {
 		// execute the query and close the prepared statement
 		// System.out.println(pst.toString()); //display the query : useful for
 		// debugging
-		System.out.println(pst.toString());
 		ResultSet res = pst.executeQuery();
 		// BELOW: depending on the DBMS
 		//pst.close();
