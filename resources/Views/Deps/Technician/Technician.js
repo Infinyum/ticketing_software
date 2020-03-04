@@ -6,10 +6,15 @@
 var statutChange = 0;
 
 $(function() { /* code here */ 
+	var technicienConnect = document.getElementById("user");
+	technicienConnect.innerHTML = sessionStorage.getItem("username")+ '<br/>(Technicien)<br><a href="">Deconnexion</a>';
+
 	var technicienSelect = document.getElementById("TechnicPeopleList");
 	technicienSelect.options[technicienSelect.options.length] = new Option(' ', '0', false, false);
-	technicienSelect.options[technicienSelect.options.length] = new Option('Jean michel Technicien', '1', false, false);
+	technicienSelect.options[technicienSelect.options.length] = new Option(sessionStorage.getItem("username"), sessionStorage.getItem("userID"),false,false);
 	// TODO : requete pour recuperer le technicien actuel
+	//sessionStorage.setItem("username", response.nom);
+	//sessionStorage.setItem("userID", response.id);
 });
 
 /*****************		View Set Ticket	from view "Intervention"		****************/
@@ -30,7 +35,6 @@ $(document).on('click','.modify-btn-intervention',function(){
 	document.getElementById("InterventionPlace").disabled = true;	
 	document.getElementById("InterventionDateInput").disabled = true;
 	document.getElementById("TechnicPeopleList").disabled = true;
-	
 
 });
 
@@ -51,6 +55,7 @@ $(document).on('click','.modify-btn',function(){
 	document.getElementById("skills").disabled = true;	
 	document.getElementById("InterventionPlace").disabled = true;	
 	document.getElementById("InterventionDateInput").disabled = true;
+	document.getElementById("InterventionTimeInput").disabled = true;
 	document.getElementById("TechnicPeopleList").disabled = false;
 
 });
@@ -72,6 +77,7 @@ $(document).on('click','#ticketCreation-btn',function(){
 	document.getElementById("skills").disabled = false;	
 	document.getElementById("InterventionPlace").disabled = false;	
 	document.getElementById("InterventionDateInput").disabled = false;
+	document.getElementById("InterventionTimeInput").disabled = false;
 	document.getElementById("TechnicPeopleList").disabled = false;
 	
 });
@@ -189,7 +195,7 @@ $(document).on('click','#InterventionView-btn',function(){
 		url: host+"/getmytechtickets",
 		dataType:"JSON",	//what we send
 		contentType:"application/json", //what we expect as the response
-		data:JSON.stringify({id:21505228}),
+		data:JSON.stringify({id:sessionStorage.getItem("userID")}),
 		beforeSend:function(xhr){
 			// disabling all search buttons to not overload the server while the query is happening
 			$('.search-get').attr("disabled", true);
@@ -201,11 +207,11 @@ $(document).on('click','#InterventionView-btn',function(){
 		success:function(element){
 			//Process success of the request...			
 			for(int i=0; i < sizeof(ticket); i++){
-				addRow(EtatTicket, IdTicket, DateTicket, EntrepriseClient)
+				addRow(EtatTicket, IdTicket, DateTicket, EntrepriseClient);
 			}
 		}
-	});*/
-	
+	});
+	*/
 	
 	// TODO: request to get tickets form database
 	/*
