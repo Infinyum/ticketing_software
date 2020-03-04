@@ -1,0 +1,1 @@
+INSERT INTO utilisateur VALUES(?, ?, ?, ?, ?, ?);

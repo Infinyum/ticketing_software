@@ -182,6 +182,34 @@ public class DataManager {
 			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createCommentaireTicket.sql", true), ticket.get("id"), c.get("id"), c.get("commentaire"));
 		}
 	}
+	
+	public void createCompte(Map<String, Object> input) throws SQLException, IOException {
+		db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\createCompte.sql", true),
+				input.get("id"), input.get("name"), input.get("email"),
+				input.get("phone"), input.get("pwd"), input.get("acctype"));
+		String accType = (String) input.get("acctype");
+		
+		switch (accType) {
+		case "Technicien":
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addTechnicien.sql", true),
+					input.get("id"), input.get("id_resp"));
+			break;
+		case "Opérateur d'appel":
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addOperateur.sql", true),
+					input.get("id"));
+			break;
+		case "Responsable technique":
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addRespTech.sql", true),
+					input.get("id"));
+			break;
+		case "Administrateur":
+			db.UpdateSQLQuery(new SQLQuery(".\\resources\\sql\\addAdmin.sql", true),
+					input.get("id"));
+			break;
+		default:
+			throw new IOException("IN THE DEFAULT!");
+		}
+	}
 
 	public String getTechniciansFromCompetences(ArrayList<String> competences, String respId) throws SQLException, IOException {
 		// Launch request and get result

@@ -31,6 +31,15 @@
 	<div class="row">
 		<div class="col-4">
 			<h1 class="title">Gestion du compte</h1>
+			Nom :
+			<input class="input" id="nom" type="text">
+			<br />
+			E-mail :
+			<input class="input" id="email" type="email">
+			<br />
+			Téléphone :
+			<input class="input" id="phone" type="text">
+			<br />
 			Identifiant :
 			<input class="input" id="id" type="text">
 			<br />
@@ -39,11 +48,12 @@
 			<br />
 			Type de compte :
 			<select id="acctype"> 
-				<option value="resp">Responsable des techniciens</option> 
+				<option value="resp">Responsable technique</option> 
 				<option value="tech">Technicien</option>  
 				<option value="op">Opérateur d'appel</option> 
 				<option value="adm">Administrateur</option>
 			</select>
+			<div id="resptech"></div>
 			<br /> 
 			<button class="modify-btn" id="addCompte">Créer</button>
 			<button class="modify-btn" id="delCompte">Supprimer</button>

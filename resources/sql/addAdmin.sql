@@ -1,0 +1,1 @@
+INSERT INTO administrateur VALUES(?);

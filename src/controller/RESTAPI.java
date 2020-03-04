@@ -52,8 +52,8 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-		return new FileInputStream("./resources/Views/Home/Home.html");
-		//return new FileInputStream("./resources/Views/Admin/Admin.html");
+		//return new FileInputStream("./resources/Views/Home/Home.html");
+		return new FileInputStream("./resources/Views/Admin/Admin.html");
 		//return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
@@ -150,8 +150,28 @@ public class RESTAPI {
 		try {
 			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
-			// Si plusieurs categories d'un coup : faire une boucle et appeler plusieurs SQL queries
 			dataManager.createTicket(dataMap);
+			
+			return Response.ok().build();
+
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}
+	}
+	
+	@POST
+	@Path("/createcompte")
+	public Response createCompte(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			dataManager.createCompte(dataMap);
 			
 			return Response.ok().build();
 

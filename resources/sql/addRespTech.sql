@@ -1,0 +1,1 @@
+INSERT INTO responsable_technique VALUES(?);
