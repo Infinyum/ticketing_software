@@ -105,8 +105,14 @@ public class DBManager {
 			if (param instanceof String) {
 				pst.setString(i, (String) param);
 			} else if (param instanceof ArrayList) { // Ne fait rien pour ignorer les arraylist le temps de débug
-				/*Array sqlArray = conn.createArrayOf("varchar", ((ArrayList)param).toArray()); // NE MARCHE PAS AU SECOURS
-				pst.setArray(i, sqlArray);*/
+				Array sqlArray = null;
+				try {
+					//sqlArray = conn.createArrayOf("VARCHAR", ((ArrayList) param).toArray()); // NE MARCHE PAS AU SECOURS
+					sqlArray = conn.createArrayOf("VARCHAR", new Object[]{"frigoriste", "electricien"});
+				} catch (SQLException e) {
+					System.out.println("ERROR THERE\n" + e.getMessage());
+				}
+				pst.setArray(i, sqlArray);
 			} else {
 				pst.setObject(i, param);
 			}
@@ -116,6 +122,7 @@ public class DBManager {
 		// execute the query and close the prepared statement
 		// System.out.println(pst.toString()); //display the query : useful for
 		// debugging
+		System.out.println(pst.toString());
 		ResultSet res = pst.executeQuery();
 		// BELOW: depending on the DBMS
 		//pst.close();

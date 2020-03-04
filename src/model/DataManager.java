@@ -152,6 +152,20 @@ public class DataManager {
 
 	public String getTechniciansFromCompetences(ArrayList<String> competences, String respId) throws SQLException, IOException {
 		// Launch request and get result
+		
+		
+		/*String competencesStr = "(";
+		for (int i = 0 ; i < competences.size() ; i++) {
+			// Last item : no comma
+			if (i == competences.size() - 1) {
+				competencesStr += "'" + competences.get(i) + "'";
+			}
+			else {
+				competencesStr += "'" + competences.get(i) + "',";
+			}
+		}
+		competencesStr += ")";*/
+		
 		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getTechniciansFromCompetences.sql", true), respId, competences);
 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
