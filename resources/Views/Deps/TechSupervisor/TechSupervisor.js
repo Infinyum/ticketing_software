@@ -11,7 +11,7 @@ window.addEventListener('load', function() {
             // Set techncian select
             $.ajax({
                 type: "POST",
-                url: host + "/getTechniciansFromCompetences",
+                url: host + "/gettechniciansfromcompetences",
                 dataType: 'json',
                 contentType: 'json', // Non present -> erreur serveur
                 data: JSON.stringify({idResp:'21407234', competences:["frigoriste", "electricien"]}),

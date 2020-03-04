@@ -2,7 +2,6 @@ package model;
 import java.io.*;
 import java.util.Scanner;
 
-
 /**
  * SQLQuery class: class representing a SQL query for our DBManager class
  * @author Thomas von Ascheberg

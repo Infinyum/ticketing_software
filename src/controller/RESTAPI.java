@@ -457,7 +457,7 @@ public class RESTAPI {
 	}
 
 	@POST
-	@Path("/getTechniciansFromCompetences")
+	@Path("/gettechniciansfromcompetences")
 	@Produces("application/json")
 	public Response getTechniciansFromCompetences(String inputJSON) {
 		ObjectMapper mapper = new ObjectMapper();
@@ -465,6 +465,7 @@ public class RESTAPI {
 		try {
 			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
+			
 			String idResp = (String) dataMap.get("idResp");
 			ArrayList<String> competences = (ArrayList<String>) dataMap.get("competences");
 

@@ -95,7 +95,7 @@ public class DataManager {
 		case "Technicien":
 			testMap.put("page", "technicien");
 			break;
-		case "Opï¿½rateur d'appel":
+		case "Opérateur d'appel":
 			testMap.put("page", "operator");
 			break;
 		case "Responsable technique":
