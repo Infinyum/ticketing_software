@@ -66,16 +66,16 @@
 							
 								<!-- all the possible status -->
 								<div class = "third-form">
-									<label for="StatusSelect">Statut</label><br/>
-									<select class="formElement" id="StatusSelect">
+									<label for="StatusSelectModifTick">Statut</label><br/>
+									<select class="formElement" id="StatusSelectModifTick">
 										<option value="Brouillon">Brouillon</option>
-										<option value="RequiertAffectation">Requiert Affectation</option>
-										<option value="EnAttente">En Attente</option>
-										<option value="InterventionPlanifiee">Intervention Planifiée</option>
-										<option value="EnCours">En Cours</option>
-										<option value="Ferme">Fermé</option>
-										<option value="Annule">Annulé</option>
-									</select>    
+										<option value="Requiert affectation">Requiert Affectation</option>
+										<option value="En attente">En Attente</option>
+										<option value="Intervention planifiée">Intervention Planifiée</option>
+										<option value="En cours">En Cours</option>
+										<option value="Fermé">Fermé</option>
+										<option value="Annulé">Annulé</option>
+									</select>     
 								</div>
 								
 								<!-- all the type of tickets : will be loaded from the database -->
@@ -101,8 +101,8 @@
 									<label for="ClientSelect">Client</label><br/> 
 									<select class="formElement" id="ClientSelect">
 										<option value="Brouillon">Client 1 </option>
-										<option value="RequiertAffectation">Client 2</option>
-										<option value="EnAttente">Client 3</option>
+										<option value="Requiert affectation">Client 2</option>
+										<option value="En attente">Client 3</option>
 									</select>									
 								</div>
 								<div class="half-form">
@@ -291,14 +291,15 @@
 						</th>
 					
 						<th unselectable  scope="col">
-							<select class="formElement" id="StatusSelect">
+							<select class="formElement columnFilters selectFilter" id="StatusSelectListHead" iscolumn=1>
+								<option value="" selected="selected"></option>
 								<option value="Brouillon">Brouillon</option>
-								<option value="RequiertAffectation">Requiert Affectation</option>
-								<option value="EnAttente">En Attente</option>
-								<option value="InterventionPlanifiee">Intervention Planifiée</option>
-								<option value="EnCours">En Cours</option>
-								<option value="Ferme">Fermé</option>
-								<option value="Annule">Annulé</option>
+								<option value="Requiert affectation">Requiert Affectation</option>
+								<option value="En attente">En Attente</option>
+								<option value="Intervention planifiée">Intervention Planifiée</option>
+								<option value="En cours">En Cours</option>
+								<option value="Fermé">Fermé</option>
+								<option value="Annulé">Annulé</option>
 							</select> 
 
 							<div class="sortableHeader">Etat du Ticket</div>
@@ -316,14 +317,16 @@
 						<!-- <th unselectable  scope="col"><br/><br/>Description</th> -->
 						
 						<th unselectable  scope="col">
-							<select id="categoryFilter" class="columnFilters">
-								
+							<select id="categoryFilter" class="columnFilters selectFilter" iscolumn=4>
+								<option value=""></option>
+								<option value="Etude">Etude</option>
+								<option value="Matériel">Materiel</option>
 							</select>
 							<br/><div class="sortableHeader">Catégorie de la demande</div>
 						</th>
 						
 						<th unselectable  scope="col">
-							<select id="typeFilter" class="columnFilters">
+							<select id="typeFilter" class="columnFilters selectFilter" iscolumn=5>
 								<option value="" selected>Filtrer un type</option>
 								<option value="Demande">Demande</option>
 								<option value="Incident">Incident</option>

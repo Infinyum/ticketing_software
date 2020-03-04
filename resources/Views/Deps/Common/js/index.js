@@ -59,6 +59,14 @@ window.onload = function () {
 		filterTable(this.parentNode.cellIndex, this.value);
 	});
 
+	/**
+	 * Anonymous function that react to change in select before ticket list
+	 * It then calls the function that filter the table
+	 */
+	$('.selectFilter').on('input', function() {
+		filterTable(this.getAttribute('iscolumn'), this.value);
+	});
+
 
 	/**
 	 * Anonymous Function that opens the creation/modif interface
@@ -70,7 +78,7 @@ window.onload = function () {
 
 		let ticket = ticketMap[this.closest('tbody').id];
 
-		console.log(ticket);
+		//console.log(ticket);
 		
 		let ID 		= ticket["id"];
 		let parentID= ticket["id_parent"];
@@ -114,7 +122,7 @@ window.onload = function () {
 		//TODO !
 		document.getElementById("ID-ticket").innerHTML 			= ID;
 		document.getElementById("ParentTicket").innerHTML 		= parentID;
-		document.getElementById("StatusSelect").value 			= status;
+		document.getElementById("StatusSelectModifTick").value 	= status;
 		document.getElementById("TicketType").value 			= type;
 		document.getElementById("CategorieSelect").value 		= category;
 		document.getElementById("ClientSelect").value	 		= companyName;
@@ -211,7 +219,7 @@ window.onload = function () {
 		document.getElementById("myNav").style.height = "0%";
 
 		//we enable all the previously blocked input
-		document.getElementById("StatusSelect").disabled = false;
+		document.getElementById("StatusSelectModifTick").disabled = false;
 		document.getElementById("TicketType").disabled = false;
 		document.getElementById("CategorieSelect").disabled = false;
 		document.getElementById("ClientSelect").disabled = false;

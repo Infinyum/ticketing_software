@@ -1,0 +1,1 @@
+SELECT DISTINCT u.id id, u.nom name FROM utilisateur u INNER JOIN technicien t ON u.id = t.id_utilisateur INNER JOIN responsable_technique rt ON t.responsable = rt.id_utilisateur INNER JOIN competence_technicien ct ON t.id_utilisateur = ct.id_technicien WHERE rt.id_utilisateur = ? AND ct.competence IN ('frigoriste','electricien');

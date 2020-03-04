@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +95,7 @@ public class DataManager {
 		case "Technicien":
 			testMap.put("page", "technicien");
 			break;
-		case "Opérateur d'appel":
+		case "Opï¿½rateur d'appel":
 			testMap.put("page", "operator");
 			break;
 		case "Responsable technique":
@@ -147,5 +148,15 @@ public class DataManager {
 				ticket.get("call_date"), ticket.get("description"), ticket.get("type"),
 				ticket.get("client"), ticket.get("planned_duration"), ticket.get("actual_duration"),
 				ticket.get("intervention_datetime"), ticket.get("technician_id"), ticket.get("id"));
+	}
+
+	public String getTechniciansFromCompetences(ArrayList<String> competences, String respId) throws SQLException, IOException {
+		// Launch request and get result
+		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getTechniciansFromCompetences.sql", true), respId, competences);
+
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		String outputJSON = ow.writeValueAsString(db.convertToList(rs));
+
+		return outputJSON;
 	}
 }

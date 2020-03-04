@@ -104,10 +104,12 @@ public class DBManager {
 
 			if (param instanceof String) {
 				pst.setString(i, (String) param);
+			} else if (param instanceof ArrayList) { // Ne fait rien pour ignorer les arraylist le temps de débug
+				/*Array sqlArray = conn.createArrayOf("varchar", ((ArrayList)param).toArray()); // NE MARCHE PAS AU SECOURS
+				pst.setArray(i, sqlArray);*/
 			} else {
 				pst.setObject(i, param);
 			}
-
 			i++;
 		}
 

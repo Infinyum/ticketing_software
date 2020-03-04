@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -453,6 +454,31 @@ public class RESTAPI {
 
 		// we return the result of the SQL query
 		return SQLres;
+	}
+
+	@POST
+	@Path("/getTechniciansFromCompetences")
+	@Produces("application/json")
+	public Response getTechniciansFromCompetences(String inputJSON) {
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> dataMap = null;
+		try {
+			// Get the query parameters
+			dataMap = mapper.readValue(inputJSON, Map.class);
+			String idResp = (String) dataMap.get("idResp");
+			ArrayList<String> competences = (ArrayList<String>) dataMap.get("competences");
+
+			String outputJSON = dataManager.getTechniciansFromCompetences(competences, idResp);
+
+			return Response.ok(outputJSON).build();
+
+		} catch (IOException e) {
+			System.err.println("ERROR ! UNABLE TO READ THE JSON PROVIDED !\n" + e.getMessage());
+			return Response.status(500).build();
+		} catch (SQLException e) {
+			System.err.println("ERROR ! ERROR IN THE SQL QUERY !\n" + e.getMessage());
+			return Response.status(500).build();
+		}
 	}
 
 }
