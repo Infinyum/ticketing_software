@@ -10,6 +10,12 @@ var ticketMap = {};
 //in this map, we map a ticket-ID to the list of sub-ticket-ID
 var graphMap = {};
 
+//List of category available
+var categoryList = new Array();
+
+//List of skills
+var skillList = new Array();
+
 /**
  * Loading function of the application
  * Map all the events' callback to our functions
@@ -23,6 +29,64 @@ window.onload = function () {
 
 	//disable forever the priority checkbox
 	document.getElementById("PriorityCheckBox").disabled = true;
+
+
+	/**
+	 * Load all the categories & skills
+	 */
+	{
+		$.ajax({
+			type: "POST",
+			url: host+"/getcategories",
+			dataType:"JSON",    //what we send
+			contentType:"application/json", //what we expect as the response
+			data:JSON.stringify(),
+			success:function(res){
+				
+				if(res == null){
+					return;
+				}
+				
+				res.forEach(function(element){			
+					categoryList.push(element);
+				});
+				
+				
+			}
+		});
+		
+		$.ajax({
+			type: "POST",
+			url: host+"/getcompetences",
+			dataType:"JSON",    //what we send
+			contentType:"application/json", //what we expect as the response
+			data:JSON.stringify(),
+			success:function(res){
+				
+				if(res == null){
+					return;
+				}
+				
+				res.forEach(function(element){			
+					skillList.push(element);
+				});
+				
+				//Add all the skills to the modify list
+				skillList.forEach(function(element){			
+					  let x = document.getElementById("skills");
+					  var option = document.createElement("option");
+					  option.text = element["nom"];
+					  option.value = element["nom"];
+					  x.add(option);
+				});
+				
+			}
+		});
+		
+		
+		
+		
+	}
 
 	/**
 	 * Anonymous function that manage the opening of the main ticket row
@@ -77,8 +141,6 @@ window.onload = function () {
 	$(document).on('click', '.modify-btn', function () {
 
 		let ticket = ticketMap[this.closest('tbody').id];
-
-		//console.log(ticket);
 		
 		let ID 		= ticket["id"];
 		let parentID= ticket["id_parent"];
@@ -100,14 +162,18 @@ window.onload = function () {
 		let object 		= ticket["object"];
 		let description = ticket["description"];
 		
-		let creationDate= ticket["creation_date"];
-		let callDate	= ticket["call_date"];
+		let creationDate= new Date(ticket["creation_date"]).toISOString().substring(0,10);
+		let callDate	= new Date(ticket["call_date"]).toISOString().substring(0,10);
 		
 		let requiredSkills = ticket["required_skills"];
 		
+		console.log(requiredSkills);
+		
 		let interventionAddress	= ticket["address"];
 		let interventionDateTime= ticket["intervention_datetime"];
-		
+		let interventionDate = new Date(interventionDateTime).toISOString().substring(0,10);
+		let interventionTime = new Date(interventionDateTime).toISOString().substring(11,16);
+
 		let technicianName	= ticket["technician_name"];
 		let technicianID	= ticket["technician_id"];
 		
@@ -132,18 +198,37 @@ window.onload = function () {
 		document.getElementById("DescriptionText").value 		= description;
 		document.getElementById("CreationDate").innerHTML		= creationDate;
 		document.getElementById("DateInput").value				= callDate;
+		
 		//document.getElementById("skills").value 				= //TODO ;
 		document.getElementById("InterventionPlace").value 		= interventionAddress;
-		//document.getElementById("InterventionDateInput").value 	= ""; //TODO
-		//document.getElementById("InterventionTimeInput").value 	= ""; //TODO
+		document.getElementById("InterventionDateInput").value 	= interventionDate;
+		document.getElementById("InterventionTimeInput").value 	= interventionTime;
 		document.getElementById("TechnicPeopleList").value		= technicianName + "(" + technicianID + ")";
 		document.getElementById("PrevisibleTimeInput").value 	= plannedDuration;
 		document.getElementById("EffectiveTimeInput").value 	= actualDuration;
+		
+		//reset the comment list
+		resetComments();
 		
 		//adding all the comments
 		for(let c in comments){
 			addComment(c);
 		}
+		
+		//We retrieve the table
+		let subTicketTable = document.getElementById('subTicketTable');
+		//We create a fragment where we are going to make all the changes
+		let fragment = document.createDocumentFragment();
+		
+		let children = graphMap[ID];
+
+		children.forEach(function(element){
+			
+			addSubTicketRow(subTicketTable,element);
+			
+		});
+		
+		subTicketTable.appendChild(fragment);
 		
 		showOverlay();
 
@@ -286,29 +371,6 @@ window.onload = function () {
 		}
 
 	}
-
-	//TODO
-	//EXAMPLE OF ROWS : Should be removed !
-	//let table = document.getElementById('ticket-table');
-	//let fragment = document.createDocumentFragment();
-
-	//buffering row addition
-	/*addRow(fragment,"enCours", "ORAN-12345-1", "2020-01-22", "Etude", "Demande", "Polytech", 100, true, 0, "");
-
-	addRow(fragment, "brouillon", 1234567810, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "RequiertAffectation", 1234567811, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "enAttente", 1234567812, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "InterventionPlanifiee", 1234567813, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "enCours", 1234567814, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "ferme", 1234567815, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-	addRow(fragment, "Annule", 1234567816, "2020-01-21", "Etude", "Demande", "Polytech", 100, false, 2, "ORAN-12345-1");
-
-	table.appendChild(fragment);
-
-	ticketMap["ORAN-12345-1"] = {"status":"enCours","id":"ORAN-12345-1","date":"2020-01-22"};
-	console.log(ticketMap["ORAN-12345-1"]);*/
-
-	//Work in progress : auto load the tickets 
 
 	$.ajax({
 		type: "POST",
@@ -778,6 +840,151 @@ function addRow(hostElement, status, ID, date, category, type, company, progress
 		}
 	}
 }
+
+function addSubTicketRow(hostElement, subTicket) {
+	
+	//We retrieve the table
+	let subTicketTable = document.getElementById('subTicketTable');
+	
+	//We create a new row on top
+	let row = subTicketTable.insertRow(-1);
+	
+	let ticket = ticketMap[subTicket];
+	
+	
+	// let ID 		= ticket["id"];
+		// let parentID= ticket["id_parent"];
+		
+		// if(parentID==null){
+			// parentID = "/";
+		// }
+		
+		// let status	= ticket["status"];
+		// let type	= ticket["type"];
+		// let category= ticket["category"];
+		
+		// let companyName = ticket["client"];
+		// let CompanyPrio = ticket["priority"];
+		
+		// let askerName = ticket["asker_name"];
+		// let askerEmail= ticket["asker_email"];
+		
+		// let object 		= ticket["object"];
+		// let description = ticket["description"];
+		
+		// let creationDate= new Date(ticket["creation_date"]).toISOString().substring(0,10);
+		// let callDate	= new Date(ticket["call_date"]).toISOString().substring(0,10);
+		
+		// let requiredSkills = ticket["required_skills"];
+		
+		// console.log(requiredSkills);
+		
+		let interventionAddress	= ticket["address"];
+		let interventionDateTime= ticket["intervention_datetime"];
+		let interventionDate = new Date(interventionDateTime).toISOString().substring(0,10);
+		let interventionTime = new Date(interventionDateTime).toISOString().substring(11,16);
+
+		// let technicianName	= ticket["technician_name"];
+		// let technicianID	= ticket["technician_id"];
+		
+		// let plannedDuration	= ticket["planned_duration"];
+		// let actualDuration	= ticket["actual_duration"];
+		
+		// let comments = ticket["comments"];
+	
+	
+	let weight	= ticket["weight"];
+	
+	
+	
+	let statusSelect = document.createElement("SELECT");
+	
+	let s1 = document.createElement("option");
+	s1.setAttribute("value", "Brouillon");
+	let t1 = document.createTextNode("Brouillon");
+	s1.appendChild(t1);
+	
+	let s2 = document.createElement("option");
+	s2.setAttribute("value", "Requiert Affectation");
+	let t2 = document.createTextNode("Requiert Affectation");
+	s2.appendChild(t2);
+	
+	let s3 = document.createElement("option");
+	s3.setAttribute("value", "En attente");
+	let t3 = document.createTextNode("En Attente");
+	s3.appendChild(t3);
+	
+	let s4 = document.createElement("option");
+	s4.setAttribute("value", "Intervention planifiée");
+	let t4 = document.createTextNode("Intervention Planifiée");
+	s4.appendChild(t4);
+	
+	let s5 = document.createElement("option");
+	s5.setAttribute("value", "En cours");
+	let t5 = document.createTextNode("En Cours");
+	s5.appendChild(t5);
+	
+	let s6 = document.createElement("option");
+	s6.setAttribute("value", "Fermé");
+	let t6 = document.createTextNode("Fermé");
+	s6.appendChild(t6);
+	
+	let s7 = document.createElement("option");
+	s7.setAttribute("value", "Annulé");
+	let t7 = document.createTextNode("Annulé");
+	s7.appendChild(t7);
+	
+	statusSelect.appendChild(s1);
+	statusSelect.appendChild(s2);
+	statusSelect.appendChild(s3);
+	statusSelect.appendChild(s4);
+	statusSelect.appendChild(s5);
+	statusSelect.appendChild(s6);
+	statusSelect.appendChild(s7);
+	
+
+	let categorySelect = document.createElement("select");
+	
+	var option = document.createElement("option");
+	option.text = "";
+	option.value = "";
+	categorySelect.add(option);
+
+	categoryList.forEach(function(element){			
+		 
+		var option = document.createElement("option");
+		option.text = element["nom"];
+		option.value = element["nom"];
+		categorySelect.add(option);
+	});
+	
+	let skillsSelect = document.createElement("select");
+	
+	skillsSelect.add(option);
+	
+	skillList.forEach(function(element){			
+		  
+		var option = document.createElement("option");
+		option.text = element["nom"];
+		option.value = element["nom"];
+		skillsSelect.add(option);
+	});
+	
+	row.setAttribute("id", subTicket);
+		
+	//Fill the row with all the cells
+	row.insertCell(0).innerHTML = subTicket;
+	row.insertCell(1).innerHTML = "<select id=\"subTicketStatusSelect\">" + statusSelect.innerHTML + "</select>";
+	row.insertCell(2).innerHTML = "<select id=\"subTicketCategorySelect\">" + categorySelect.innerHTML + "</select>";
+	row.insertCell(3).innerHTML = "<input type=\"number\" id=\"subTicketWeight\" value=" + weight +">";
+	row.insertCell(4).innerHTML = "<select id=\"subTicketSkillSelect\" multiple>" + skillsSelect.innerHTML + "</select>"; 
+	row.insertCell(5).innerHTML = "<input id=\"subTicketInterventionAddress\" value=\'" + interventionAddress +"\'>";
+	row.insertCell(6).innerHTML = "<input class=\"formElement\" id=\"subTicketInterventionDate\" type=\"date\" value=" + interventionDate +">";
+	
+	hostElement.appendChild(row);
+	
+}
+
 
 
 /**
