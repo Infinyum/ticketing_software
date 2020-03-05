@@ -290,6 +290,8 @@ window.onload = function () {
 
 		//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
 		document.getElementById(id).style.display = "block";
+		
+		map.invalidateSize();
 
 	});
 
@@ -508,6 +510,8 @@ window.onload = function () {
 	});
 
 }
+
+
 /**
  * Function that show the ticket menu overlay
  * @param : nothing

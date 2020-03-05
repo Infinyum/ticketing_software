@@ -14,6 +14,11 @@
 		<!-- Home made CSS -->
 		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/main.css">
 		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/Overlay.css">
+		
+		<!-- map ressources-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+		<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+		
 	</head>
 	<body>
 	
@@ -552,11 +557,31 @@
 			
 			<!-- Map view -->
 			<div class="views" id="mapView" style="display:none;">
-			
-				<br/><br/>
-				<!-- for demo purpose => to be removed -->
-				<img class="map" alt="Map" src="../Deps/Common/img/map.jpg" style="margin:auto; display:block; border:3px solid;">
-			
+				<div class="filter-bar">
+					<label class="checkbox-inline">
+				      <input type="checkbox" id="BrouillonCheckBox" value="Brouillon"checked>Brouillon
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="RequiertAffectationCheckBox" value="RequiertAffectation"checked>Requiert Affectation
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="EnAttenteCheckBox" value="EnAttente"checked>En Attente
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="InterventionPlanifieeCheckBox" value="InterventionPlanifiee"checked>Intervention Planifiée
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="EnCours" value="EnCours"checked>En Cours
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="FermeCheckBox" value="Ferme"checked>Fermé
+				    </label>
+				    <label class="checkbox-inline">
+				      <input type="checkbox" id="AnnuleCheckBox" value="Annule"checked>Annulé
+				    </label>
+				</div>
+				
+				<div class="map" id="mapDisplay" style=" height: 500px;"></div>			    
 			</div>
 			
 						
@@ -569,6 +594,7 @@
 		<!-- Our own scripts -->
 		<script type="text/javascript" src="../Deps/Common/js/index.js"></script>
 		<script type="text/javascript" src="../Deps/Operator/Operator.js"></script>
+		<script type="text/javascript" src="../Deps/Common/js/map.js"></script>	
 		
 	</body>
 </html>

@@ -21,7 +21,7 @@ $(function() { /* code here */
 
 $(document).on('click','.modify-btn-intervention',function(){
 	showOverlay();
-	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("StatusSelectModifTick").disabled = true;
 	document.getElementById("TicketType").disabled = true;
 	document.getElementById("CategorieSelect").disabled = true;
 	document.getElementById("ClientSelect").disabled = true;
@@ -42,7 +42,7 @@ $(document).on('click','.modify-btn-intervention',function(){
 
 $(document).on('click','.modify-btn',function(){
 	
-	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("StatusSelectModifTick").disabled = true;
 	document.getElementById("TicketType").disabled = true;
 	document.getElementById("CategorieSelect").disabled = true;
 	document.getElementById("ClientSelect").disabled = true;
@@ -64,7 +64,7 @@ $(document).on('click','.modify-btn',function(){
 
 $(document).on('click','#ticketCreation-btn',function(){
 	
-	document.getElementById("StatusSelect").disabled = true;
+	document.getElementById("StatusSelectModifTick").disabled = true;
 	document.getElementById("TicketType").disabled = false;
 	document.getElementById("CategorieSelect").disabled = false;
 	document.getElementById("ClientSelect").disabled = false;
