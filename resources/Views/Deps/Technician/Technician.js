@@ -9,12 +9,15 @@ $(function() { /* code here */
 	var technicienConnect = document.getElementById("user");
 	technicienConnect.innerHTML = sessionStorage.getItem("username")+ '<br/>(Technicien)<br><a href="">Deconnexion</a>';
 
+	
 	var technicienSelect = document.getElementById("TechnicPeopleList");
-	technicienSelect.options[technicienSelect.options.length] = new Option(' ', '0', false, false);
-	technicienSelect.options[technicienSelect.options.length] = new Option(sessionStorage.getItem("username"), sessionStorage.getItem("userID"),false,false);
-	// TODO : requete pour recuperer le technicien actuel
-	//sessionStorage.setItem("username", response.nom);
-	//sessionStorage.setItem("userID", response.id);
+	if(technicienSelect.options.length == 0){
+		technicienSelect.options[technicienSelect.options.length] = new Option(' ', '0', false, false);
+		technicienSelect.options[technicienSelect.options.length] = new Option(sessionStorage.getItem("username"), sessionStorage.getItem("userID"),false,false);
+		// TODO : requete pour recuperer le technicien actuel
+		//sessionStorage.setItem("username", response.nom);
+		//sessionStorage.setItem("userID", response.id);
+	}
 });
 
 /*****************		View Set Ticket	from view "Intervention"		****************/
@@ -177,20 +180,7 @@ $(document).on('click','.resetButton',function(){
 
 /*****************					Row table						****************/
 
-$(document).on('click','#InterventionView-btn',function(){
-	
-	//hide all views
-	$('.views').css('display','none');
-	
-	// we retrieve all the name of the view according to the button name
-	// /!\ Button id and the view id should only differ by the 4 ending char
-	// for example : myView1 works with myView1-btn, etc.
-	var id = this.id.substr(0, this.id.length-4);
-
-	//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
-	document.getElementById(id).style.display="block";
-	
-	$.ajax({
+$.ajax({
 		type: "POST",
 		url: host+"/getmytechtickets",
 		dataType:"JSON",	//what we send
@@ -198,6 +188,7 @@ $(document).on('click','#InterventionView-btn',function(){
 		data:JSON.stringify({id:sessionStorage.getItem("userID")}),
 		beforeSend:function(){
 			// disabling all search buttons to not overload the server while the query is happening
+			
 		},
 		complete:function(){
 			// enabling back all search buttons after query finished (whether in failure or success)
@@ -212,17 +203,28 @@ $(document).on('click','#InterventionView-btn',function(){
 				let idTicket = ticket["id"];
 				let statut = ticket["statut"];
 				let companyName = ticket["entreprise"];
-				let callDate = new Date(ticket["call_date"]);
+				let callDate = new Date(ticket["call_date"]).toISOString().substring(0,10);
 				//alert(statut);
-				if(statut == "Intervention planifiée" || statut == "En cours")
+				if(statut == "Intervention planifiée" || statut == "En cours" ||statut == "Fermé")
 					addRowIntervention(statut, idTicket, callDate, companyName);
 			}
-			/*
-			for(int i=0; i < sizeof(ticket); i++){
-				
-			}*/
 		}
 	});
+
+$(document).on('click','#InterventionView-btn',function(){
+	
+	//hide all views
+	$('.views').css('display','none');
+
+	// we retrieve all the name of the view according to the button name
+	// /!\ Button id and the view id should only differ by the 4 ending char
+	// for example : myView1 works with myView1-btn, etc.
+	var id = this.id.substr(0, this.id.length-4);
+
+	//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
+	document.getElementById(id).style.display="block";
+
+	
 	
 	
 	// TODO: request to get tickets form database
@@ -236,7 +238,7 @@ $(document).on('click','#InterventionView-btn',function(){
 });
 
 function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
-	alert(etatTicket)
+	//alert(etatTicket)
 	//alert(etatTicket == "Intervention planifiée")
 	let table = document.getElementById('ticket-table-intervention');
 	let tbody = document.createElement('tbody');
@@ -324,18 +326,19 @@ $(document).on('click','.valideButton',function(){
 	dataType:"json",	//what we send
 	contentType:"application/json", //what we expect as the response
 	data:JSON.stringify({id:ticketId,statut:statutSelect,duree:"02:15:25"}),
-	beforeSend:function(xhr){
+	beforeSend:function(){
 		// disabling all search buttons to not overload the server while the query is happening
 		//$('.search-get').attr("disabled", true);
-		alert("En cours d'enregistrement");
+		//alert("En cours d'enregistrement");
 	},
-	complete:function(xhr){
+	complete:function(){
 		// enabling back all search buttons after query finished (whether in failure or success)
 		//$('.search-get').attr("disabled", false);
 		alert("Enregistrement termine");
-	},success:function(element){
+	},success:function(){
+		
 		//Process success of the request...			
-		alert("Temps intervention et statut du ticket bien enregistre");
+		//alert("Temps intervention et statut du ticket bien enregistre");
 	}
 	});
 	
