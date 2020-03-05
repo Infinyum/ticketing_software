@@ -294,7 +294,7 @@ public class RESTAPI {
 	public Response removeCategorie(String inputJSON) {
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> dataMap = null;
-
+	
 		try {
 			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);

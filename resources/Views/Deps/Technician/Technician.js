@@ -189,29 +189,41 @@ $(document).on('click','#InterventionView-btn',function(){
 
 	//We get the div to display according to the button we press on (ID should match in both scenarion, we just -btn to the button)
 	document.getElementById(id).style.display="block";
-	/*
+	
 	$.ajax({
 		type: "POST",
 		url: host+"/getmytechtickets",
 		dataType:"JSON",	//what we send
 		contentType:"application/json", //what we expect as the response
 		data:JSON.stringify({id:sessionStorage.getItem("userID")}),
-		beforeSend:function(xhr){
+		beforeSend:function(){
 			// disabling all search buttons to not overload the server while the query is happening
-			$('.search-get').attr("disabled", true);
 		},
-		complete:function(xhr){
+		complete:function(){
 			// enabling back all search buttons after query finished (whether in failure or success)
-			$('.search-get').attr("disabled", false);
 		},
-		success:function(element){
-			//Process success of the request...			
-			for(int i=0; i < sizeof(ticket); i++){
-				addRow(EtatTicket, IdTicket, DateTicket, EntrepriseClient);
+		success:function(response){
+			//alert("test3");
+			//console.log(response)
+			//Process success of the request...
+			for (let i = 0; i < response.length; i++) {
+
+				let ticket = response[i];
+				let idTicket = ticket["id"];
+				let statut = ticket["statut"];
+				let companyName = ticket["entreprise"];
+				let callDate = new Date(ticket["call_date"]);
+				//alert(statut);
+				if(statut == "Intervention planifiée" || statut == "En cours")
+					addRowIntervention(statut, idTicket, callDate, companyName);
 			}
+			/*
+			for(int i=0; i < sizeof(ticket); i++){
+				
+			}*/
 		}
 	});
-	*/
+	
 	
 	// TODO: request to get tickets form database
 	/*
@@ -224,8 +236,8 @@ $(document).on('click','#InterventionView-btn',function(){
 });
 
 function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
-	//alert(etatTicket)
-	//alert(etatTicket == "Intervention Planifiée")
+	alert(etatTicket)
+	//alert(etatTicket == "Intervention planifiée")
 	let table = document.getElementById('ticket-table-intervention');
 	let tbody = document.createElement('tbody');
 	
@@ -239,14 +251,14 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 	row.insertCell(1).innerHTML = '<select class="formElement" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>'
 	*/
 	
-	if(etatTicket == "Intervention Planifiée"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
-	}else if(etatTicket == "En Cours"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours" selected>En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>';
+	if(etatTicket == "Intervention planifiée"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="Intervention planifiée" selected>Intervention planifiée</option><option value="En cours">En Cours</option><option value="Fermé">Fermé</option><option value="Annulé">Annulé</option></select>';
+	}else if(etatTicket == "En cours"){
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="Intervention planifiée">Intervention planifiée</option><option value="En cours" selected>En Cours</option><option value="Fermé">Fermé</option><option value="Annulé">Annulé</option></select>';
 	}else if(etatTicket == "Fermé"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme" selected>Fermé</option><option value="Annule">Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="Intervention planifiée">Intervention planifiée</option><option value="En cours">En Cours</option><option value="Fermé" selected>Fermé</option><option value="Annulé">Annulé</option></select>';
 	}else if(etatTicket == "Annulé"){
-		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee">Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule" selected>Annulé</option></select>';
+		row.insertCell(1).innerHTML = '<select class="formElementIntervention setButton" id="StatutSelectIntervention_'+idTicket+'"><option value="Intervention planifiée">Intervention planifiée</option><option value="En cours">En cours</option><option value="Fermé">Fermé</option><option value="Annulé" selected>Annulé</option></select>';
 	}else{
 		row.insertCell(1).innerHTML = '<span> etatTicket </span>'
 	}
@@ -272,11 +284,12 @@ $(document).on('change','.formElementIntervention',function(){
 	statutChange = 1
 });
 
-$(function() { /* code here */ 
+/*
+$(function() {
 	addRowIntervention("En Cours", 12354664, "2019-03-19", "Jean Boucherie")
 	addRowIntervention("Intervention Planifiée", 45624858, "2020-02-14", "Joe Boucherie")
 });
-
+*/
 
 $(document).on('click','.valideButton',function(){
 	var strSplit = this.id.split('_')
