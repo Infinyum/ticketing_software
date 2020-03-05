@@ -390,6 +390,9 @@ window.onload = function () {
 				//we add our ticket to the main map
 				//ticketMap.set(id, ticket);
 				ticketMap[id] = ticket;
+				
+				//We add a pin to the map
+				addMarker(ticket);
 
 				//if the ticket has a parent
 				if (parentID != null) {
@@ -419,6 +422,8 @@ window.onload = function () {
 					graphMap[id] = new Array();
 				}
 			}
+			
+			loadMap();
 
 			//We create a fragment where we are going to make all the changes
 			let fragmentStorage = document.createDocumentFragment();
