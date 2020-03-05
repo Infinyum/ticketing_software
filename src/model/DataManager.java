@@ -25,7 +25,7 @@ public class DataManager {
 		db = new DBManager();
 	}
 
-	public String getMyTechTickets(int id) throws SQLException, IOException {
+	public String getMyTechTickets(String id) throws SQLException, IOException {
 		ResultSet rs = db.ExecuteSQLQuery(new SQLQuery(".\\resources\\sql\\getTicketByTechnician.sql", true), id);
 
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();

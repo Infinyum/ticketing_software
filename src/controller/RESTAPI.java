@@ -52,8 +52,8 @@ public class RESTAPI {
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public InputStream getIndex() throws IOException {
-		//return new FileInputStream("./resources/Views/Home/Home.html");
-		return new FileInputStream("./resources/Views/Admin/Admin.html");
+		return new FileInputStream("./resources/Views/Home/Home.html");
+		//return new FileInputStream("./resources/Views/Admin/Admin.html");
 		//return new FileInputStream("./resources/Views/Technician/Technician.html");
 	}
 	
@@ -220,7 +220,7 @@ public class RESTAPI {
 		try {
 			// Get the query parameters
 			dataMap = mapper.readValue(inputJSON, Map.class);
-			int id = (Integer)dataMap.get("id");
+			String id = (String) dataMap.get("id");
 			
 			String outputJSON = dataManager.getMyTechTickets(id);
 
