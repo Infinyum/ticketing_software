@@ -1,8 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="">
 	<head>
-
-
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
@@ -14,6 +12,7 @@
 		<!-- Home made CSS -->
 		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/main.css">
 		<link rel="stylesheet" type="text/css" href="../Deps/Common/css/Overlay.css">
+		<link rel="stylesheet" type="text/css" href="../Deps/TechSupervisor/TechSupervisor.css">
 	</head>
 	<body>
 	
@@ -242,7 +241,6 @@
 						<label for="endDateFilter">Fin</label><br/>
 						<input class="" type="date" id="endDateFilter"></input>
 					</div>
-					
 				</div>
 				<table id="ticket-table" class="table">
 					<thead class="header-row">
@@ -299,6 +297,10 @@
 						</th>
 						
 						<th unselectable  scope="col">
+							<span class="clientPrioBtnFilter">
+								<input type="checkbox" id="clientPriorityFilterBtn"/>
+								<label for="clientPriorityFilterBtn">Clients prioritaires</label>
+							</span>
 							<input type="text" id="clientFilter" class="columnFilters" placeholder="Rechercher une entreprise cliente" title="Rechercher une entreprise cliente">
 							<div class="sortableHeader">Entreprise Cliente</div>
 						</th>
