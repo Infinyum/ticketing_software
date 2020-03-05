@@ -98,9 +98,9 @@
 								<div class="half-form" style="width:75%;">
 									<label for="ClientSelect">Client</label><br/> 
 									<select class="formElement" id="ClientSelect">
-										<option value="Brouillon">Client 1 </option>
-										<option value="Requiert affectation">Client 2</option>
-										<option value="En attente">Client 3</option>
+										<option value="Client 1">Client 1 </option>
+										<option value="Client 2">Client 2</option>
+										<option value="Client 3">Client 3</option>
 									</select>									
 								</div>
 								<div class="half-form">
@@ -144,8 +144,6 @@
 								
 								<label for="skills">Compétences requises</label>
 								<select class="formElement" id="skills" multiple>
-								  <option value="frigoriste">Frigoriste</option>
-								  <option value="electricien">Electricien</option>
 								</select>
 								
 								<br/><br/>
@@ -204,7 +202,7 @@
 								<br/><br/>
 								
 							
-								<table class="subTicketTable">
+								<table id="subTicketTable">
 								
 									<thead>
 										<th>ID Sous-ticket</th>
@@ -216,36 +214,36 @@
 										<th>Date de l'intervention</th>
 									</thead>
 									<tbody>
-										<tr>
-											<td>19970321</td>
-											<td>
-												<select class="formElement" id="StatusSelect">
-													<option value="Brouillon">Brouillon</option>
-													<option value="RequiertAffectation">Requiert Affectation</option>
-													<option value="EnAttente">En Attente</option>
-													<option value="InterventionPlanifiee">Intervention Planifiée</option>
-													<option value="EnCours">En Cours</option>
-													<option value="Ferme" selected>Fermé</option>
-													<option value="Annule">Annulé</option>
-												</select> 
-											</td>
-											<td>
-												<select>
-													<option value="materiel" selected>Matériel</option>
-													<option value="etude">Etude</option>
-												</select>    
-											</td>
-											<td><input type="number" value="1"></input></td>
-											<td>
-												<select class="formElement" multiple>
-													<option value="frigoriste" selected>Frigoriste</option>
-													<option value="electricien">Electricien</option>
-													<option value="">aucune</option>
-												</select>
-											</td>
-											<td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td>
-											<td><input class="formElement" type="date" value="2019-09-01"></input></td>
-										</tr>
+										<!-- <tr> -->
+											<!-- <td>19970321</td> -->
+											<!-- <td> -->
+												<!-- <select class="formElement" id="StatusSelect"> -->
+													<!-- <option value="Brouillon">Brouillon</option> -->
+													<!-- <option value="RequiertAffectation">Requiert Affectation</option> -->
+													<!-- <option value="EnAttente">En Attente</option> -->
+													<!-- <option value="InterventionPlanifiee">Intervention Planifiée</option> -->
+													<!-- <option value="EnCours">En Cours</option> -->
+													<!-- <option value="Ferme" selected>Fermé</option> -->
+													<!-- <option value="Annule">Annulé</option> -->
+												<!-- </select>  -->
+											<!-- </td> -->
+											<!-- <td> -->
+												<!-- <select> -->
+													<!-- <option value="materiel" selected>Matériel</option> -->
+													<!-- <option value="etude">Etude</option> -->
+												<!-- </select>     -->
+											<!-- </td> -->
+											<!-- <td><input type="number" value="1"></input></td> -->
+											<!-- <td> -->
+												<!-- <select class="formElement" multiple> -->
+													<!-- <option value="frigoriste" selected>Frigoriste</option> -->
+													<!-- <option value="electricien">Electricien</option> -->
+													<!-- <option value="">aucune</option> -->
+												<!-- </select> -->
+											<!-- </td> -->
+											<!-- <td><input value="3 rue du gros Chochon, 39250 Longcochon"></input></td> -->
+											<!-- <td><input class="formElement" type="date" value="2019-09-01"></input></td> -->
+										<!-- </tr> -->
 
 									</tbody>
 									
