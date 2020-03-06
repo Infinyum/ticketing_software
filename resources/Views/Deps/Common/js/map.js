@@ -65,7 +65,7 @@ var iconAnnule = L.icon({
 
 $(window).on('load',function(){
 
-	/* just for test
+	/*
 	var ticketMapTest = {};
 	ticketMapTest["ORAN-12345-1"] = {"status":"Brouillon","id":"ORAN-12345-1","date":"2020-01-22","address":"19 rue de liers, saint michel sur orge"};
 	ticketMapTest["ORAN-12345-2"] = {"status":"En attente","id":"ORAN-12345-2","date":"2020-01-22","address":"10 rue auber, Paris"};
@@ -81,29 +81,7 @@ $(window).on('load',function(){
 	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
 	  maxZoom: 18,
-	}).addTo(map);
-	
-	
-	/*just for testing
-	for (let k in ticketMapTest) {
-	  	addMarker(ticketMapTest[k]);
-	}
-	*/
-	for (let k in ticketMap) {
-			alert("add ticket "+ ticketMap[k]);
-		  	addMarker(ticketMap[k]);
-	}
-	
-	
-	layerBrouillon = L.layerGroup(mapBrouillon).addTo(map);
-	layerAffectation = L.layerGroup(mapAffectation).addTo(map);
-	layerEnAttente = L.layerGroup(mapEnAttente).addTo(map);
-	layerIntervention = L.layerGroup(mapIntervention).addTo(map);
-	layerEnCours = L.layerGroup(mapEnCours).addTo(map);
-	layerFerme = L.layerGroup(mapFerme).addTo(map);
-	layerAnnule = L.layerGroup(mapAnnule).addTo(map);
-	
-	
+	}).addTo(map);	
 	
 	$(document).on('click','#BrouillonCheckBox',function(){
 		if(document.getElementById("BrouillonCheckBox").checked){
@@ -141,8 +119,8 @@ $(window).on('load',function(){
 
 	});
 	
-		$(document).on('click','#EnCoursCheckBox',function(){
-		if(document.getElementById("EnCoursCheckBox").checked){
+		$(document).on('click','#EnCours',function(){
+		if(document.getElementById("EnCours").checked){
 			layerEnCours.addTo(map);
 		}else{
 			layerEnCours.remove();
@@ -192,7 +170,6 @@ function findLatLong(address){
 }
 
 function addMarker(ticket){
-
 	var adressGPS = findLatLong(ticket["address"]);
 	var markerLat = adressGPS[0];
 	var markerLong = adressGPS[1];
@@ -200,7 +177,7 @@ function addMarker(ticket){
 	
 	// add marker to the map
 	var marker = L.marker([markerLat, markerLong]);
-	
+
 	switch(ticket["status"]){
 		case "Brouillon" : 
 			marker.setIcon(iconBrouillon);
@@ -236,6 +213,16 @@ function addMarker(ticket){
 	
 	// add popup to the marker
 	marker.bindPopup("<b>"+ticket["id"]+"</b><br>"+ ticket["status"] + "<br>" + ticket["address"]);
+}
+
+function loadMap(){
+	layerBrouillon = L.layerGroup(mapBrouillon).addTo(map);
+	layerAffectation = L.layerGroup(mapAffectation).addTo(map);
+	layerEnAttente = L.layerGroup(mapEnAttente).addTo(map);
+	layerIntervention = L.layerGroup(mapIntervention).addTo(map);
+	layerEnCours = L.layerGroup(mapEnCours).addTo(map);
+	layerFerme = L.layerGroup(mapFerme).addTo(map);
+	layerAnnule = L.layerGroup(mapAnnule).addTo(map);
 }
 
 

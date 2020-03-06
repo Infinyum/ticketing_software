@@ -230,7 +230,6 @@ window.onload = function () {
 		
 		//We retrieve the table
 		let subTicketTable = document.getElementById('subTicketTable');
-		console.log(subTicketTable);
 		
 		//We create a fragment where we are going to make all the changes
 		let fragment = document.createDocumentFragment();
@@ -405,6 +404,9 @@ window.onload = function () {
 				//we add our ticket to the main map
 				//ticketMap.set(id, ticket);
 				ticketMap[id] = ticket;
+				
+				//We pin the ticket on the map
+				addMarker(ticket);
 
 				if(ticket["priority"]){
 					importantClientList.push(ticket["client"]);
@@ -439,6 +441,8 @@ window.onload = function () {
 					graphMap[id] = new Array();
 				}
 			}
+			
+			loadMap();
 
 			//We create a fragment where we are going to make all the changes
 			let fragmentStorage = document.createDocumentFragment();
