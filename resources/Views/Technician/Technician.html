@@ -415,18 +415,7 @@
 				
 				<!-- Ticket view (with the table) -->
 
-					<div class="filter-bar">
-						<span style="font-weight:bold;">Filtrer les tickets compris entre les dates : </span>
-						<div class="half-form dateFilters">
-							<label for="startDateFilter">Début</label><br/>
-							<input class="" type="date" id="startDateFilter"></input>
-						</div>
-						<div class="half-form  dateFilters">
-							<label for="endDateFilter">Fin</label><br/>
-							<input class="" type="date" id="endDateFilter"></input>
-						</div>
-						
-					</div>
+					
 					<table id="ticket-table-intervention" class="table-intervention">
 						<thead class="header-row-intervention">
 						
@@ -437,21 +426,13 @@
 							</th>
 						
 							<th unselectable  scope="col">
-								<select class="formElement columnFilters selectFilter" id="StatusSelectFilter">
-									<option value="Brouillon">Brouillon</option>
-									<option value="RequiertAffectation">Requiert Affectation</option>
-									<option value="EnAttente">En Attente</option>
-									<option value="InterventionPlanifiee">Intervention Planifiée</option>
-									<option value="EnCours">En Cours</option>
-									<option value="Ferme">Fermé</option>
-									<option value="Annule">Annulé</option>
-								</select> 
+								 
 
 								<div class="sortableHeader">Etat du Ticket</div>
 							</th>
 							
 							<th unselectable  scope="col">
-								<input type="text" id="idInput" class="columnFilters" placeholder="Rechercher un id" title="Rechercher un id">
+								
 								<div class="sortableHeader">ID Ticket</div>
 							</th>
 							
@@ -459,7 +440,6 @@
 							
 							
 							<th unselectable  scope="col">
-								<input type="text" id="clientFilter" class="columnFilters" placeholder="Rechercher une entreprise cliente" title="Rechercher une entreprise cliente">
 								<div class="sortableHeader">Entreprise Cliente</div>
 							</th>
 							

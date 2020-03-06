@@ -181,35 +181,35 @@ $(document).on('click','.resetButton',function(){
 /*****************					Row table						****************/
 
 $.ajax({
-		type: "POST",
-		url: host+"/getmytechtickets",
-		dataType:"JSON",	//what we send
-		contentType:"application/json", //what we expect as the response
-		data:JSON.stringify({id:sessionStorage.getItem("userID")}),
-		beforeSend:function(){
-			// disabling all search buttons to not overload the server while the query is happening
-			
-		},
-		complete:function(){
-			// enabling back all search buttons after query finished (whether in failure or success)
-		},
-		success:function(response){
-			//alert("test3");
-			//console.log(response)
-			//Process success of the request...
-			for (let i = 0; i < response.length; i++) {
+	type: "POST",
+	url: host+"/getmytechtickets",
+	dataType:"JSON",	//what we send
+	contentType:"application/json", //what we expect as the response
+	data:JSON.stringify({id:sessionStorage.getItem("userID")}),
+	beforeSend:function(){
+		// disabling all search buttons to not overload the server while the query is happening
+		
+	},
+	complete:function(){
+		// enabling back all search buttons after query finished (whether in failure or success)
+	},
+	success:function(response){
+		//alert("test3");
+		//console.log(response)
+		//Process success of the request...
+		for (let i = 0; i < response.length; i++) {
 
-				let ticket = response[i];
-				let idTicket = ticket["id"];
-				let statut = ticket["statut"];
-				let companyName = ticket["entreprise"];
-				let callDate = new Date(ticket["call_date"]).toISOString().substring(0,10);
-				//alert(statut);
-				if(statut == "Intervention planifiée" || statut == "En cours" ||statut == "Fermé")
-					addRowIntervention(statut, idTicket, callDate, companyName);
-			}
+			let ticket = response[i];
+			let idTicket = ticket["id"];
+			let statut = ticket["statut"];
+			let companyName = ticket["entreprise"];
+			let callDate = new Date(ticket["call_date"]).toISOString().substring(0,10);
+			//alert(statut);
+			if(statut == "Intervention planifiée" || statut == "En cours" ||statut == "Fermé")
+				addRowIntervention(statut, idTicket, callDate, companyName);
 		}
-	});
+	}
+});
 
 $(document).on('click','#InterventionView-btn',function(){
 	
@@ -242,13 +242,14 @@ function addRowIntervention(etatTicket, idTicket, dateTicket, entreprise){
 	//alert(etatTicket == "Intervention planifiée")
 	let table = document.getElementById('ticket-table-intervention');
 	let tbody = document.createElement('tbody');
+	tbody.id = idTicket;
 	
 	let row = tbody.insertRow(0);
 	row.class="ligneIntervention"
 	row.id="ligneIntervention_"+idTicket
 	
 	//Fill the row
-	row.insertCell(0).innerHTML = "<button class=\"modify-btn-intervention\">Modifier</button>"; //Insert the "modifier" button
+	row.insertCell(0).innerHTML = "<button class=\"modify-btn\">Modifier</button>"; //Insert the "modifier" button
 	/*
 	row.insertCell(1).innerHTML = '<select class="formElement" id="StatutSelectIntervention_'+idTicket+'"><option value="InterventionPlanifiee" selected>Intervention Planifiée</option><option value="EnCours">En Cours</option><option value="Ferme">Fermé</option><option value="Annule">Annulé</option></select>'
 	*/

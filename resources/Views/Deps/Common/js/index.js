@@ -16,6 +16,9 @@ var categoryList = new Array();
 //List of skills
 var skillList = new Array();
 
+// List of important clients
+var importantClientList = new Array();
+
 /**
  * Loading function of the application
  * Map all the events' callback to our functions
@@ -167,7 +170,7 @@ window.onload = function () {
 		
 		let requiredSkills = ticket["required_skills"];
 		
-		console.log(requiredSkills);
+		//console.log(requiredSkills);
 		
 		let interventionAddress	= ticket["address"];
 		let interventionDateTime= ticket["intervention_datetime"];
@@ -203,7 +206,17 @@ window.onload = function () {
 		document.getElementById("InterventionPlace").value 		= interventionAddress;
 		document.getElementById("InterventionDateInput").value 	= interventionDate;
 		document.getElementById("InterventionTimeInput").value 	= interventionTime;
-		document.getElementById("TechnicPeopleList").value		= technicianName + "(" + technicianID + ")";
+		
+		
+		var x = document.getElementById("TechnicPeopleList");
+		var option = document.createElement("option");
+		option.text = technicianName + " (" + technicianID + ")";
+		option.value = technicianID 
+		
+		option.selected  = true;
+		x.add(option);
+		
+		//document.getElementById("TechnicPeopleList").value		= technicianName + "(" + technicianID + ")";
 		document.getElementById("PrevisibleTimeInput").value 	= plannedDuration;
 		document.getElementById("EffectiveTimeInput").value 	= actualDuration;
 		
@@ -217,6 +230,8 @@ window.onload = function () {
 		
 		//We retrieve the table
 		let subTicketTable = document.getElementById('subTicketTable');
+		console.log(subTicketTable);
+		
 		//We create a fragment where we are going to make all the changes
 		let fragment = document.createDocumentFragment();
 		
@@ -393,6 +408,11 @@ window.onload = function () {
 				
 				//We add a pin to the map
 				addMarker(ticket);
+
+				if(ticket["priority"]){
+					importantClientList.push(ticket["client"]);
+				}
+
 
 				//if the ticket has a parent
 				if (parentID != null) {
