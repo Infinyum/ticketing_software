@@ -27,7 +27,6 @@ window.addEventListener('load', function() {
                     opt.innerHTML = "";
                     techSelect.appendChild(opt);
                     // Fill select with new technicians
-                    let techIndex = -1;
                     for(let i = 0; i < response.length; i++) {
                         let tech = response[i];
                         opt = document.createElement('option');
@@ -41,5 +40,20 @@ window.addEventListener('load', function() {
                     console.log("ERROR!" + status + "\n" + errorThrown);
                 }
             });
-        });
+    });
+
+    $(document).on('change', '#clientPriorityFilterBtn', function() {
+        let tablerows = document.getElementById('ticket-table').tBodies;
+        if(this.checked) {
+            let row = null;
+            for(let i = 0; i < tablerows.length; i++) {
+                row = ticketMap[tablerows[i].id];
+                if(!row.priority)
+                    tablerows[i].style.display = "none";
+            }
+        }
+        else {
+            filterTable(1, document.getElementById('StatusSelectListHead').value);
+        }
+    });
 });
